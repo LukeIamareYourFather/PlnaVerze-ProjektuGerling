@@ -1,0 +1,1 @@
+# PlnaVerze-ProjektuGerling
