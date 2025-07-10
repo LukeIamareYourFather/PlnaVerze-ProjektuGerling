@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+
+<html lang="cs-cz">
+    <head th:replace="~{fragments/layout.html :: head}">
+    
+    </head>
+
+    <header th:replace="~{fragments/layout.html :: header}">
+
+    </header>
+
+    <body id="main-page">
+        <article>
+            <section th:replace="~{fragments/layout.html :: deleteForm('Odebrání pojistnínka', @{/parties/delete/policy-owners/find}, 'Potvrdit')}"></footer>
+        </article>
+        <footer th:replace="~{fragments/layout.html :: footer}"></footer>
+    </body>
+</html>

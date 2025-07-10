@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html lang="cs-cz">
+    <head th:replace="~{fragments/layout.html :: head}">
+    
+    </head>
+
+    <header th:replace="~{fragments/layout.html :: header}">
+
+    </header>
+
+    <body id="main-page">
+        <article class="pb-5">
+            <div class="tile-background">
+                <h2 th:text="${pageTitle}"></h2>
+
+                <section class="px-4 py-4">
+                    <div class="form-group">
+                        <label for="contract-number" class="control-label">Číslo smlouvy:</label>
+                        <input id="contract-number" type="text" class="form-control" th:field="${contractDetails.contractNumber}" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="removal-reason" class="control-label">Subjekt k Pojištění:</label>
+                        <input id="removal-reason" th:field="${contractDetails.insuredSubject.displayName}" class="form-select" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="insurance-type" class="control-label">Typ pojištění:</label>
+                        <input id="removal-reason" th:field="${contractDetails.insuranceType.displayName}" class="form-select" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="begin-date" class="control-label">Datum zahájení:</label>
+                        <input id="begin-date" type="date" class="form-control" th:value="${contractDetails.beginDate}" readonly>
+                    </div>                
+
+                    <div class="form-group">
+                        <label for="signature-date" class="control-label">Datum podpisu smlouvy:</label>
+                        <input id="signature-date" type="date" class="form-control" th:value="${contractDetails.signatureDate}" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="price-per-period" class="control-label">Cena za období:</label>
+                        <input id="price-per-period" type="number" class="form-control" th:field="${contractDetails.pricePerPeriod}" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="liability-percentage" class="control-label">Procentuální spoluúčast:</label>
+                        <input id="liability-percentage" type="number" step="0.01" class="form-control" th:field="${contractDetails.liabilityPercentage}" readonly>
+                    </div>
+                </section>
+            </div>
+        </article>
+        
+        <footer th:replace="~{fragments/layout.html :: footer}"></footer>
+    </body>
+</html>

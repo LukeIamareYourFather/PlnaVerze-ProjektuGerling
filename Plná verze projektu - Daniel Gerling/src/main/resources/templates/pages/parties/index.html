@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html lang="cs-cz">
+    <head th:replace="~{fragments/layout.html :: head}">
+    
+    </head>
+
+    <header th:replace="~{fragments/layout.html :: header}">
+
+    </header>
+
+    <body id="main-page">
+        <article class="pb-5">
+            <div class="container-fluid">
+                <div class="tile-background">
+                    <div class="row justify-content-center">
+                        <div class="col-auto mx-4 my-4">
+                            <button class="btn insuree-tile lime-tile">
+                                <a href="parties/find/policy-owner">Vyhledat pojistníka</a>
+                            </button>
+                        </div>
+
+                        <div class="col-auto mx-4 my-4">
+                            <button class="btn insuree-tile green-tile">
+                                <a href="parties/find/insured">Vyhledat pojištěnce</a>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center mt-4">
+                        <div class="col-auto mx-4 my-4">
+                            <button class="btn insuree-tile blue-tile">
+                                <a href="parties/create/policy-owner">Vytvořit pojistníka</a>
+                            </button>
+                        </div>
+
+                        <div class="col-auto mx-4 my-4">
+                            <button class="btn insuree-tile purple-tile">
+                                <a href="parties/create/insured">Vytvořit pojištěnce</a>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center mt-4">
+                        <div class="col-auto mx-4 my-4">
+                            <button class="btn insuree-tile red-tile">
+                                <a href="parties/delete/policy-owner">Odebrat pojistníka</a>
+                            </button>
+                        </div>
+
+                        <div class="col-auto mx-4 my-4">
+                            <button class="btn insuree-tile orange-tile">
+                                <a href="parties/delete/insured">Odebrat pojištěnce</a>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center mt-4">
+                        <div class="col-auto mx-4 my-4">
+                            <button class="btn insuree-tile red-tile">
+                                <a href="parties/parties-list">Seznam pojištěných</a>
+                            </button>
+                        </div>
+
+                        <div class="col-auto mx-4 my-4">
+                            <button class="btn insuree-tile orange-tile">
+                                <a href="parties/deleted-parties-list">Seznam smazaných</a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <footer th:replace="~{fragments/layout.html :: footer}">
+            
+        </footer>
+    </body>
+</html>

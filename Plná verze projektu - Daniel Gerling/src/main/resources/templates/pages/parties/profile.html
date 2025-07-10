@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html lang="cs-cz">
+    <head th:replace="~{fragments/layout.html :: head}">
+    
+    </head>
+
+    <header th:replace="~{fragments/layout.html :: header}">
+
+    </header>
+
+    <body id="main-page">
+        <article class="pb-5">
+            <div class="tile-background">
+                <h2 th:text="${pageTitle}"></h2>
+
+                <section th:replace="~{fragments/layout.html :: partyDetailsForm}"></section>
+            </div>
+
+            <div class="tile-background" th:if="${ifShowDeleteForm}">
+                <section class="px-4 py-4">
+                    <div class="form-group">
+                        <label for="name" class="control-label">Důvod odebrání:</label>
+                        <input id="name" type="text" th:value="${reasonsDTO.removalReason.displayName}" class="form-control" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name" class="control-label">Datum podaní požadavku:</label>
+                        <input id="name" type="date" th:value="${reasonsDTO.dateOfRequest}" class="form-control" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name" class="control-label">Požadovaná akce:</label>
+                        <input id="name" type="text" th:value="${reasonsDTO.ifToDeleteParty}" class="form-control" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name" class="control-label">Dodatečné informace:</label>
+                        <textarea id="name" th:field="${reasonsDTO.additionalInformation}" class="form-control" readonly></textarea>
+                    </div>
+                </section>
+
+                <form id="hiddenForm" method="post" th:action="@{${confirmationLink}}" style="display: none;"></form>
+
+                <button type="submit" form="hiddenForm" class="btn btn-primary">Odebrat</button>
+            </div>
+
+            <div>
+                <section class="tile-background px-4 py-4">
+                    <ul class="list-group" id="found-insurees">
+                        <li th:each="contract: ${activeContracts}" class="list-group-item">
+                            <h2>
+                                <a th:href="@{${referenceLink} + ${contract.contractId}}"
+                                th:text="${contract.contractNumber}">
+                                </a>
+                                <p th:text="${contract.insuranceType.displayName}"></p>
+                            </h2>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+        </article>
+
+        <footer th:replace="~{fragments/layout.html :: footer}"></footer>
+    </body>
+</html>

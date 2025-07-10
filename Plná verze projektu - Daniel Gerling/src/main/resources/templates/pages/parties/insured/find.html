@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<html lang="cs-cz">
+    <head th:replace="~{fragments/layout.html :: head}">
+    
+    </head>
+
+    <header th:replace="~{fragments/layout.html :: header}">
+
+    </header>
+
+    <body id="main-page">
+        <article>
+            <section th:replace="~{fragments/layout.html :: personForm('Vyhledávání pojištěných', 'Vyhledej')}">
+	            
+            </section>
+        </article>
+        
+        <footer th:replace="~{fragments/layout.html :: footer}"></footer>
+    </body>
+</html>

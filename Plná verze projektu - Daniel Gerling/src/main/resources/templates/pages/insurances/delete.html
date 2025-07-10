@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html lang="cs-cz">
+    <head th:replace="~{fragments/layout.html :: head}">
+    
+    </head>
+
+    <header th:replace="~{fragments/layout.html :: header}">
+
+    </header>
+
+    <body id="main-page">
+        <article class="pb-5">
+            <section th:fragment="createInsurancesForm(formName, buttonLabel)" class="tile-background py-4 px-4">
+                <div class="centered">
+                    <h1 th:text="${formName}"></h1>
+                </div>
+
+                <form class="d-flex flex-column gap-2" method="post" th:action="${formAction}" th:object="${insurancesReasonsDTO}">
+                    <div class="form-group">
+                        <label for="removal-reason" class="control-label">Důvod odstranění pojištění:</label>
+                        <select id="removal-reason" th:field="*{removalReason}" class="form-select">
+                            <option th:each="removalReason : ${T(com.danger.insurance.data.enums.insurances.InsurancesDeleteReason).values()}"
+                                    th:value="${removalReason}"
+                                    th:text="${removalReason.displayName}">
+                            </option>
+                        </select>
+                        <small class="text-danger" th:if="${#fields.hasErrors('removalReason')}" th:errors="*{removalReason}"></small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="request-date" class="control-label">Datum požadavku:</label>
+                        <input id="request-date" type="date" class="form-control" th:field="*{requestDate}"></input>
+                        <small class="text-danger" th:if="${#fields.hasErrors('requestDate')}" th:errors="*{requestDate}"></small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="delete-description" class="control-label">Popis důvodu odstranění:</label>
+                        <textarea id="delete-description" class="form-control" th:field="*{deleteDescription}"></textarea>
+                        <small class="text-danger" th:if="${#fields.hasErrors('deleteDescription')}" th:errors="*{deleteDescription}"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="if-to-remove-all-contracts" class="control-label">Odstranit všechny aktivní smlouvy:</label>
+                        <select id="if-to-remove-all-contracts" class="form-select" th:field="*{ifToRemoveAllContracts}">
+                            <option th:value="false">Ponechat pojištění u aktivních kontratků</option>
+                            <option th:value="true">Odebrat odstraněné pojištění ze všech kontratků</option>
+                        </select>
+                        <small class="text-danger" th:if="${#fields.hasErrors('ifToRemoveAllContracts')}" th:errors="*{ifToRemoveAllContracts}"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="clanky-tlacitko" th:text="${buttonLabel}"></button>
+                    </div>
+                </form>
+            </section>
+        </article>
+
+        <footer th:replace="~{fragments/layout.html :: footer}"></footer>
+    </body>
+</html>
