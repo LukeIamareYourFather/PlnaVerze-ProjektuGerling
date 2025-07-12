@@ -135,7 +135,7 @@
                 <div class="form-group">
                     <label for="removal-reason" class="control-label">Důvod odebrání:</label>
                     <select id="removal-reason" th:field="*{removalReason}" class="form-select">
-                        <option th:each="reason : ${T(com.danger.insurance.data.enums.parties.PartiesRemovalReason).values()}"
+                        <option th:each="reason : ${T(com.danger.insurance.parties.data.enums.PartiesRemovalReason).values()}"
                                 th:value="${reason}"
                                 th:text="${reason.displayName}">
                         </option>
@@ -185,7 +185,7 @@
                 <div class="form-group">
                     <label for="removal-reason" class="control-label">Subjekt k Pojištění:</label>
                     <select id="removal-reason" th:field="*{insuredSubject}" class="form-select">
-                        <option th:each="subject : ${T(com.danger.insurance.data.enums.insurances.InsurancesSubjects).values()}"
+                        <option th:each="subject : ${T(com.danger.insurance.insurances.data.enums.InsurancesSubjects).values()}"
                                 th:value="${subject}"
                                 th:text="${subject.displayName}">
                         </option>
@@ -196,7 +196,7 @@
                 <div class="form-group">
                     <label for="insurance-type" class="control-label">Typ pojištění:</label>
                     <select id="removal-reason" th:field="*{insuranceType}" class="form-select">
-                        <option th:each="insuranceType : ${T(com.danger.insurance.data.enums.insurances.InsurancesType).values()}"
+                        <option th:each="insuranceType : ${T(com.danger.insurance.insurances.data.enums.InsurancesType).values()}"
                                 th:value="${insuranceType}"
                                 th:text="${insuranceType.displayName}">
                         </option>
@@ -249,7 +249,7 @@
                 <div class="form-group">
                     <label for="insurances-type" class="control-label">Typ pojištění:</label>
                     <select id="insurances-type" th:field="*{insurancesType}" class="form-select">
-                        <option th:each="insuranceType : ${T(com.danger.insurance.data.enums.insurances.InsurancesType).values()}"
+                        <option th:each="insuranceType : ${T(com.danger.insurance.insurances.data.enums.InsurancesType).values()}"
                                 th:value="${insuranceType}"
                                 th:text="${insuranceType.displayName}">
                         </option>

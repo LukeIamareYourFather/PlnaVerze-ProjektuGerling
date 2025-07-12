@@ -20,7 +20,7 @@
                     <div class="form-group">
                         <label for="removal-reason" class="control-label">Důvod odstranění pojištění:</label>
                         <select id="removal-reason" th:field="*{removalReason}" class="form-select">
-                            <option th:each="removalReason : ${T(com.danger.insurance.data.enums.insurances.InsurancesDeleteReason).values()}"
+                            <option th:each="removalReason : ${T(com.danger.insurance.insurances.contracts.data.enums.InsurancesDeleteReason).values()}"
                                     th:value="${removalReason}"
                                     th:text="${removalReason.displayName}">
                             </option>
