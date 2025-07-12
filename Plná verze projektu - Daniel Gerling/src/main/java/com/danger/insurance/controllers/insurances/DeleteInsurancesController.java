@@ -63,6 +63,7 @@ public class DeleteInsurancesController {
 	public String handleDeleteInsuranceConfirmed(@PathVariable("insurancesId") long insurancesId, @ModelAttribute("insurancesReasonsDTO") DeleteInsurancesReasonsDTO insurancesReasonsDTO, SessionStatus sessionStatus) {
 		DeletedInsurancesDTO deletedInsuranceDTO = deleterService.createDeleteDTO(insurancesReasonsDTO, insurancesService.getById(insurancesId));
 		deletedInsuranceDTO.setTodaysDate(LocalDate.now());
+		System.out.println(deletedInsuranceDTO.getIsAutoRenewalRequired());
 		deleterService.create(deletedInsuranceDTO);
 		insurancesService.delete(insurancesId);
 		sessionStatus.setComplete();

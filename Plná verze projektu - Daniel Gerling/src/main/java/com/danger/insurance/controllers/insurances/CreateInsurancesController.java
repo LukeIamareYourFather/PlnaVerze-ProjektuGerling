@@ -16,15 +16,15 @@ public class CreateInsurancesController {
 	@Autowired
 	private InsurancesServiceImplementation insuracesService;
 	
-	@RequestMapping("create")
+	@RequestMapping("make")
 	public String renderCreateInsurancesForm(Model model) {
 		model.addAttribute("insurancesDTO", new InsurancesDTO());
-		model.addAttribute("formAction", "/insurances/create/new");
+		model.addAttribute("formAction", "/insurances/make/new");
 		
 		return "pages/insurances/create";
 	}
 	
-	@PostMapping("create/new") 
+	@PostMapping("make/new") 
 	public String handleCreateInsurancesSubmit(InsurancesDTO dto) {
 		long insuranceId = insuracesService.create(dto);
 		

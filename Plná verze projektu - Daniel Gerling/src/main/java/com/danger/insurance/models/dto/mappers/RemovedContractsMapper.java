@@ -1,10 +1,9 @@
 package com.danger.insurance.models.dto.mappers;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
-import com.danger.insurance.data.entities.ContractsEntity;
-import com.danger.insurance.data.entities.InsurancesEntity;
 import com.danger.insurance.data.entities.PartiesEntity;
 import com.danger.insurance.data.entities.RemovedContractsEntity;
 import com.danger.insurance.models.dto.insurances.ContractsDTO;
@@ -30,6 +29,10 @@ public interface RemovedContractsMapper {
      * @return a new {@link PartiesDetailsDTO} populated from the entity.
      */
 	RemoveContractReasonsDTO toDTO(RemovedContractsEntity source);			// Can be split into getDto and setDto in bigger projects
+	
+	@Mapping(target = ".", source = "contractsDTO")
+	@Mapping(target = ".", source = "insurancesDTO")
+	void mergeToRemoveContractReasonsDTO(ContractsDTO contractsDTO, InsurancesDTO insurancesDTO, @MappingTarget RemoveContractReasonsDTO removeContractReasonsDTO);
 	
 	/**
      * Updates an existing {@link PartiesDetailsDTO} with values from another DTO.

@@ -3,7 +3,6 @@ package com.danger.insurance.models.services.insurances;
 import java.util.List;
 
 import com.danger.insurance.models.dto.insurances.ContractsDTO;
-import com.danger.insurance.models.dto.insurances.InsurancesDTO;
 import com.danger.insurance.models.dto.parties.PartiesDetailsDTO;
 
 public interface ContractsService {

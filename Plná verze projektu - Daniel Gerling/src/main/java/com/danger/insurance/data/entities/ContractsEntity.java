@@ -1,10 +1,13 @@
 package com.danger.insurance.data.entities;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.danger.insurance.data.enums.insurances.InsurancesSubjects;
 import com.danger.insurance.data.enums.insurances.InsurancesType;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -14,6 +17,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class ContractsEntity {
@@ -49,24 +53,23 @@ public class ContractsEntity {
 	@JoinColumn(name = "insurances_id", nullable = false)
 	private InsurancesEntity insurancesEntity;
 
-	@ManyToOne
-	@JoinColumn(name = "party_id", nullable = false)
-	private PartiesEntity partiesEntity;
 
+	@OneToMany(mappedBy = "contractEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PartyContractsEntity> partyContracts = new ArrayList<>();
 	
 	
 	/**
-	 * @return the partiesEntity
+	 * @return the partyContracts
 	 */
-	public PartiesEntity getPartiesEntity() {
-		return partiesEntity;
+	public List<PartyContractsEntity> getPartyContracts() {
+		return partyContracts;
 	}
 
 	/**
-	 * @param partiesEntity the partiesEntity to set
+	 * @param partyContracts the partyContracts to set
 	 */
-	public void setPartiesEntity(PartiesEntity partiesEntity) {
-		this.partiesEntity = partiesEntity;
+	public void setPartyContracts(List<PartyContractsEntity> partyContracts) {
+		this.partyContracts = partyContracts;
 	}
 
 	/**

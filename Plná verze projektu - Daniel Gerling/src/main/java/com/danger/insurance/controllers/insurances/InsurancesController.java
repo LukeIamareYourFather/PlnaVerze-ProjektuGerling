@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.danger.insurance.models.services.insurances.ContractsService;
+import com.danger.insurance.data.repositories.PartyContractsRepository;
 import com.danger.insurance.models.services.insurances.ContractsServiceImplementation;
 import com.danger.insurance.models.services.insurances.InsurancesServiceImplementation;
 
@@ -20,6 +20,9 @@ public class InsurancesController {
 	
 	@Autowired
 	private ContractsServiceImplementation contractsService;
+	
+	@Autowired
+	private PartyContractsRepository partyContractsRepository;
 	
 	@GetMapping
 	public String renderIndex() {
@@ -46,6 +49,10 @@ public class InsurancesController {
 	public String renderContractDetails(@PathVariable("contractId") long contractId, Model model) {
 		model.addAttribute("contractDetails", contractsService.getById(contractId));
 		model.addAttribute("pageTitle", "Přehled smlouvy");
+		model.addAttribute("insuredParties", partyContractsRepository.findPartiesByContractId(contractId));
+		model.addAttribute("referenceLink", "/parties/profile-");
+		model.addAttribute("insurance", insurancesService.getById(contractsService.getById(contractId).getInsurancesEntity().getInsurancesId()));
+		model.addAttribute("insuranceReferenceLink", "/insurances/insurance-");
 		
 		return "pages/insurances/contracts/detail";
 	}

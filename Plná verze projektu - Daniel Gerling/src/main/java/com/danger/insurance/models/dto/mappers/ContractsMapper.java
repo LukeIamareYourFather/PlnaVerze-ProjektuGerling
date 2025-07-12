@@ -4,10 +4,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
 import com.danger.insurance.data.entities.ContractsEntity;
-import com.danger.insurance.data.entities.InsurancesEntity;
 import com.danger.insurance.data.entities.PartiesEntity;
 import com.danger.insurance.models.dto.insurances.ContractsDTO;
-import com.danger.insurance.models.dto.insurances.InsurancesDTO;
 import com.danger.insurance.models.dto.parties.PartiesDetailsDTO;
 
 @Mapper(componentModel = "spring")

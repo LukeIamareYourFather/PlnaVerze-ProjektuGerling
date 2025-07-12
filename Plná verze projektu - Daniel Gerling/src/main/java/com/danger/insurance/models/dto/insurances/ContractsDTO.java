@@ -3,17 +3,11 @@ package com.danger.insurance.models.dto.insurances;
 import java.time.LocalDate;
 
 import com.danger.insurance.data.entities.InsurancesEntity;
-import com.danger.insurance.data.entities.PartiesEntity;
 import com.danger.insurance.data.enums.insurances.InsurancesSubjects;
 import com.danger.insurance.data.enums.insurances.InsurancesType;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.AssertFalse;
 
 public class ContractsDTO {
 	//make nullable false when using for creation or a new DTO
@@ -36,25 +30,8 @@ public class ContractsDTO {
 	private float liabilityPercentage;
 	
 	private InsurancesEntity insurancesEntity;
-	
-	private PartiesEntity partiesEntity;
 
 	
-	
-	/**
-	 * @return the partiesEntity
-	 */
-	public PartiesEntity getPartiesEntity() {
-		return partiesEntity;
-	}
-
-	/**
-	 * @param partiesEntity the partiesEntity to set
-	 */
-	public void setPartiesEntity(PartiesEntity partiesEntity) {
-		this.partiesEntity = partiesEntity;
-	}
-
 	/**
 	 * @return the contractId
 	 */

@@ -3,23 +3,28 @@ package com.danger.insurance.models.dto.insurances;
 import java.time.LocalDate;
 
 import com.danger.insurance.data.enums.insurances.ContractsRemovalReason;
-import com.danger.insurance.data.enums.insurances.InsurancesDeleteReason;
 import com.danger.insurance.data.enums.insurances.InsurancesSubjects;
 import com.danger.insurance.data.enums.insurances.InsurancesType;
 
+import jakarta.validation.constraints.NotNull;
+
 public class RemoveContractReasonsDTO {
 
-	private  ContractsRemovalReason deleteReason;	
+	private long removedInsurancesId;
 	
+	@NotNull(message = "Prosím zadejte důvod ukončení pojištění")
+	private  ContractsRemovalReason deleteReason;	
+
+	@NotNull(message = "Prosím zadejte popis důvodu ukončení pojištění")
 	private String description;
 	
+	@NotNull(message = "Prosím zadejte datum požadavku ukončení pojištění")
 	private LocalDate dateOfRequest;
 	
+	@NotNull(message = "Prosím zadejte ke kterému datu ukončit pojištění")
 	private LocalDate dateOfCancellation;
 	
 	private LocalDate todaysDate;
-	
-	private Boolean ifToRemoveAllParties;
 	
 	private String birthNumber;
 	
@@ -41,6 +46,22 @@ public class RemoveContractReasonsDTO {
 	
 	private InsurancesType insurancesType;
 	
+	
+	
+	/**
+	 * @return the removedInsurancesId
+	 */
+	public long getRemovedInsurancesId() {
+		return removedInsurancesId;
+	}
+
+	/**
+	 * @param removedInsurancesId the removedInsurancesId to set
+	 */
+	public void setRemovedInsurancesId(long removedInsurancesId) {
+		this.removedInsurancesId = removedInsurancesId;
+	}
+
 	/**
 	 * @return the deleteReason
 	 */
@@ -109,20 +130,6 @@ public class RemoveContractReasonsDTO {
 	 */
 	public void setTodaysDate(LocalDate todaysDate) {
 		this.todaysDate = todaysDate;
-	}
-
-	/**
-	 * @return the ifToRemoveAllParties
-	 */
-	public Boolean getIfToRemoveAllParties() {
-		return ifToRemoveAllParties;
-	}
-
-	/**
-	 * @param ifToRemoveAllParties the ifToRemoveAllParties to set
-	 */
-	public void setIfToRemoveAllParties(Boolean ifToRemoveAllParties) {
-		this.ifToRemoveAllParties = ifToRemoveAllParties;
 	}
 
 	/**

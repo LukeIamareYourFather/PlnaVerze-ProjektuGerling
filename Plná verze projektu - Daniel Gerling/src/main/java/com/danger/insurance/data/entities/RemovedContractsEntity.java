@@ -22,6 +22,7 @@ public class RemovedContractsEntity {
 	private long removedInsurancesId;
 
 	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
 	private  ContractsRemovalReason deleteReason;
 	
 	@Column(nullable = false)
@@ -35,10 +36,7 @@ public class RemovedContractsEntity {
 	
 	@Column(nullable = false)
 	private LocalDate todaysDate;
-	
-	@Column(nullable = false)
-	private Boolean ifToRemoveAllParties;
-	
+		
 	@Column(nullable = false)
 	private String birthNumber;
 	
@@ -154,20 +152,6 @@ public class RemovedContractsEntity {
 	 */
 	public void setTodaysDate(LocalDate todaysDate) {
 		this.todaysDate = todaysDate;
-	}
-
-	/**
-	 * @return the ifToRemoveAllParties
-	 */
-	public Boolean getIfToRemoveAllParties() {
-		return ifToRemoveAllParties;
-	}
-
-	/**
-	 * @param ifToRemoveAllParties the ifToRemoveAllParties to set
-	 */
-	public void setIfToRemoveAllParties(Boolean ifToRemoveAllParties) {
-		this.ifToRemoveAllParties = ifToRemoveAllParties;
 	}
 
 	/**

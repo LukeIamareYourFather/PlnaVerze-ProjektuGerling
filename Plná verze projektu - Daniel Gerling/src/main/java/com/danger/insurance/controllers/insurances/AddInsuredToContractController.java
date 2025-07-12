@@ -1,5 +1,6 @@
 package com.danger.insurance.controllers.insurances;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,11 @@ import com.danger.insurance.data.entities.ContractsEntity;
 import com.danger.insurance.data.entities.PartiesEntity;
 import com.danger.insurance.data.enums.parties.PartyStatus;
 import com.danger.insurance.models.dto.insurances.ContractsDTO;
+import com.danger.insurance.models.dto.insurances.PartyContractsDTO;
+import com.danger.insurance.models.dto.mappers.ContractsMapper;
+import com.danger.insurance.models.dto.mappers.PartiesMapper;
 import com.danger.insurance.models.dto.parties.PartiesDetailsDTO;
+import com.danger.insurance.models.services.insurances.PartyContractsServiceImplementation;
 import com.danger.insurance.models.services.insurances.ContractsServiceImplementation;
 import com.danger.insurance.models.services.insurances.InsurancesServiceImplementation;
 import com.danger.insurance.models.services.parties.PartiesServiceImplementation;
@@ -33,6 +38,15 @@ public class AddInsuredToContractController {
 	
 	@Autowired
 	private InsurancesServiceImplementation insurancesService;
+	
+	@Autowired
+	private PartyContractsServiceImplementation partyContractsService;
+	
+	@Autowired 
+	private ContractsMapper contractsMapper;
+	
+	@Autowired
+	private PartiesMapper partiesMapper;
 	
 	@GetMapping("add")
 	public String renderInsuredSearchForm(Model model) {
@@ -104,8 +118,13 @@ public class AddInsuredToContractController {
 	}
 	
 	@PostMapping("add/select/party-{partyId}/contract-{contractId}/confirmed")
-	public String handleConfirmation() {
-		
+	public String handleConfirmation(@PathVariable("partyId") long partyId, @PathVariable("contractId") long contractId, Model model) {
+		PartyContractsDTO newEntry = new PartyContractsDTO();
+		newEntry.setContractEntity(contractsMapper.toEntity(contractsService.getById(contractId)));
+		newEntry.setPartyEntity(partiesMapper.toEntity(partiesService.getById(partyId)));
+		newEntry.setContractRole(PartyStatus.INSURED);
+		newEntry.setTodaysDate(LocalDate.now());
+		partyContractsService.create(newEntry);
 		
 		return "redirect:/insurances";
 	}

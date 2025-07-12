@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html lang="cs-cz">
+    <head th:replace="~{fragments/layout.html :: head}">
+    
+    </head>
+
+    <header th:replace="~{fragments/layout.html :: header}">
+
+    </header>
+
+    <body id="main-page">
+        <article class="pb-5">
+            <div class="tile-background">
+                <h2 th:text="${pageTitle}"></h2>
+
+                <section th:replace="~{fragments/layout.html :: partyDetailsForm}"></section>
+
+                <h2>Vyberte smlouvu ze které má být pojištěnec odebrán :</h2>
+
+                <ul class="list-group px-4 py-4" id="found-insurees">
+                    <li th:each="contract: ${partyContracts}" class="list-group-item">
+                        <h2>
+                            <a th:href="@{${contractReferenceLink} + ${contract.contractId}}"
+                            th:text="${contract.contractNumber}">
+                            </a>
+                        </h2>
+                    </li>
+                </ul>
+            </div>
+        </article>
+        
+        <footer th:replace="~{fragments/layout.html :: footer}"></footer>
+    </body>
+</html>

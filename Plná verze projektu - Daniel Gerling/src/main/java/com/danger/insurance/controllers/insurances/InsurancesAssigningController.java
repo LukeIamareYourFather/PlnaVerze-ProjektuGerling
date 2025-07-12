@@ -1,5 +1,7 @@
 package com.danger.insurance.controllers.insurances;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,16 +12,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.danger.insurance.data.enums.parties.PartyStatus;
 import com.danger.insurance.models.dto.insurances.ContractsDTO;
 import com.danger.insurance.models.dto.insurances.InsurancesDTO;
+import com.danger.insurance.models.dto.insurances.PartyContractsDTO;
+import com.danger.insurance.models.dto.mappers.ContractsMapper;
 import com.danger.insurance.models.dto.mappers.InsurancesMapper;
 import com.danger.insurance.models.dto.mappers.PartiesMapper;
-import com.danger.insurance.models.dto.parties.PartiesDetailsDTO;
-import com.danger.insurance.models.services.insurances.ContractsService;
 import com.danger.insurance.models.services.insurances.ContractsServiceImplementation;
-import com.danger.insurance.models.services.insurances.InsurancesService;
+import com.danger.insurance.models.services.insurances.PartyContractsServiceImplementation;
 import com.danger.insurance.models.services.insurances.InsurancesServiceImplementation;
-import com.danger.insurance.models.services.parties.PartiesService;
 import com.danger.insurance.models.services.parties.PartiesServiceImplementation;
 
 @Controller
@@ -37,10 +39,16 @@ public class InsurancesAssigningController {
 	private ContractsServiceImplementation contractsService;
 	
 	@Autowired
+	private PartyContractsServiceImplementation partyContractsService;
+	
+	@Autowired
 	private InsurancesMapper insurancesMapper;
 	
 	@Autowired
 	private PartiesMapper partiesMapper;
+	
+	@Autowired
+	private ContractsMapper contractsMapper;
 	
 	@ModelAttribute("contractDTO")
 	public ContractsDTO contractDTO() {
@@ -79,7 +87,7 @@ public class InsurancesAssigningController {
 	
 	@GetMapping("create/selected-{insurancesId}/user-find") 
 	public String renderAssignConfirmationForm(@PathVariable("insurancesId") long insurancesId , @ModelAttribute("contractDTO") ContractsDTO contractsDTO, Model model) {
-		model.addAttribute("foundParties", partiesService.getAll());
+		model.addAttribute("foundParties", partiesService.getAll()); //ne getall ale vyhledat	
 		model.addAttribute("referenceLink",  "party-");
 		
 		return "pages/parties/list";
@@ -100,9 +108,14 @@ public class InsurancesAssigningController {
 	public String renderHandleDandle(@PathVariable("insurancesId") long insurancesId , @PathVariable("partyId") long partyId, @ModelAttribute("contractDTO") ContractsDTO contractsDTO, Model model) {
 		ContractsDTO populatedDTO = contractsDTO;
 		populatedDTO.setInsurancesEntity(insurancesMapper.toEntity(insuranceService.getById(insurancesId)));
-		populatedDTO.setPartiesEntity(partiesMapper.toEntity(partiesService.getById(partyId)));
-		System.out.println(partiesService.getById(partyId).getName() + " : " + partiesService.getById(partyId).getPartyId());
-		contractsService.create(populatedDTO);
+		long contractId = contractsService.create(populatedDTO);
+		
+		PartyContractsDTO partyContractEntry = new PartyContractsDTO();
+		partyContractEntry.setContractEntity(contractsMapper.toEntity(contractsService.getById(contractId)));
+		partyContractEntry.setPartyEntity(partiesMapper.toEntity(partiesService.getById(partyId)));
+		partyContractEntry.setContractRole(PartyStatus.POLICY_OWNER);
+		partyContractEntry.setTodaysDate(LocalDate.now());
+		partyContractsService.create(partyContractEntry);
 
 		
 		return "redirect:/parties/profile-" + partyId;

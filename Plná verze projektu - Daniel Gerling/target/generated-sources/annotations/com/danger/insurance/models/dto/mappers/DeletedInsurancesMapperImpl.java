@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-07-10T22:44:00+0200",
+    date = "2025-07-12T02:27:19+0200",
     comments = "version: 1.6.3, compiler: javac, environment: Java 23.0.2 (Oracle Corporation)"
 )
 @Component
@@ -27,7 +27,7 @@ public class DeletedInsurancesMapperImpl implements DeletedInsurancesMapper {
         deletedInsurancesEntity.setRemovalReason( source.getRemovalReason() );
         deletedInsurancesEntity.setRequestDate( source.getRequestDate() );
         deletedInsurancesEntity.setDeleteDescription( source.getDeleteDescription() );
-        deletedInsurancesEntity.setIfToRemoveAllContracts( source.isIfToRemoveAllContracts() );
+        deletedInsurancesEntity.setIfToRemoveAllContracts( source.getIfToRemoveAllContracts() );
         deletedInsurancesEntity.setName( source.getName() );
         deletedInsurancesEntity.setInsurancesType( source.getInsurancesType() );
         deletedInsurancesEntity.setDescription( source.getDescription() );
@@ -54,7 +54,7 @@ public class DeletedInsurancesMapperImpl implements DeletedInsurancesMapper {
         deletedInsurancesEntity.setRemovalReason( source.getRemovalReason() );
         deletedInsurancesEntity.setRequestDate( source.getRequestDate() );
         deletedInsurancesEntity.setDeleteDescription( source.getDeleteDescription() );
-        deletedInsurancesEntity.setIfToRemoveAllContracts( source.isIfToRemoveAllContracts() );
+        deletedInsurancesEntity.setIfToRemoveAllContracts( source.getIfToRemoveAllContracts() );
         deletedInsurancesEntity.setName( source.getName() );
         deletedInsurancesEntity.setInsurancesType( source.getInsurancesType() );
         deletedInsurancesEntity.setDescription( source.getDescription() );
@@ -111,6 +111,8 @@ public class DeletedInsurancesMapperImpl implements DeletedInsurancesMapper {
             deletedInsurancesDTO.setIfToRemoveAllContracts( reasonsDto.getIfToRemoveAllContracts() );
         }
         if ( insurancesDTO != null ) {
+            deletedInsurancesDTO.setIsAnnualPaymentRequired( insurancesDTO.getIsAnnualPaymentRequired() );
+            deletedInsurancesDTO.setIsAutoRenewalRequired( insurancesDTO.getIsAutoRenewalRequired() );
             deletedInsurancesDTO.setInsurancesId( insurancesDTO.getInsurancesId() );
             deletedInsurancesDTO.setName( insurancesDTO.getName() );
             deletedInsurancesDTO.setInsurancesType( insurancesDTO.getInsurancesType() );
@@ -131,11 +133,13 @@ public class DeletedInsurancesMapperImpl implements DeletedInsurancesMapper {
             return;
         }
 
+        target.setIsAnnualPaymentRequired( source.getIsAnnualPaymentRequired() );
+        target.setIsAutoRenewalRequired( source.getIsAutoRenewalRequired() );
         target.setTodaysDate( source.getTodaysDate() );
         target.setRemovalReason( source.getRemovalReason() );
         target.setRequestDate( source.getRequestDate() );
         target.setDeleteDescription( source.getDeleteDescription() );
-        target.setIfToRemoveAllContracts( source.isIfToRemoveAllContracts() );
+        target.setIfToRemoveAllContracts( source.getIfToRemoveAllContracts() );
         target.setInsurancesId( source.getInsurancesId() );
         target.setName( source.getName() );
         target.setInsurancesType( source.getInsurancesType() );
@@ -159,7 +163,7 @@ public class DeletedInsurancesMapperImpl implements DeletedInsurancesMapper {
         target.setRemovalReason( source.getRemovalReason() );
         target.setRequestDate( source.getRequestDate() );
         target.setDeleteDescription( source.getDeleteDescription() );
-        target.setIfToRemoveAllContracts( source.isIfToRemoveAllContracts() );
+        target.setIfToRemoveAllContracts( source.getIfToRemoveAllContracts() );
         target.setName( source.getName() );
         target.setInsurancesType( source.getInsurancesType() );
         target.setDescription( source.getDescription() );

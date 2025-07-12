@@ -47,15 +47,6 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="if-to-remove-all-parties" class="control-label">Odstranit všechny zbylé pojistníky:</label>
-                        <select id="if-to-remove-all-parties" class="form-select" th:field="*{ifToRemoveAllParties}">
-                            <option th:value="false">Ponechat pojištění u zbylých pojistníků</option>
-                            <option th:value="true">Odebrat pojištění u všech zbylých pojistníků</option>
-                        </select>
-                        <small class="text-danger" th:if="${#fields.hasErrors('ifToRemoveAllParties')}" th:errors="*{ifToRemoveAllParties}"></small>
-                    </div>
-
-                    <div class="form-group">
                         <button type="submit" class="clanky-tlacitko" th:text="${buttonLabel}"></button>
                     </div>
                 </form>

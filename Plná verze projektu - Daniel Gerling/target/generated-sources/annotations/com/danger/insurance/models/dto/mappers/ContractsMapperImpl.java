@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-07-10T22:44:00+0200",
+    date = "2025-07-12T02:27:19+0200",
     comments = "version: 1.6.3, compiler: javac, environment: Java 23.0.2 (Oracle Corporation)"
 )
 @Component
@@ -21,7 +21,6 @@ public class ContractsMapperImpl implements ContractsMapper {
 
         ContractsEntity contractsEntity = new ContractsEntity();
 
-        contractsEntity.setPartiesEntity( source.getPartiesEntity() );
         contractsEntity.setContractId( source.getContractId() );
         contractsEntity.setContractNumber( source.getContractNumber() );
         contractsEntity.setInsuredSubject( source.getInsuredSubject() );
@@ -43,7 +42,6 @@ public class ContractsMapperImpl implements ContractsMapper {
 
         ContractsDTO contractsDTO = new ContractsDTO();
 
-        contractsDTO.setPartiesEntity( source.getPartiesEntity() );
         contractsDTO.setContractId( source.getContractId() );
         contractsDTO.setContractNumber( source.getContractNumber() );
         contractsDTO.setInsuredSubject( source.getInsuredSubject() );
@@ -63,7 +61,6 @@ public class ContractsMapperImpl implements ContractsMapper {
             return;
         }
 
-        target.setPartiesEntity( source.getPartiesEntity() );
         target.setContractId( source.getContractId() );
         target.setContractNumber( source.getContractNumber() );
         target.setInsuredSubject( source.getInsuredSubject() );
@@ -81,7 +78,6 @@ public class ContractsMapperImpl implements ContractsMapper {
             return;
         }
 
-        target.setPartiesEntity( source.getPartiesEntity() );
         target.setContractId( source.getContractId() );
         target.setContractNumber( source.getContractNumber() );
         target.setInsuredSubject( source.getInsuredSubject() );

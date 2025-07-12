@@ -28,6 +28,36 @@ public class DeletedInsurancesDTO {
 	
 	
 	/**
+	 * @return the isAnnualPaymentRequired
+	 */
+	public Boolean getIsAnnualPaymentRequired() {
+		return isAnnualPaymentRequired;
+	}
+	/**
+	 * @param isAnnualPaymentRequired the isAnnualPaymentRequired to set
+	 */
+	public void setIsAnnualPaymentRequired(Boolean isAnnualPaymentRequired) {
+		this.isAnnualPaymentRequired = isAnnualPaymentRequired;
+	}
+	/**
+	 * @return the isAutoRenewalRequired
+	 */
+	public Boolean getIsAutoRenewalRequired() {
+		return isAutoRenewalRequired;
+	}
+	/**
+	 * @param isAutoRenewalRequired the isAutoRenewalRequired to set
+	 */
+	public void setIsAutoRenewalRequired(Boolean isAutoRenewalRequired) {
+		this.isAutoRenewalRequired = isAutoRenewalRequired;
+	}
+	/**
+	 * @return the ifToRemoveAllContracts
+	 */
+	public Boolean getIfToRemoveAllContracts() {
+		return ifToRemoveAllContracts;
+	}
+	/**
 	 * @return the todaysDate
 	 */
 	public LocalDate getTodaysDate() {

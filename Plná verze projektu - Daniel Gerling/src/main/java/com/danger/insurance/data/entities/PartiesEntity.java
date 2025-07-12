@@ -7,7 +7,6 @@ import java.util.List;
 import com.danger.insurance.data.enums.parties.InsuranceType;
 import com.danger.insurance.data.enums.parties.PartyStatus;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -61,9 +60,9 @@ public class PartiesEntity {
 	
 	@Column(nullable = true)
 	private String contractNumber;
-	
-	@OneToMany(mappedBy = "partiesEntity", cascade = CascadeType.ALL)
-    private List<ContractsEntity> contracts = new ArrayList<>();
+		
+	@OneToMany(mappedBy = "partyEntity")
+    private List<PartyContractsEntity> partyContracts = new ArrayList<>();
 
 	// Getters and Setters Region
 	
@@ -77,17 +76,17 @@ public class PartiesEntity {
 	}
 
 	/**
-	 * @return the contracts
+	 * @return the partyContracts
 	 */
-	public List<ContractsEntity> getContracts() {
-		return contracts;
+	public List<PartyContractsEntity> getPartyContracts() {
+		return partyContracts;
 	}
 
 	/**
-	 * @param contracts the contracts to set
+	 * @param partyContracts the partyContracts to set
 	 */
-	public void setContracts(List<ContractsEntity> contracts) {
-		this.contracts = contracts;
+	public void setPartyContracts(List<PartyContractsEntity> partyContracts) {
+		this.partyContracts = partyContracts;
 	}
 
 	/**

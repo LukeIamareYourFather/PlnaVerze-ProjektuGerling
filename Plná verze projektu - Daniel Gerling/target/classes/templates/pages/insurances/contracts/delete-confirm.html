@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<html lang="cs-cz">
+    <head th:replace="~{fragments/layout.html :: head}">
+    
+    </head>
+
+    <header th:replace="~{fragments/layout.html :: header}">
+
+    </header>
+
+    <body id="main-page">
+        <article class="pb-5">
+            <div class="tile-background">
+                <h2 th:text="${pageTitle}"></h2>
+
+                <form th:action="@{${referenceLink}}" method="post">
+                    <section th:replace="~{fragments/layout.html :: contractDetailsForm}"></section>
+
+                    <ul class="list-group px-4 py-4" id="found-insurees">
+                        <li th:each="party: ${foundParties}" class="list-group-item">
+                            <h2>
+                                <a th:href="@{${partyReferenceLink} + ${party.partyId}}"
+                                th:text="${party.name}">
+                                </a>
+                            </h2>
+                        </li>
+                    </ul>
+
+                    <button type="submit" class="clanky-tlacitko" th:text="${buttonLabel}"></button>
+                </form>
+            </div>
+        </article>
+
+        <footer th:replace="~{fragments/layout.html :: footer}"></footer>
+    </body>
+</html>

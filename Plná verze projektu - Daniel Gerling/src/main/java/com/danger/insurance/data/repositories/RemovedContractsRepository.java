@@ -1,7 +1,5 @@
 package com.danger.insurance.data.repositories;
 
-import java.util.List;
-
 import org.springframework.data.repository.CrudRepository;
 
 import com.danger.insurance.data.entities.RemovedContractsEntity;

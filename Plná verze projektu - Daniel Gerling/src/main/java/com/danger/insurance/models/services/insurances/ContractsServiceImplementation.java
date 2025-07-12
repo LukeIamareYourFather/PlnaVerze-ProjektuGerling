@@ -7,16 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.danger.insurance.data.entities.ContractsEntity;
-import com.danger.insurance.data.entities.InsurancesEntity;
-import com.danger.insurance.data.entities.PartiesEntity;
-import com.danger.insurance.data.enums.parties.PartyStatus;
 import com.danger.insurance.data.repositories.ContractsRepository;
-import com.danger.insurance.data.repositories.InsurancesRepository;
 import com.danger.insurance.models.dto.insurances.ContractsDTO;
-import com.danger.insurance.models.dto.insurances.InsurancesDTO;
 import com.danger.insurance.models.dto.mappers.ContractsMapper;
-import com.danger.insurance.models.dto.mappers.InsurancesMapper;
-import com.danger.insurance.models.dto.parties.PartiesDetailsDTO;
 import com.danger.insurance.models.exceptions.PartyNotFoundException;
 
 @Service

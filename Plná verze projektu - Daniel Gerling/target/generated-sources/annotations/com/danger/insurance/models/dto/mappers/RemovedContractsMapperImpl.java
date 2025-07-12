@@ -1,13 +1,15 @@
 package com.danger.insurance.models.dto.mappers;
 
 import com.danger.insurance.data.entities.RemovedContractsEntity;
+import com.danger.insurance.models.dto.insurances.ContractsDTO;
+import com.danger.insurance.models.dto.insurances.InsurancesDTO;
 import com.danger.insurance.models.dto.insurances.RemoveContractReasonsDTO;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-07-10T22:44:00+0200",
+    date = "2025-07-12T02:27:19+0200",
     comments = "version: 1.6.3, compiler: javac, environment: Java 23.0.2 (Oracle Corporation)"
 )
 @Component
@@ -21,12 +23,12 @@ public class RemovedContractsMapperImpl implements RemovedContractsMapper {
 
         RemovedContractsEntity removedContractsEntity = new RemovedContractsEntity();
 
+        removedContractsEntity.setRemovedInsurancesId( source.getRemovedInsurancesId() );
         removedContractsEntity.setDeleteReason( source.getDeleteReason() );
         removedContractsEntity.setDescription( source.getDescription() );
         removedContractsEntity.setDateOfRequest( source.getDateOfRequest() );
         removedContractsEntity.setDateOfCancellation( source.getDateOfCancellation() );
         removedContractsEntity.setTodaysDate( source.getTodaysDate() );
-        removedContractsEntity.setIfToRemoveAllParties( source.getIfToRemoveAllParties() );
         removedContractsEntity.setBirthNumber( source.getBirthNumber() );
         removedContractsEntity.setContractNumber( source.getContractNumber() );
         removedContractsEntity.setInsuredSubject( source.getInsuredSubject() );
@@ -49,12 +51,12 @@ public class RemovedContractsMapperImpl implements RemovedContractsMapper {
 
         RemoveContractReasonsDTO removeContractReasonsDTO = new RemoveContractReasonsDTO();
 
+        removeContractReasonsDTO.setRemovedInsurancesId( source.getRemovedInsurancesId() );
         removeContractReasonsDTO.setDeleteReason( source.getDeleteReason() );
         removeContractReasonsDTO.setDescription( source.getDescription() );
         removeContractReasonsDTO.setDateOfRequest( source.getDateOfRequest() );
         removeContractReasonsDTO.setDateOfCancellation( source.getDateOfCancellation() );
         removeContractReasonsDTO.setTodaysDate( source.getTodaysDate() );
-        removeContractReasonsDTO.setIfToRemoveAllParties( source.getIfToRemoveAllParties() );
         removeContractReasonsDTO.setBirthNumber( source.getBirthNumber() );
         removeContractReasonsDTO.setContractNumber( source.getContractNumber() );
         removeContractReasonsDTO.setInsuredSubject( source.getInsuredSubject() );
@@ -70,17 +72,40 @@ public class RemovedContractsMapperImpl implements RemovedContractsMapper {
     }
 
     @Override
+    public void mergeToRemoveContractReasonsDTO(ContractsDTO contractsDTO, InsurancesDTO insurancesDTO, RemoveContractReasonsDTO removeContractReasonsDTO) {
+        if ( contractsDTO == null && insurancesDTO == null ) {
+            return;
+        }
+
+        if ( contractsDTO != null ) {
+            removeContractReasonsDTO.setContractNumber( contractsDTO.getContractNumber() );
+            removeContractReasonsDTO.setInsuredSubject( contractsDTO.getInsuredSubject() );
+            removeContractReasonsDTO.setInsuranceType( contractsDTO.getInsuranceType() );
+            removeContractReasonsDTO.setBeginDate( contractsDTO.getBeginDate() );
+            removeContractReasonsDTO.setSignatureDate( contractsDTO.getSignatureDate() );
+            if ( contractsDTO.getPricePerPeriod() != null ) {
+                removeContractReasonsDTO.setPricePerPeriod( contractsDTO.getPricePerPeriod() );
+            }
+            removeContractReasonsDTO.setLiabilityPercentage( contractsDTO.getLiabilityPercentage() );
+        }
+        if ( insurancesDTO != null ) {
+            removeContractReasonsDTO.setDescription( insurancesDTO.getDescription() );
+            removeContractReasonsDTO.setInsurancesType( insurancesDTO.getInsurancesType() );
+        }
+    }
+
+    @Override
     public void updatePartiesSearchDTO(RemoveContractReasonsDTO source, RemoveContractReasonsDTO target) {
         if ( source == null ) {
             return;
         }
 
+        target.setRemovedInsurancesId( source.getRemovedInsurancesId() );
         target.setDeleteReason( source.getDeleteReason() );
         target.setDescription( source.getDescription() );
         target.setDateOfRequest( source.getDateOfRequest() );
         target.setDateOfCancellation( source.getDateOfCancellation() );
         target.setTodaysDate( source.getTodaysDate() );
-        target.setIfToRemoveAllParties( source.getIfToRemoveAllParties() );
         target.setBirthNumber( source.getBirthNumber() );
         target.setContractNumber( source.getContractNumber() );
         target.setInsuredSubject( source.getInsuredSubject() );
@@ -99,12 +124,12 @@ public class RemovedContractsMapperImpl implements RemovedContractsMapper {
             return;
         }
 
+        target.setRemovedInsurancesId( source.getRemovedInsurancesId() );
         target.setDeleteReason( source.getDeleteReason() );
         target.setDescription( source.getDescription() );
         target.setDateOfRequest( source.getDateOfRequest() );
         target.setDateOfCancellation( source.getDateOfCancellation() );
         target.setTodaysDate( source.getTodaysDate() );
-        target.setIfToRemoveAllParties( source.getIfToRemoveAllParties() );
         target.setBirthNumber( source.getBirthNumber() );
         target.setContractNumber( source.getContractNumber() );
         target.setInsuredSubject( source.getInsuredSubject() );

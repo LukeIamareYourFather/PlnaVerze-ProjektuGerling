@@ -1,7 +1,6 @@
 package com.danger.insurance.controllers.parties;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,12 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.danger.insurance.data.entities.ContractsEntity;
 import com.danger.insurance.data.entities.PartiesEntity;
-import com.danger.insurance.data.repositories.ContractsRepository;
-import com.danger.insurance.models.dto.mappers.PartiesMapper;
+import com.danger.insurance.data.repositories.PartyContractsRepository;
 import com.danger.insurance.models.dto.parties.DeletedPartiesDTO;
 import com.danger.insurance.models.dto.parties.PartiesDetailsDTO;
 import com.danger.insurance.models.dto.parties.PartiesFoundSendDTO;
-import com.danger.insurance.models.services.insurances.ContractsServiceImplementation;
 import com.danger.insurance.models.services.parties.DeletedPartiesServiceImplementation;
 import com.danger.insurance.models.services.parties.PartiesServiceImplementation;
 
@@ -42,13 +39,7 @@ public class DisplayPartiesController {
 	private DeletedPartiesServiceImplementation deleterService;
 	
 	@Autowired
-	private ContractsServiceImplementation contractsService;
-	
-	@Autowired 
-	private PartiesMapper partiesMapper;
-	
-	@Autowired
-	private ContractsRepository contractsRepository;
+	private PartyContractsRepository partyContractsRepository;
 	
 	// Start of code
 	
@@ -89,10 +80,9 @@ public class DisplayPartiesController {
 	public String renderProfile(@PathVariable long partyId, Model model) {
 		PartiesDetailsDTO fetchedParty = partiesService.getById(partyId);						// Retrieve the selected party by ID
 		model.addAttribute("party", fetchedParty);												// Add party details to the model for display
-		List<ContractsEntity> contracts = contractsRepository.findByPartiesEntity_PartyId(partyId);
-		System.out.println(contracts.size());
+		List<ContractsEntity> contracts = partyContractsRepository.findContractsByPartyId(partyId);
 		model.addAttribute("activeContracts", contracts);
-		model.addAttribute("referenceLink", "/insurances/insurance-");
+		model.addAttribute("referenceLink", "/insurances/contract-");
 		
 		return "pages/parties/profile";															// Render the profile page
 	}

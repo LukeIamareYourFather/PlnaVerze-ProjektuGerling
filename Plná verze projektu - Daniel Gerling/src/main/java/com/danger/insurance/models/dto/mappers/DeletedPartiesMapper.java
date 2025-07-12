@@ -39,7 +39,7 @@ public interface DeletedPartiesMapper {
 	DeletedPartiesDTO toDTO(DeletedPartiesEntity source);			// Can be split into getDto and setDto in bigger projects
 	
 	@Mapping(target = ".", source = "reasonsDto")
-    @Mapping(target = ".",source = "partiesDTO")
+    @Mapping(target = ".", source = "partiesDTO")
 	DeletedPartiesDTO mergeToDeleteDTO(PartiesReasonsFormDTO reasonsDto, PartiesDetailsDTO partiesDTO);
 
 	/**

@@ -8,12 +8,10 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import com.danger.insurance.data.entities.ContractsEntity;
-import com.danger.insurance.data.entities.PartiesEntity;
 import com.danger.insurance.data.enums.insurances.InsurancesSubjects;
 import com.danger.insurance.data.enums.insurances.InsurancesType;
 
 public interface ContractsRepository extends CrudRepository<ContractsEntity, Long> {
-	List<ContractsEntity> findByPartiesEntity_PartyId(Long partyId);
 	
 	@Query("""
 			SELECT c FROM ContractsEntity c
