@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.danger.insurance.archive.data.entities.DeletedPartiesEntity;
 import com.danger.insurance.archive.data.repositories.DeletedPartiesRepository;
-import com.danger.insurance.parties.models.dto.DeletedPartiesDTO;
+import com.danger.insurance.archive.models.dto.DeletedPartiesDTO;
 import com.danger.insurance.parties.models.dto.PartiesDetailsDTO;
 import com.danger.insurance.parties.models.dto.PartiesReasonsFormDTO;
 import com.danger.insurance.parties.models.dto.mappers.DeletedPartiesMapper;

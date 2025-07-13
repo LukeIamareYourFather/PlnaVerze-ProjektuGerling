@@ -2,14 +2,7 @@ package com.danger.insurance.parties.models.dto;
 
 import java.time.LocalDate;
 
-import com.danger.insurance.parties.data.enums.InsuranceType;
-import com.danger.insurance.parties.data.enums.PartyStatus;
-
 public class PartiesDetailsDTO {
-
-	// Define Enums
-	private PartyStatus partyStatus;	
-	private InsuranceType insuranceType;
 	
 	// Define Dates
 	private LocalDate birthDay;	
@@ -22,7 +15,6 @@ public class PartiesDetailsDTO {
 	private String phoneNumber;	
 	private String street;	
 	private String city;	
-	private String contractNumber;
 	private String zipCode;
 	
 	// Define numbers
@@ -149,42 +141,6 @@ public class PartiesDetailsDTO {
 	 */
 	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
-	}
-	/**
-	 * @return the partyStatus
-	 */
-	public PartyStatus getPartyStatus() {
-		return partyStatus;
-	}
-	/**
-	 * @param partyStatus the partyStatus to set
-	 */
-	public void setPartyStatus(PartyStatus partyStatus) {
-		this.partyStatus = partyStatus;
-	}
-	/**
-	 * @return the insuranceType
-	 */
-	public InsuranceType getInsuranceType() {
-		return insuranceType;
-	}
-	/**
-	 * @param insuranceType the insuranceType to set
-	 */
-	public void setInsuranceType(InsuranceType insuranceType) {
-		this.insuranceType = insuranceType;
-	}
-	/**
-	 * @return the contractNumber
-	 */
-	public String getContractNumber() {
-		return contractNumber;
-	}
-	/**
-	 * @param contractNumber the contractNumber to set
-	 */
-	public void setContractNumber(String contractNumber) {
-		this.contractNumber = contractNumber;
 	}
 	
 }

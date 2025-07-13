@@ -9,7 +9,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import com.danger.insurance.parties.data.entities.PartiesEntity;
-import com.danger.insurance.parties.data.enums.PartyStatus;
 
 /**
  * Repository interface for accessing and querying {@link PartiesEntity} objects.
@@ -27,7 +26,6 @@ public interface PartiesRepository extends CrudRepository<PartiesEntity, Long> {
 	Optional<PartiesEntity> findByZipCode(String zipCode);
 	Optional<PartiesEntity> findByBirthNumber(String birthNumber);
 	Optional<PartiesEntity> findByBirthDay(LocalDate birthDay);
-	Optional<PartiesEntity> findByPartyStatus(Enum<PartyStatus> partyStatus);
 	
 	/**
      * Custom query to search for parties matching a specific status and optional personal attributes.
@@ -43,8 +41,7 @@ public interface PartiesRepository extends CrudRepository<PartiesEntity, Long> {
      */
 	@Query("""
 				SELECT p FROM PartiesEntity p
-				WHERE (p.partyStatus = :partyStatus)
-				AND (:name IS NULL OR p.name = :name)
+				WHERE (:name IS NULL OR p.name = :name)
 			   	AND (:surname IS NULL OR p.surname = :surname)
 				AND (:street IS NULL OR p.street = :street)
 				AND (:email IS NULL OR p	.email = :email)
@@ -52,7 +49,6 @@ public interface PartiesRepository extends CrudRepository<PartiesEntity, Long> {
 			   	AND (:birthDay IS NULL OR p.birthDay = :birthDay)
 			""")
 	List<PartiesEntity> searchParties(
-			@Param("partyStatus") PartyStatus partyStatus,
 			@Param("name") String name,
 			@Param("surname") String surname,
 	   		@Param("street") String street,

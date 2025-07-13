@@ -2,46 +2,38 @@ package com.danger.insurance.archive.models.services;
 
 import java.util.List;
 
-import com.danger.insurance.insurances.models.dto.DeleteInsurancesReasonsDTO;
-import com.danger.insurance.insurances.models.dto.DeletedInsurancesDTO;
+import com.danger.insurance.archive.models.dto.DeleteInsurancesReasonsDTO;
+import com.danger.insurance.archive.models.dto.DeletedInsurancesDTO;
 import com.danger.insurance.insurances.models.dto.InsurancesDTO;
-import com.danger.insurance.parties.models.dto.PartiesDetailsDTO;
 
 public interface DeletedInsurancesService {
 
 	/**
-     * Creates a new party based on the provided DTO.
+     * Creates a new deleted insurance entry based on the provided DTO.
      *
-     * @param party the {@link PartiesDetailsDTO} containing the data to persist
+     * @param entry the {@link DeletedInsurancesDTO} containing the data to persist
      */
-	long create(DeletedInsurancesDTO party);
+	long create(DeletedInsurancesDTO entry);
 	
 	/**
-     * Retrieves all parties from the database.
+     * Retrieves all deleted insurances from the database.
      *
-     * @return a list of {@link PartiesDetailsDTO} representing all parties
+     * @return a list of {@link DeletedInsurancesDTO} representing all deleted insurances
      */
 	List<DeletedInsurancesDTO> getAll();
 	
 	/**
-     * Retrieves a party by its unique ID.
+     * Retrieves a deleted insurance entry by its unique ID.
      *
-     * @param insureeId the ID of the party to retrieve
-     * @return the corresponding {@link PartiesDetailsDTO}
+     * @param deletedInsurancesId the ID of the deleted insurance to retrieve
+     * @return the corresponding {@link DeletedInsurancesDTO}
      */
 	DeletedInsurancesDTO getById(long deletedInsurancesId);
 	
 	/**
-     * Updates an existing party with the values from the given DTO.
+     * Deletes the entry of the deleted insurance with the specified ID from the database.
      *
-     * @param party the {@link PartiesDetailsDTO} containing updated party data
-     */
-	void edit(DeletedInsurancesDTO reason);
-	
-	/**
-     * Deletes the party with the specified ID from the database.
-     *
-     * @param insureeId the ID of the party to delete
+     * @param deletedInsurancesId the ID of the deleted insurance entry
      */
 	void delete(long deletedInsurancesId);
 	

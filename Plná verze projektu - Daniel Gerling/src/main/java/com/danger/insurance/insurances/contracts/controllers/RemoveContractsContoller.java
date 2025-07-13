@@ -13,16 +13,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.danger.insurance.archive.models.dto.RemoveContractReasonsDTO;
 import com.danger.insurance.archive.models.services.RemovedContractsServiceImplementation;
 import com.danger.insurance.insurances.contracts.data.entities.ContractsEntity;
+import com.danger.insurance.insurances.contracts.data.repositories.PartyContractsRepository;
 import com.danger.insurance.insurances.contracts.models.dto.ContractsDTO;
-import com.danger.insurance.insurances.contracts.models.dto.RemoveContractReasonsDTO;
 import com.danger.insurance.insurances.contracts.models.dto.mappers.RemovedContractsMapper;
 import com.danger.insurance.insurances.contracts.models.services.ContractsServiceImplementation;
 import com.danger.insurance.insurances.models.dto.InsurancesDTO;
 import com.danger.insurance.insurances.models.services.InsurancesServiceImplementation;
 import com.danger.insurance.parties.data.entities.PartiesEntity;
-import com.danger.insurance.parties.data.repositories.PartyContractsRepository;
 import com.danger.insurance.parties.models.service.PartiesServiceImplementation;
 
 @Controller

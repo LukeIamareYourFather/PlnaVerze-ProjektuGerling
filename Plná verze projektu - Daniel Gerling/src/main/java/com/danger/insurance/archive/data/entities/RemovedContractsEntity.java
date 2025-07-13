@@ -293,6 +293,5 @@ public class RemovedContractsEntity {
 	public void setInsurancesType(InsurancesType insurancesType) {
 		this.insurancesType = insurancesType;
 	}
-	
-	
+
 }

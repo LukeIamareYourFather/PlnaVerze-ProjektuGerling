@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.danger.insurance.archive.data.repositories.DeletedInsurancesRepository;
+import com.danger.insurance.archive.models.dto.DeleteInsurancesReasonsDTO;
+import com.danger.insurance.archive.models.dto.DeletedInsurancesDTO;
 import com.danger.insurance.archive.data.entities.DeletedInsurancesEntity;
-import com.danger.insurance.insurances.models.dto.DeleteInsurancesReasonsDTO;
-import com.danger.insurance.insurances.models.dto.DeletedInsurancesDTO;
 import com.danger.insurance.insurances.models.dto.InsurancesDTO;
 import com.danger.insurance.insurances.models.dto.mappers.DeletedInsurancesMapper;
 import com.danger.insurance.parties.models.exceptions.PartyNotFoundException;
@@ -23,21 +23,22 @@ public class DeletedInsurancesServiceImplementation implements DeletedInsurances
 	private DeletedInsurancesRepository deletedInsurancesRepository;				// Handles querying operations for the Parties entity
 		
 	@Autowired
-	private DeletedInsurancesMapper deletedInsurancesMapper;
+	private DeletedInsurancesMapper deletedInsurancesMapper;						// 
+	
 	// Start of code
 
 	/**
-	 * Creates a new party entry in the Parties database and returns the party ID of the created party.
+	 * Creates a new deleted insurance entry in the archive database and returns the ID of the created record.
 	 *
-	 * @param dto a DTO containing personal information used to create a new party; includes fields such as name, surname, birth date, birth number, email, street, and phone number.
-	 * @return a {@code long} number of the party ID from the created party entry.
+	 * @param dto a DTO containing information about the deleted insurance; may include fields such as insurance number, reason for deletion, and metadata for archival.
+	 * @return a {@code long} representing the ID of the created deleted insurance entry.
 	 */
 	@Override
 	public long create(DeletedInsurancesDTO dto) {
 		DeletedInsurancesEntity newInsurance = deletedInsurancesMapper.toEntity(dto);										// Convert received DTO to party entity
-		deletedInsurancesRepository.save(newInsurance);						// Save the received party to the database
+		deletedInsurancesRepository.save(newInsurance);								// Save the received party to the database
 		
-		return newInsurance.getDeletedInsurancesId();
+		return newInsurance.getDeletedInsurancesId();								//
 	}
 
 	/**
@@ -71,18 +72,6 @@ public class DeletedInsurancesServiceImplementation implements DeletedInsurances
 	    
 	    return deletedInsurancesMapper.toDTO(fetchedInsurance);				// Convert party entity to DTO and return
 	}
-
-	/**
-	 * Updates an existing party entity in the database using values from the provided DTO.
-	 *
-	 * @param dto a DTO containing personal information to update the party; includes fields such as name, surname, birth date, birth number, email, street, and phone number.
-	 */
-	@Override
-    public void edit(DeletedInsurancesDTO dto) {
-		DeletedInsurancesEntity fetchedInsurance = getInsuranceOrThrow(dto.getInsurancesId());							// Retrieve party entity or throw exception if not found
-		deletedInsurancesMapper.updatePartiesEntity(dto, fetchedInsurance);										// Apply the DTO values to the party entity
-		deletedInsurancesRepository.save(fetchedInsurance);					// Save updated party to the database
-    }
     
     /**
      * Retrieves a party entity by its ID or throws a {@link PartyNotFoundException} if not found.

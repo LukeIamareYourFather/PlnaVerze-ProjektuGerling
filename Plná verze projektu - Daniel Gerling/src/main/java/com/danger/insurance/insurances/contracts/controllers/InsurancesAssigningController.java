@@ -77,6 +77,7 @@ public class InsurancesAssigningController {
 		InsurancesDTO selectedInsurance = insuranceService.getById(insurancesId);
 		String redirectPage = "redirect:/insurances/";
 		System.out.println(selectedInsurance.getIsAnnualPaymentRequired());
+		
 		//
 		if(selectedInsurance.getIsAnnualPaymentRequired() && selectedInsurance.getIsAutoRenewalRequired()) {
 			return redirectPage + "create/selected-" + insurancesId + "/user-find";
@@ -117,7 +118,6 @@ public class InsurancesAssigningController {
 		partyContractEntry.setTodaysDate(LocalDate.now());
 		partyContractsService.create(partyContractEntry);
 
-		
 		return "redirect:/parties/profile-" + partyId;
 	}
 }

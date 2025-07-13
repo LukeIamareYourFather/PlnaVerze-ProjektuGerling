@@ -64,7 +64,7 @@ public class AddInsuredToContractController {
 			return "redirect:/insurances/add";
 		}
 		
-		List<PartiesEntity> foundInsured = partiesService.findUserId(partyDetails, PartyStatus.INSURED);
+		List<PartiesEntity> foundInsured = partiesService.findUserId(partyDetails, PartyStatus.REGISTERED);
 		redirectAttributes.addFlashAttribute("foundParties", foundInsured);
 		
 		return "redirect:/insurances/add/select";

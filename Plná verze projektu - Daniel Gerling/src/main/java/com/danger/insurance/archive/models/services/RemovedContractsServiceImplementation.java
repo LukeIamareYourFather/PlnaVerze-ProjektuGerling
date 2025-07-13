@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.danger.insurance.archive.data.repositories.RemovedContractsRepository;
+import com.danger.insurance.archive.models.dto.RemoveContractReasonsDTO;
 import com.danger.insurance.archive.data.entities.RemovedContractsEntity;
-import com.danger.insurance.insurances.contracts.models.dto.RemoveContractReasonsDTO;
 import com.danger.insurance.insurances.contracts.models.dto.mappers.RemovedContractsMapper;
 import com.danger.insurance.parties.models.exceptions.PartyNotFoundException;
 

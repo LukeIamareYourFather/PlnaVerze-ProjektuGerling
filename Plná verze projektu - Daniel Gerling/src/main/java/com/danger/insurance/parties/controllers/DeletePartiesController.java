@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.danger.insurance.archive.models.dto.DeletedPartiesDTO;
 import com.danger.insurance.parties.data.entities.PartiesEntity;
 import com.danger.insurance.parties.data.enums.PartyStatus;
-import com.danger.insurance.parties.models.dto.DeletedPartiesDTO;
 import com.danger.insurance.parties.models.dto.PartiesDetailsDTO;
 import com.danger.insurance.parties.models.dto.PartiesReasonsFormDTO;
 import com.danger.insurance.parties.models.service.DeletedPartiesServiceImplementation;
@@ -52,85 +52,42 @@ public class DeletePartiesController {
 	 * @param dto a DTO to store the search criteria submitted by the user; includes personal details such as name, surname, birth date, birth number, email, street, or phone number.
 	 * @return the name of the Thymeleaf template for the create Policy Owner page.
 	 */
-	@GetMapping("delete/policy-owner")
+	@GetMapping("delete")
 	public String renderDeletePolicyOwner(@ModelAttribute("reasonsDTO") PartiesReasonsFormDTO reasonsDto, Model model) {
-		return "pages/parties/policy-owners/delete-reasons";									// Redirect to the create Policy Owner page
+		model.addAttribute("formAction", "/parties/delete/find");
+		
+		return "pages/parties/delete-reasons";									// Redirect to the create Policy Owner page
 	}
 	
-	/**
-	 * Renders the delete Policy Owner tool.
-	 * 
-	 * @param dto a DTO to store the search criteria submitted by the user; includes personal details such as name, surname, birth date, birth number, email, street, or phone number.
-	 * @return the name of the Thymeleaf template for the create Policy Owner page.
-	 */
-	@GetMapping("delete/insured")
-	public String renderDeleteInsured(@ModelAttribute("reasonsDTO") PartiesReasonsFormDTO reasonsDto) {	
-		return "pages/parties/insured/delete-reasons";									// Redirect to the create Policy Owner page
-	}
-	
-	@PostMapping("delete/policy-owners/find")
+	@PostMapping("delete/find")
 	public String renderFindPolicyOwnerToDeleteForm(@ModelAttribute("reasonsDTO") PartiesReasonsFormDTO reasonsDto, Model model, RedirectAttributes redirectAttributes) {
-		assignSearchAttributes("formDTO", "formAction", "/parties/delete/policy-owners/found", null, null, model, true);
+		assignSearchAttributes("formDTO", "formAction", "/parties/delete/found", null, null, model, true);
 		
 		return "pages/parties/policy-owners/find";
 	}
 	
-	@PostMapping("delete/insured/find")
-	public String renderFindInsuredToDeleteForm(@ModelAttribute("reasonsDTO") PartiesReasonsFormDTO reasonsDto,Model model, RedirectAttributes redirectAttributes) {
-		assignSearchAttributes("formDTO", "formAction", "/parties/delete/insured/found", null, null, model, true);
-		
-		return "pages/parties/insured/find";
-	}
-	
-	@PostMapping("delete/policy-owners/found")
+	@PostMapping("delete/found")
 	public String handleFoundPolicyOwnersToDelete(@ModelAttribute("reasonsDTO") PartiesReasonsFormDTO reasonsDto, PartiesDetailsDTO partyDto, Model model, RedirectAttributes redirectAttributes) {
-		assignSearchAttributes("foundParties", "referenceLink", "/parties/delete/policy-owners/party-", partyDto, PartyStatus.POLICY_OWNER, model, false);
+		assignSearchAttributes("foundParties", "referenceLink", "/parties/delete/party-", partyDto, PartyStatus.REGISTERED, model, false);
 		
 		return "pages/parties/found-parties";
 	}
 	
-	@PostMapping("delete/insured/found")
-	public String handleFoundInsuredToDelete(@ModelAttribute("reasonsDTO") PartiesReasonsFormDTO reasonsDto, PartiesDetailsDTO partyDto, Model model, RedirectAttributes redirectAttributes) {
-		assignSearchAttributes("foundParties", "referenceLink", "/parties/delete/insured/party-", partyDto, PartyStatus.INSURED, model, false);
-		
-		return "pages/parties/found-parties";
-	}
-	
-	@GetMapping("delete/policy-owners/party-{partyId}")
+	@GetMapping("delete/party-{partyId}")
 	public String renderDeletePolicyOwnersConfirmationForm(@PathVariable long partyId, @ModelAttribute("reasonsDTO") PartiesReasonsFormDTO reasonsDto, Model model, RedirectAttributes redirectAttributes) {
 		assignDeleteConfirmationAttributes(partyId, reasonsDto, model);
 		
 		return "pages/parties/profile";
 	}
 	
-	@GetMapping("delete/insured/party-{partyId}")
-	public String renderDeleteInsuredConfirmationForm(@PathVariable long partyId, @ModelAttribute("reasonsDTO") PartiesReasonsFormDTO reasonsDto, Model model, RedirectAttributes redirectAttributes) {
-		assignDeleteConfirmationAttributes(partyId, reasonsDto, model);
-		
-		return "pages/parties/profile";
-	}
 	
-	
-	@PostMapping("delete/policy-owners/party-{partyId}/confirmed")
+	@PostMapping("delete/party-{partyId}/confirmed")
 	public String handleDeletePolicyOwnerConfirmation(@PathVariable long partyId, @ModelAttribute("reasonsDTO") PartiesReasonsFormDTO reasonsDto, SessionStatus sessionStatus) {
 		processConfirmedRemoval(reasonsDto, partyId, sessionStatus);
 		
 		return "redirect:/parties";
 	}
-	
-	/**
-	 * 
-	 * @param partyId
-	 * @param reasonsDto
-	 * @param sessionStatus
-	 * @return
-	 */
-	@PostMapping("delete/insured/party-{partyId}/confirmed")
-	public String handleDeleteInsuredConfirmation(@PathVariable long partyId, @ModelAttribute("reasonsDTO") PartiesReasonsFormDTO reasonsDto, SessionStatus sessionStatus) {
-		processConfirmedRemoval(reasonsDto, partyId, sessionStatus);
-		
-		return "redirect:/parties";
-	}
+
 	
 	// Helper methods
 	

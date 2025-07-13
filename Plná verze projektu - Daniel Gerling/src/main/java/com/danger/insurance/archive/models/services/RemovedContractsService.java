@@ -2,7 +2,7 @@ package com.danger.insurance.archive.models.services;
 
 import java.util.List;
 
-import com.danger.insurance.insurances.contracts.models.dto.RemoveContractReasonsDTO;
+import com.danger.insurance.archive.models.dto.RemoveContractReasonsDTO;
 import com.danger.insurance.parties.models.dto.PartiesDetailsDTO;
 
 public interface RemovedContractsService {

@@ -61,10 +61,10 @@
 
                 <article class="px-4 py-4">
                     <ul class="list-group" id="found-insurees">
-                        <li th:each="party: ${insuredParties}" class="list-group-item">
+                        <li th:each="party: ${insuredPartiesWithRoles}" class="list-group-item">
                             <h2>
-                                <a th:href="@{${referenceLink} + ${party.partyId}}"
-                                th:text="${party.name}">
+                                <a th:href="@{${referenceLink} + ${party.partyEntity.partyId}}"
+                                th:text="${party.partyEntity.name + ' — ' + party.contractRole.displayName}">
                                 </a>
                             </h2>
                         </li>

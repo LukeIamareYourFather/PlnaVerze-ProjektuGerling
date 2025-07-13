@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.danger.insurance.insurances.contracts.data.entities.PartyContractsEntity;
 import com.danger.insurance.parties.data.entities.PartiesEntity;
 import com.danger.insurance.parties.data.enums.PartyStatus;
 import com.danger.insurance.parties.data.repositories.PartiesRepository;
@@ -114,17 +115,17 @@ public class PartiesServiceImplementation implements PartiesService {
      * @param status the {@link PartyStatus} to filter by (e.g., {@code POLICY_OWNER}, {@code INSURED}).
      * @return a list of matching {@link PartiesEntity} objects.
      */
-    public List<PartiesEntity> findUserId(PartiesDetailsDTO dto, PartyStatus status) {
-    	
-    	return partiesRepository.searchParties(
-    			status,
+    public List<PartiesEntity> findUserId(PartiesDetailsDTO dto, PartyStatus contractRole) {
+    	List<PartiesEntity> foundParties = partiesRepository.searchParties(
     	        emptyToNull(dto.getName()),
     	        emptyToNull(dto.getSurname()),
     	        emptyToNull(dto.getStreet()),
     	        emptyToNull(dto.getEmail()),
     	        emptyToNull(dto.getPhoneNumber()),
     	        dto.getBirthDay()
-    	    );													// Return list of all matching parties
+    	    );			
+    	
+    	return filterFoundParties(foundParties, contractRole);								// Return list of all matching parties
     }
     
     /**
@@ -137,53 +138,49 @@ public class PartiesServiceImplementation implements PartiesService {
         return (value == null || value.trim().isEmpty()) ? null : value;							// Return original string or null if empty/blank
     }
     
-    /**
-     * Validates the submitted search criteria to ensure the request is valid.
-     *
-     * @param dto a DTO containing the search criteria; includes personal details such as name, surname, birth date, birth number, email, street, and phone number.
-     * @return {@code true} if the submitted criteria meet the minimum requirements for a valid search; {@code false} otherwise.
-     */
-    public final boolean isSearchRequestValid(PartiesDetailsDTO dto) {
+    //
+    private List<PartiesEntity> filterFoundParties(List<PartiesEntity> partiesToFilter, PartyStatus statusToKeep) {
     	
-    	// Should the birth number be provided
-    	if(dto.getBirthNumber() != null) {
-    		return true;										// Return evaluation as passed
-    	} else {		// Or should the birth number be missing
-			int checksPassed = 0;								// Initialize counter of passed checks
-    		
-			// Should the name be provided...
-			if (!dto.getName().equals("")) {
-				checksPassed++;									// Increase the number of passed checks...
-			}
-    		
-			if (!dto.getSurname().equals("")) {
-				checksPassed++;							
-			}
-    		
-			if (!dto.getStreet().equals("")) {
-				checksPassed++;					
-			}
-    		
-			if (!dto.getEmail().equals("")) {
-				checksPassed++;
-			}
-    		
-			if (!dto.getPhoneNumber().equals("")) {
-    			checksPassed++;
-    		}
-			
-			if (dto.getBirthDay() != null) {
-				checksPassed++;
-			}
-    		
-			// Should the desired amount of checks be passed
-			if (checksPassed >= 3) {							
-				return true;									// Return evaluation as passed
-			}
+    	//
+    	if (statusToKeep == PartyStatus.REGISTERED) {
+			return partiesToFilter;
 		}
     	
-    	return false;											// Since no requirement was met, return evaluation as failed
+    	//
+    	for (int i = 0; i < partiesToFilter.size(); i++) {
+    		boolean partyContainsDesiredStatus = false;
+    		List<PartyContractsEntity> contractsList = partiesToFilter.get(i).getPartyContracts();
+    		
+    		//
+    		if (!contractsList.isEmpty()) {
+    			
+    			//
+        		for (int j = 0; j < contractsList.size(); j++) {
+        		
+        			//
+        			if (contractsList.get(j).getContractRole() == statusToKeep) {
+    					partyContainsDesiredStatus = true;
+    				}
+        			
+        		}
+        		
+			} else {
+				
+				//
+    			if (statusToKeep == null) {
+					partyContainsDesiredStatus = true;
+				}
+    			
+			}
+    		
+    		if (!partyContainsDesiredStatus) {
+				partiesToFilter.remove(i);
+				i--;
+			}
+    		
+    	}
+    	
+    	return partiesToFilter;
     }
-    
 	
 }

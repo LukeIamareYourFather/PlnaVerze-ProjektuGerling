@@ -48,12 +48,12 @@
             <div>
                 <section class="tile-background px-4 py-4">
                     <ul class="list-group" id="found-insurees">
-                        <li th:each="contract: ${activeContracts}" class="list-group-item">
+                        <li th:each="contract: ${activeContractsWithRoles}" class="list-group-item">
                             <h2>
                                 <a th:href="@{${referenceLink} + ${contract.contractId}}"
-                                th:text="${contract.contractNumber}">
+                                th:text="${contract.contractNumber + ' — ' + contract.contractRole.displayName}">
                                 </a>
-                                <p th:text="${contract.insuranceType.displayName}"></p>
+                                <p th:text="${contract.insuranceType.displayName + ' — ' + contract.insuranceName}"></p>
                             </h2>
                         </li>
                     </ul>

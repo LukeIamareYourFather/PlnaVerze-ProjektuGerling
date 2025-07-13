@@ -1,5 +1,6 @@
 package com.danger.insurance.parties.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.danger.insurance.archive.models.dto.DeletedPartiesDTO;
 import com.danger.insurance.insurances.contracts.data.entities.ContractsEntity;
+import com.danger.insurance.insurances.contracts.data.repositories.PartyContractsRepository;
+import com.danger.insurance.insurances.contracts.models.dto.PartyContractsProfileDTO;
 import com.danger.insurance.parties.data.entities.PartiesEntity;
-import com.danger.insurance.parties.data.repositories.PartyContractsRepository;
-import com.danger.insurance.parties.models.dto.DeletedPartiesDTO;
 import com.danger.insurance.parties.models.dto.PartiesDetailsDTO;
 import com.danger.insurance.parties.models.dto.PartiesFoundSendDTO;
 import com.danger.insurance.parties.models.service.DeletedPartiesServiceImplementation;
@@ -80,8 +82,7 @@ public class DisplayPartiesController {
 	public String renderProfile(@PathVariable long partyId, Model model) {
 		PartiesDetailsDTO fetchedParty = partiesService.getById(partyId);						// Retrieve the selected party by ID
 		model.addAttribute("party", fetchedParty);												// Add party details to the model for display
-		List<ContractsEntity> contracts = partyContractsRepository.findContractsByPartyId(partyId);
-		model.addAttribute("activeContracts", contracts);
+		model.addAttribute("activeContractsWithRoles", addPartyStatusesToContracts(partyId));
 		model.addAttribute("referenceLink", "/insurances/contract-");
 		
 		return "pages/parties/profile";															// Render the profile page
@@ -103,6 +104,23 @@ public class DisplayPartiesController {
 		return "pages/parties/deleted-list";
 	}
 	
+	
+	private List<PartyContractsProfileDTO> addPartyStatusesToContracts(long partyId) {
+		List<PartyContractsProfileDTO> dtoList = new ArrayList<PartyContractsProfileDTO>();
+		List<ContractsEntity> contracts = partyContractsRepository.findContractsByPartyId(partyId);
+		
+		for (ContractsEntity contract : contracts) {
+			PartyContractsProfileDTO partyContractsProfileDTO = new PartyContractsProfileDTO();
+			partyContractsProfileDTO.setContractId(contract.getContractId());
+			partyContractsProfileDTO.setContractNumber(contract.getContractNumber());
+			partyContractsProfileDTO.setContractRole(partyContractsRepository.findPartyStatus(contract.getContractId(), partyId));
+			partyContractsProfileDTO.setInsuranceType(contract.getInsuranceType());
+			partyContractsProfileDTO.setInsuranceName(contract.getInsurancesEntity().getName());
+			dtoList.add(partyContractsProfileDTO);
+		}
+		
+		return dtoList;
+	}
 	
 
 }

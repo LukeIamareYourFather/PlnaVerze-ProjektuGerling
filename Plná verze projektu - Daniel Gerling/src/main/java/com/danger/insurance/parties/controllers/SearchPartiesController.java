@@ -57,6 +57,19 @@ public class SearchPartiesController {
 	}
 	
 	/**
+	 * Renders the Insured search tool.
+	 * 
+	 * @param dto a DTO to store the search criteria submitted by the user; includes personal details such as name, surname, birth date, birth number, email, street, or phone number.
+	 * @return the name of the Thymeleaf template for the Insured search page.
+	 */
+	@GetMapping("find/uninsured")
+	public String renderFindUninsured(Model model) {
+		addFindPartyAttributes("uninsured", model);
+			
+		return "pages/parties/insured/find";													// Redirect to the find Insured page
+	}
+	
+	/**
 	 * Handles the submission of the Policy Owner search form.
 	 *
 	 * @param dto a DTO to store the search criteria submitted by the user; includes personal details such as name, surname, birth date, birth number, email, street, or phone number.
@@ -80,6 +93,18 @@ public class SearchPartiesController {
 		return validateSearchParty(dto, PartyStatus.INSURED, redirectAttributes);
 	}
 	
+	/**
+	 * Handles the submission of the Insured search form.
+	 * 
+	 * @param dto a DTO to store the search criteria submitted by the user; includes personal details such as name, surname, birth date, birth number, email, street, or phone number.
+	 * @param redirectAttributes used to pass temporary attributes (e.g., search results or error flags) between redirect pages.
+	 * @return a redirect to the appropriate result page: either a list of matches, a not-found page, or the same page if the input is invalid.
+	 */
+	@PostMapping("find/uninsured")
+	public String handleSearchUninsuredFormSubmit(PartiesDetailsDTO dto, RedirectAttributes redirectAttributes) {
+		return validateSearchParty(dto, null, redirectAttributes);
+	}
+	
 	// Helper methods
 	
 	//
@@ -95,7 +120,7 @@ public class SearchPartiesController {
 
 		if(foundParties.isEmpty()) {
 			redirectResult += "not-found";												// Redirect to "not found" page if no matches occur
-		} else if(!partiesService.isSearchRequestValid(dto)) {		// Or should the validation check fail
+		} else if(!isSearchRequestValid(dto)) {		// Or should the validation check fail
 			redirectResult += "find/insured";											// Reload the form page if the request is invalid
 		}
 		
@@ -117,4 +142,51 @@ public class SearchPartiesController {
 	    redirectAttributes.addFlashAttribute("findingsDto", sendDto);							// Pass the populated DTO as attribute for the redirected page to display found parties
 	}	
 	
+	/**
+     * Validates the submitted search criteria to ensure the request is valid.
+     *
+     * @param dto a DTO containing the search criteria; includes personal details such as name, surname, birth date, birth number, email, street, and phone number.
+     * @return {@code true} if the submitted criteria meet the minimum requirements for a valid search; {@code false} otherwise.
+     */
+    public final boolean isSearchRequestValid(PartiesDetailsDTO dto) {
+    	
+    	// Should the birth number be provided
+    	if(dto.getBirthNumber() != null) {
+    		return true;										// Return evaluation as passed
+    	} else {		// Or should the birth number be missing
+			int checksPassed = 0;								// Initialize counter of passed checks
+    		
+			// Should the name be provided...
+			if (!dto.getName().equals("")) {
+				checksPassed++;									// Increase the number of passed checks...
+			}
+    		
+			if (!dto.getSurname().equals("")) {
+				checksPassed++;							
+			}
+    		
+			if (!dto.getStreet().equals("")) {
+				checksPassed++;					
+			}
+    		
+			if (!dto.getEmail().equals("")) {
+				checksPassed++;
+			}
+    		
+			if (!dto.getPhoneNumber().equals("")) {
+    			checksPassed++;
+    		}
+			
+			if (dto.getBirthDay() != null) {
+				checksPassed++;
+			}
+    		
+			// Should the desired amount of checks be passed
+			if (checksPassed >= 3) {							
+				return true;									// Return evaluation as passed
+			}
+		}
+    	
+    	return false;											// Since no requirement was met, return evaluation as failed
+    }
 }

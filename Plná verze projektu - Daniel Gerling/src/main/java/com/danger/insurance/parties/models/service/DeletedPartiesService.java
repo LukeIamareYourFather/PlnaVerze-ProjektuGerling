@@ -2,7 +2,7 @@ package com.danger.insurance.parties.models.service;
 
 import java.util.List;
 
-import com.danger.insurance.parties.models.dto.DeletedPartiesDTO;
+import com.danger.insurance.archive.models.dto.DeletedPartiesDTO;
 import com.danger.insurance.parties.models.dto.PartiesDetailsDTO;
 import com.danger.insurance.parties.models.dto.PartiesReasonsFormDTO;
 

@@ -5,8 +5,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 import com.danger.insurance.archive.data.entities.DeletedInsurancesEntity;
-import com.danger.insurance.insurances.models.dto.DeleteInsurancesReasonsDTO;
-import com.danger.insurance.insurances.models.dto.DeletedInsurancesDTO;
+import com.danger.insurance.archive.models.dto.DeleteInsurancesReasonsDTO;
+import com.danger.insurance.archive.models.dto.DeletedInsurancesDTO;
 import com.danger.insurance.insurances.models.dto.InsurancesDTO;
 import com.danger.insurance.parties.data.entities.PartiesEntity;
 import com.danger.insurance.parties.models.dto.PartiesCreateDTO;

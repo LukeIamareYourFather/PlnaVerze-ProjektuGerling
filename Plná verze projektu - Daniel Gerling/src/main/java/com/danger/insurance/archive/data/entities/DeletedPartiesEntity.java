@@ -2,9 +2,7 @@ package com.danger.insurance.archive.data.entities;
 
 import java.time.LocalDate;
 
-import com.danger.insurance.parties.data.enums.InsuranceType;
 import com.danger.insurance.parties.data.enums.PartiesRemovalReason;
-import com.danger.insurance.parties.data.enums.PartyStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -66,20 +64,7 @@ public class DeletedPartiesEntity {
 	
 	@Column(nullable = false)
 	private String zipCode;
-	
-	@Column(nullable = false)
-	@Enumerated(EnumType.STRING)
-	private PartyStatus partyStatus;
-	
-	@Column(nullable = false)
-	@Enumerated(EnumType.STRING)
-	private InsuranceType insuranceType;
-	
-	@Column(nullable = true)
-	private String contractNumber;
-	
-	
-	
+
 	/**
 	 * @return the deleteReasonId
 	 */
@@ -92,6 +77,90 @@ public class DeletedPartiesEntity {
 	 */
 	public void setDeleteReasonId(long deleteReasonId) {
 		this.deleteReasonId = deleteReasonId;
+	}
+
+	/**
+	 * @return the removalReason
+	 */
+	public PartiesRemovalReason getRemovalReason() {
+		return removalReason;
+	}
+
+	/**
+	 * @param removalReason the removalReason to set
+	 */
+	public void setRemovalReason(PartiesRemovalReason removalReason) {
+		this.removalReason = removalReason;
+	}
+
+	/**
+	 * @return the dateOfRequest
+	 */
+	public LocalDate getDateOfRequest() {
+		return dateOfRequest;
+	}
+
+	/**
+	 * @param dateOfRequest the dateOfRequest to set
+	 */
+	public void setDateOfRequest(LocalDate dateOfRequest) {
+		this.dateOfRequest = dateOfRequest;
+	}
+
+	/**
+	 * @return the todaysDate
+	 */
+	public LocalDate getTodaysDate() {
+		return todaysDate;
+	}
+
+	/**
+	 * @param todaysDate the todaysDate to set
+	 */
+	public void setTodaysDate(LocalDate todaysDate) {
+		this.todaysDate = todaysDate;
+	}
+
+	/**
+	 * @return the ifToDeleteParty
+	 */
+	public Boolean getIfToDeleteParty() {
+		return ifToDeleteParty;
+	}
+
+	/**
+	 * @param ifToDeleteParty the ifToDeleteParty to set
+	 */
+	public void setIfToDeleteParty(Boolean ifToDeleteParty) {
+		this.ifToDeleteParty = ifToDeleteParty;
+	}
+
+	/**
+	 * @return the additionalInformation
+	 */
+	public String getAdditionalInformation() {
+		return additionalInformation;
+	}
+
+	/**
+	 * @param additionalInformation the additionalInformation to set
+	 */
+	public void setAdditionalInformation(String additionalInformation) {
+		this.additionalInformation = additionalInformation;
+	}
+
+	/**
+	 * @return the partyId
+	 */
+	public long getPartyId() {
+		return partyId;
+	}
+
+	/**
+	 * @param partyId the partyId to set
+	 */
+	public void setPartyId(long partyId) {
+		this.partyId = partyId;
 	}
 
 	/**
@@ -219,132 +288,5 @@ public class DeletedPartiesEntity {
 	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
 	}
-
-	/**
-	 * @return the partyStatus
-	 */
-	public PartyStatus getPartyStatus() {
-		return partyStatus;
-	}
-
-	/**
-	 * @param partyStatus the partyStatus to set
-	 */
-	public void setPartyStatus(PartyStatus partyStatus) {
-		this.partyStatus = partyStatus;
-	}
-
-	/**
-	 * @return the insuranceType
-	 */
-	public InsuranceType getInsuranceType() {
-		return insuranceType;
-	}
-
-	/**
-	 * @param insuranceType the insuranceType to set
-	 */
-	public void setInsuranceType(InsuranceType insuranceType) {
-		this.insuranceType = insuranceType;
-	}
-
-	/**
-	 * @return the contractNumber
-	 */
-	public String getContractNumber() {
-		return contractNumber;
-	}
-
-	/**
-	 * @param contractNumber the contractNumber to set
-	 */
-	public void setContractNumber(String contractNumber) {
-		this.contractNumber = contractNumber;
-	}
-
-	/**
-	 * @return the partyId
-	 */
-	public long getPartyId() {
-		return partyId;
-	}
-
-	/**
-	 * @param partyId the partyId to set
-	 */
-	public void setPartyId(long partyId) {
-		this.partyId = partyId;
-	}
-
-	/**
-	 * @return the removalReason
-	 */
-	public PartiesRemovalReason getRemovalReason() {
-		return removalReason;
-	}
-
-	/**
-	 * @param removalReason the removalReason to set
-	 */
-	public void setRemovalReason(PartiesRemovalReason removalReason) {
-		this.removalReason = removalReason;
-	}
-
-	/**
-	 * @return the dateOfRequest
-	 */
-	public LocalDate getDateOfRequest() {
-		return dateOfRequest;
-	}
-
-	/**
-	 * @param dateOfRequest the dateOfRequest to set
-	 */
-	public void setDateOfRequest(LocalDate dateOfRequest) {
-		this.dateOfRequest = dateOfRequest;
-	}
-
-	/**
-	 * @return the todaysDate
-	 */
-	public LocalDate getTodaysDate() {
-		return todaysDate;
-	}
-
-	/**
-	 * @param todaysDate the todaysDate to set
-	 */
-	public void setTodaysDate(LocalDate todaysDate) {
-		this.todaysDate = todaysDate;
-	}
-
-	/**
-	 * @return the ifToDeleteParty
-	 */
-	public Boolean isIfToDeleteParty() {
-		return ifToDeleteParty;
-	}
-
-	/**
-	 * @param ifToDeleteParty the ifToDeleteParty to set
-	 */
-	public void setIfToDeleteParty(Boolean ifToDeleteParty) {
-		this.ifToDeleteParty = ifToDeleteParty;
-	}
-
-	/**
-	 * @return the additionalInformation
-	 */
-	public String getAdditionalInformation() {
-		return additionalInformation;
-	}
-
-	/**
-	 * @param additionalInformation the additionalInformation to set
-	 */
-	public void setAdditionalInformation(String additionalInformation) {
-		this.additionalInformation = additionalInformation;
-	}
-	
 	
 }

@@ -1,7 +1,7 @@
 package com.danger.insurance.parties.models.dto.mappers;
 
 import com.danger.insurance.archive.data.entities.DeletedPartiesEntity;
-import com.danger.insurance.parties.models.dto.DeletedPartiesDTO;
+import com.danger.insurance.archive.models.dto.DeletedPartiesDTO;
 import com.danger.insurance.parties.models.dto.PartiesDetailsDTO;
 import com.danger.insurance.parties.models.dto.PartiesReasonsFormDTO;
 import javax.annotation.processing.Generated;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-07-13T00:25:54+0200",
+    date = "2025-07-13T06:25:00+0200",
     comments = "version: 1.6.3, compiler: javac, environment: Java 23.0.2 (Oracle Corporation)"
 )
 @Component
@@ -24,6 +24,12 @@ public class DeletedPartiesMapperImpl implements DeletedPartiesMapper {
         DeletedPartiesEntity deletedPartiesEntity = new DeletedPartiesEntity();
 
         deletedPartiesEntity.setDeleteReasonId( source.getDeleteReasonId() );
+        deletedPartiesEntity.setRemovalReason( source.getRemovalReason() );
+        deletedPartiesEntity.setDateOfRequest( source.getDateOfRequest() );
+        deletedPartiesEntity.setTodaysDate( source.getTodaysDate() );
+        deletedPartiesEntity.setIfToDeleteParty( source.isIfToDeleteParty() );
+        deletedPartiesEntity.setAdditionalInformation( source.getAdditionalInformation() );
+        deletedPartiesEntity.setPartyId( source.getPartyId() );
         deletedPartiesEntity.setName( source.getName() );
         deletedPartiesEntity.setSurname( source.getSurname() );
         deletedPartiesEntity.setBirthDay( source.getBirthDay() );
@@ -33,15 +39,6 @@ public class DeletedPartiesMapperImpl implements DeletedPartiesMapper {
         deletedPartiesEntity.setStreet( source.getStreet() );
         deletedPartiesEntity.setCity( source.getCity() );
         deletedPartiesEntity.setZipCode( source.getZipCode() );
-        deletedPartiesEntity.setPartyStatus( source.getPartyStatus() );
-        deletedPartiesEntity.setInsuranceType( source.getInsuranceType() );
-        deletedPartiesEntity.setContractNumber( source.getContractNumber() );
-        deletedPartiesEntity.setPartyId( source.getPartyId() );
-        deletedPartiesEntity.setRemovalReason( source.getRemovalReason() );
-        deletedPartiesEntity.setDateOfRequest( source.getDateOfRequest() );
-        deletedPartiesEntity.setTodaysDate( source.getTodaysDate() );
-        deletedPartiesEntity.setIfToDeleteParty( source.isIfToDeleteParty() );
-        deletedPartiesEntity.setAdditionalInformation( source.getAdditionalInformation() );
 
         return deletedPartiesEntity;
     }
@@ -55,6 +52,12 @@ public class DeletedPartiesMapperImpl implements DeletedPartiesMapper {
         DeletedPartiesEntity deletedPartiesEntity = new DeletedPartiesEntity();
 
         deletedPartiesEntity.setDeleteReasonId( source.getDeleteReasonId() );
+        deletedPartiesEntity.setRemovalReason( source.getRemovalReason() );
+        deletedPartiesEntity.setDateOfRequest( source.getDateOfRequest() );
+        deletedPartiesEntity.setTodaysDate( source.getTodaysDate() );
+        deletedPartiesEntity.setIfToDeleteParty( source.isIfToDeleteParty() );
+        deletedPartiesEntity.setAdditionalInformation( source.getAdditionalInformation() );
+        deletedPartiesEntity.setPartyId( source.getPartyId() );
         deletedPartiesEntity.setName( source.getName() );
         deletedPartiesEntity.setSurname( source.getSurname() );
         deletedPartiesEntity.setBirthDay( source.getBirthDay() );
@@ -64,15 +67,6 @@ public class DeletedPartiesMapperImpl implements DeletedPartiesMapper {
         deletedPartiesEntity.setStreet( source.getStreet() );
         deletedPartiesEntity.setCity( source.getCity() );
         deletedPartiesEntity.setZipCode( source.getZipCode() );
-        deletedPartiesEntity.setPartyStatus( source.getPartyStatus() );
-        deletedPartiesEntity.setInsuranceType( source.getInsuranceType() );
-        deletedPartiesEntity.setContractNumber( source.getContractNumber() );
-        deletedPartiesEntity.setPartyId( source.getPartyId() );
-        deletedPartiesEntity.setRemovalReason( source.getRemovalReason() );
-        deletedPartiesEntity.setDateOfRequest( source.getDateOfRequest() );
-        deletedPartiesEntity.setTodaysDate( source.getTodaysDate() );
-        deletedPartiesEntity.setIfToDeleteParty( source.isIfToDeleteParty() );
-        deletedPartiesEntity.setAdditionalInformation( source.getAdditionalInformation() );
 
         return deletedPartiesEntity;
     }
@@ -85,8 +79,6 @@ public class DeletedPartiesMapperImpl implements DeletedPartiesMapper {
 
         DeletedPartiesDTO deletedPartiesDTO = new DeletedPartiesDTO();
 
-        deletedPartiesDTO.setPartyStatus( source.getPartyStatus() );
-        deletedPartiesDTO.setInsuranceType( source.getInsuranceType() );
         deletedPartiesDTO.setBirthDay( source.getBirthDay() );
         deletedPartiesDTO.setName( source.getName() );
         deletedPartiesDTO.setSurname( source.getSurname() );
@@ -95,14 +87,13 @@ public class DeletedPartiesMapperImpl implements DeletedPartiesMapper {
         deletedPartiesDTO.setPhoneNumber( source.getPhoneNumber() );
         deletedPartiesDTO.setStreet( source.getStreet() );
         deletedPartiesDTO.setCity( source.getCity() );
-        deletedPartiesDTO.setContractNumber( source.getContractNumber() );
         deletedPartiesDTO.setZipCode( source.getZipCode() );
         deletedPartiesDTO.setPartyId( source.getPartyId() );
         deletedPartiesDTO.setDeleteReasonId( source.getDeleteReasonId() );
         deletedPartiesDTO.setRemovalReason( source.getRemovalReason() );
         deletedPartiesDTO.setDateOfRequest( source.getDateOfRequest() );
         deletedPartiesDTO.setTodaysDate( source.getTodaysDate() );
-        deletedPartiesDTO.setIfToDeleteParty( source.isIfToDeleteParty() );
+        deletedPartiesDTO.setIfToDeleteParty( source.getIfToDeleteParty() );
         deletedPartiesDTO.setAdditionalInformation( source.getAdditionalInformation() );
 
         return deletedPartiesDTO;
@@ -125,8 +116,6 @@ public class DeletedPartiesMapperImpl implements DeletedPartiesMapper {
             deletedPartiesDTO.setAdditionalInformation( reasonsDto.getAdditionalInformation() );
         }
         if ( partiesDTO != null ) {
-            deletedPartiesDTO.setPartyStatus( partiesDTO.getPartyStatus() );
-            deletedPartiesDTO.setInsuranceType( partiesDTO.getInsuranceType() );
             deletedPartiesDTO.setBirthDay( partiesDTO.getBirthDay() );
             deletedPartiesDTO.setName( partiesDTO.getName() );
             deletedPartiesDTO.setSurname( partiesDTO.getSurname() );
@@ -135,7 +124,6 @@ public class DeletedPartiesMapperImpl implements DeletedPartiesMapper {
             deletedPartiesDTO.setPhoneNumber( partiesDTO.getPhoneNumber() );
             deletedPartiesDTO.setStreet( partiesDTO.getStreet() );
             deletedPartiesDTO.setCity( partiesDTO.getCity() );
-            deletedPartiesDTO.setContractNumber( partiesDTO.getContractNumber() );
             deletedPartiesDTO.setZipCode( partiesDTO.getZipCode() );
             deletedPartiesDTO.setPartyId( partiesDTO.getPartyId() );
         }
@@ -149,8 +137,6 @@ public class DeletedPartiesMapperImpl implements DeletedPartiesMapper {
             return;
         }
 
-        target.setPartyStatus( source.getPartyStatus() );
-        target.setInsuranceType( source.getInsuranceType() );
         target.setBirthDay( source.getBirthDay() );
         target.setName( source.getName() );
         target.setSurname( source.getSurname() );
@@ -159,7 +145,6 @@ public class DeletedPartiesMapperImpl implements DeletedPartiesMapper {
         target.setPhoneNumber( source.getPhoneNumber() );
         target.setStreet( source.getStreet() );
         target.setCity( source.getCity() );
-        target.setContractNumber( source.getContractNumber() );
         target.setZipCode( source.getZipCode() );
         target.setPartyId( source.getPartyId() );
         target.setDeleteReasonId( source.getDeleteReasonId() );
@@ -177,6 +162,12 @@ public class DeletedPartiesMapperImpl implements DeletedPartiesMapper {
         }
 
         target.setDeleteReasonId( source.getDeleteReasonId() );
+        target.setRemovalReason( source.getRemovalReason() );
+        target.setDateOfRequest( source.getDateOfRequest() );
+        target.setTodaysDate( source.getTodaysDate() );
+        target.setIfToDeleteParty( source.isIfToDeleteParty() );
+        target.setAdditionalInformation( source.getAdditionalInformation() );
+        target.setPartyId( source.getPartyId() );
         target.setName( source.getName() );
         target.setSurname( source.getSurname() );
         target.setBirthDay( source.getBirthDay() );
@@ -186,14 +177,5 @@ public class DeletedPartiesMapperImpl implements DeletedPartiesMapper {
         target.setStreet( source.getStreet() );
         target.setCity( source.getCity() );
         target.setZipCode( source.getZipCode() );
-        target.setPartyStatus( source.getPartyStatus() );
-        target.setInsuranceType( source.getInsuranceType() );
-        target.setContractNumber( source.getContractNumber() );
-        target.setPartyId( source.getPartyId() );
-        target.setRemovalReason( source.getRemovalReason() );
-        target.setDateOfRequest( source.getDateOfRequest() );
-        target.setTodaysDate( source.getTodaysDate() );
-        target.setIfToDeleteParty( source.isIfToDeleteParty() );
-        target.setAdditionalInformation( source.getAdditionalInformation() );
     }
 }

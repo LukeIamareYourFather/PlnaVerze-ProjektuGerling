@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.danger.insurance.insurances.contracts.data.entities.PartyContractsEntity;
+import com.danger.insurance.insurances.contracts.data.repositories.PartyContractsRepository;
 import com.danger.insurance.insurances.contracts.models.dto.PartyContractsDTO;
 import com.danger.insurance.insurances.contracts.models.dto.mappers.PartyContractsMapper;
-import com.danger.insurance.parties.data.repositories.PartyContractsRepository;
 import com.danger.insurance.parties.models.exceptions.PartyNotFoundException;
 
 @Service

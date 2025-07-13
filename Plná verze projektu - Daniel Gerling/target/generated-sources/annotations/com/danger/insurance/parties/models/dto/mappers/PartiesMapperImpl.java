@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-07-13T00:25:53+0200",
+    date = "2025-07-13T06:24:59+0200",
     comments = "version: 1.6.3, compiler: javac, environment: Java 23.0.2 (Oracle Corporation)"
 )
 @Component
@@ -32,9 +32,6 @@ public class PartiesMapperImpl implements PartiesMapper {
         partiesEntity.setStreet( source.getStreet() );
         partiesEntity.setCity( source.getCity() );
         partiesEntity.setZipCode( source.getZipCode() );
-        partiesEntity.setPartyStatus( source.getPartyStatus() );
-        partiesEntity.setInsuranceType( source.getInsuranceType() );
-        partiesEntity.setContractNumber( source.getContractNumber() );
 
         return partiesEntity;
     }
@@ -56,9 +53,6 @@ public class PartiesMapperImpl implements PartiesMapper {
         partiesEntity.setStreet( source.getStreet() );
         partiesEntity.setCity( source.getCity() );
         partiesEntity.setZipCode( source.getZipCode() );
-        partiesEntity.setPartyStatus( source.getPartyStatus() );
-        partiesEntity.setInsuranceType( source.getInsuranceType() );
-        partiesEntity.setContractNumber( source.getContractNumber() );
 
         return partiesEntity;
     }
@@ -81,9 +75,6 @@ public class PartiesMapperImpl implements PartiesMapper {
         partiesDetailsDTO.setStreet( source.getStreet() );
         partiesDetailsDTO.setCity( source.getCity() );
         partiesDetailsDTO.setZipCode( source.getZipCode() );
-        partiesDetailsDTO.setPartyStatus( source.getPartyStatus() );
-        partiesDetailsDTO.setInsuranceType( source.getInsuranceType() );
-        partiesDetailsDTO.setContractNumber( source.getContractNumber() );
 
         return partiesDetailsDTO;
     }
@@ -104,9 +95,6 @@ public class PartiesMapperImpl implements PartiesMapper {
         target.setStreet( source.getStreet() );
         target.setCity( source.getCity() );
         target.setZipCode( source.getZipCode() );
-        target.setPartyStatus( source.getPartyStatus() );
-        target.setInsuranceType( source.getInsuranceType() );
-        target.setContractNumber( source.getContractNumber() );
     }
 
     @Override
@@ -125,8 +113,5 @@ public class PartiesMapperImpl implements PartiesMapper {
         target.setStreet( source.getStreet() );
         target.setCity( source.getCity() );
         target.setZipCode( source.getZipCode() );
-        target.setPartyStatus( source.getPartyStatus() );
-        target.setInsuranceType( source.getInsuranceType() );
-        target.setContractNumber( source.getContractNumber() );
     }
 }

@@ -2,8 +2,6 @@ package com.danger.insurance.parties.models.dto;
 
 import java.time.LocalDate;
 
-import com.danger.insurance.parties.data.enums.InsuranceType;
-import com.danger.insurance.parties.data.enums.PartyStatus;
 import com.danger.insurance.validation.groups.OnCreateInsured;
 import com.danger.insurance.validation.groups.OnCreatePolicyOwner;
 
@@ -11,12 +9,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public class PartiesCreateDTO {
-
-	// Define Enums	
-	
-	@NotNull(message = "Prosím zadejte typ pojištění", groups = {OnCreatePolicyOwner.class, OnCreateInsured.class})
-	private InsuranceType insuranceType;
-	private PartyStatus partyStatus;
 	
 	// Define Dates
 	@NotNull(message = "Prosím zadejte den narození", groups = {OnCreatePolicyOwner.class, OnCreateInsured.class})
@@ -44,39 +36,8 @@ public class PartiesCreateDTO {
 	@NotBlank(message = "Prosím zadejte město", groups = {OnCreatePolicyOwner.class, OnCreateInsured.class})
 	private String city;	
 	
-	@NotBlank(message = "Prosím zadejte číslo smlouvy", groups = {OnCreateInsured.class})
-	private String contractNumber;
-	
 	@NotBlank(message = "Prosím zadejte poštovní směrovací číslo", groups = {OnCreatePolicyOwner.class, OnCreateInsured.class})
 	private String zipCode;
-
-	/**
-	 * @return the insuranceType
-	 */
-	public InsuranceType getInsuranceType() {
-		return insuranceType;
-	}
-
-	/**
-	 * @param insuranceType the insuranceType to set
-	 */
-	public void setInsuranceType(InsuranceType insuranceType) {
-		this.insuranceType = insuranceType;
-	}
-
-	/**
-	 * @return the partyStatus
-	 */
-	public PartyStatus getPartyStatus() {
-		return partyStatus;
-	}
-
-	/**
-	 * @param partyStatus the partyStatus to set
-	 */
-	public void setPartyStatus(PartyStatus partyStatus) {
-		this.partyStatus = partyStatus;
-	}
 
 	/**
 	 * @return the birthDay
@@ -188,20 +149,6 @@ public class PartiesCreateDTO {
 	 */
 	public void setCity(String city) {
 		this.city = city;
-	}
-
-	/**
-	 * @return the contractNumber
-	 */
-	public String getContractNumber() {
-		return contractNumber;
-	}
-
-	/**
-	 * @param contractNumber the contractNumber to set
-	 */
-	public void setContractNumber(String contractNumber) {
-		this.contractNumber = contractNumber;
 	}
 
 	/**

@@ -1,15 +1,15 @@
 package com.danger.insurance.insurances.contracts.models.dto.mappers;
 
 import com.danger.insurance.archive.data.entities.RemovedContractsEntity;
+import com.danger.insurance.archive.models.dto.RemoveContractReasonsDTO;
 import com.danger.insurance.insurances.contracts.models.dto.ContractsDTO;
-import com.danger.insurance.insurances.contracts.models.dto.RemoveContractReasonsDTO;
 import com.danger.insurance.insurances.models.dto.InsurancesDTO;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-07-13T00:25:54+0200",
+    date = "2025-07-13T06:25:00+0200",
     comments = "version: 1.6.3, compiler: javac, environment: Java 23.0.2 (Oracle Corporation)"
 )
 @Component

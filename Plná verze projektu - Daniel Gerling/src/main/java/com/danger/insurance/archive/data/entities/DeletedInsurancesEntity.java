@@ -54,81 +54,19 @@ public class DeletedInsurancesEntity {
 	
 	@Column(nullable = false)
 	private long maximumPayoutValue;
-	
-	/**
-	 * @return the isAnnualPaymentRequired
-	 */
-	public Boolean getIsAnnualPaymentRequired() {
-		return isAnnualPaymentRequired;
-	}
 
 	/**
-	 * @param isAnnualPaymentRequired the isAnnualPaymentRequired to set
-	 */
-	public void setIsAnnualPaymentRequired(Boolean isAnnualPaymentRequired) {
-		this.isAnnualPaymentRequired = isAnnualPaymentRequired;
-	}
-
-	/**
-	 * @return the isAutoRenewalRequired
-	 */
-	public Boolean getIsAutoRenewalRequired() {
-		return isAutoRenewalRequired;
-	}
-
-	/**
-	 * @param isAutoRenewalRequired the isAutoRenewalRequired to set
-	 */
-	public void setIsAutoRenewalRequired(Boolean isAutoRenewalRequired) {
-		this.isAutoRenewalRequired = isAutoRenewalRequired;
-	}
-
-	/**
-	 * @return the ifToRemoveAllContracts
-	 */
-	public Boolean getIfToRemoveAllContracts() {
-		return ifToRemoveAllContracts;
-	}
-
-	private Boolean isAnnualPaymentRequired;
-	
-	@Column(nullable = false)
-	private int renewalPeriod;
-	
-	@Column(nullable = false)
-	private long minimumPolicyTerm;
-	
-	@Column(nullable = false)
-	private Boolean isAutoRenewalRequired;
-
-	
-	
-	/**
-	 * @return the todaysDate
-	 */
-	public LocalDate getTodaysDate() {
-		return todaysDate;
-	}
-
-	/**
-	 * @param todaysDate the todaysDate to set
-	 */
-	public void setTodaysDate(LocalDate todaysDate) {
-		this.todaysDate = todaysDate;
-	}
-
-	/**
-	 * @return the deletedInsuranceId
+	 * @return the deletedInsurancesId
 	 */
 	public long getDeletedInsurancesId() {
 		return deletedInsurancesId;
 	}
 
 	/**
-	 * @param deletedInsuranceId the deletedInsuranceId to set
+	 * @param deletedInsurancesId the deletedInsurancesId to set
 	 */
-	public void setDeletedInsurancesId(long deletedInsuranceId) {
-		this.deletedInsurancesId = deletedInsuranceId;
+	public void setDeletedInsurancesId(long deletedInsurancesId) {
+		this.deletedInsurancesId = deletedInsurancesId;
 	}
 
 	/**
@@ -160,6 +98,20 @@ public class DeletedInsurancesEntity {
 	}
 
 	/**
+	 * @return the todaysDate
+	 */
+	public LocalDate getTodaysDate() {
+		return todaysDate;
+	}
+
+	/**
+	 * @param todaysDate the todaysDate to set
+	 */
+	public void setTodaysDate(LocalDate todaysDate) {
+		this.todaysDate = todaysDate;
+	}
+
+	/**
 	 * @return the deleteDescription
 	 */
 	public String getDeleteDescription() {
@@ -176,7 +128,7 @@ public class DeletedInsurancesEntity {
 	/**
 	 * @return the ifToRemoveAllContracts
 	 */
-	public Boolean isIfToRemoveAllContracts() {
+	public Boolean getIfToRemoveAllContracts() {
 		return ifToRemoveAllContracts;
 	}
 
@@ -270,61 +222,5 @@ public class DeletedInsurancesEntity {
 	public void setMaximumPayoutValue(long maximumPayoutValue) {
 		this.maximumPayoutValue = maximumPayoutValue;
 	}
-
-	/**
-	 * @return the isAnnualPaymentRequired
-	 */
-	public Boolean isAnnualPaymentRequired() {
-		return isAnnualPaymentRequired;
-	}
-
-	/**
-	 * @param isAnnualPaymentRequired the isAnnualPaymentRequired to set
-	 */
-	public void setAnnualPaymentRequired(Boolean isAnnualPaymentRequired) {
-		this.isAnnualPaymentRequired = isAnnualPaymentRequired;
-	}
-
-	/**
-	 * @return the renewalPeriod
-	 */
-	public int getRenewalPeriod() {
-		return renewalPeriod;
-	}
-
-	/**
-	 * @param renewalPeriod the renewalPeriod to set
-	 */
-	public void setRenewalPeriod(int renewalPeriod) {
-		this.renewalPeriod = renewalPeriod;
-	}
-
-	/**
-	 * @return the minimumPolicyTerm
-	 */
-	public long getMinimumPolicyTerm() {
-		return minimumPolicyTerm;
-	}
-
-	/**
-	 * @param minimumPolicyTerm the minimumPolicyTerm to set
-	 */
-	public void setMinimumPolicyTerm(long minimumPolicyTerm) {
-		this.minimumPolicyTerm = minimumPolicyTerm;
-	}
-
-	/**
-	 * @return the isAutoRenewalRequired
-	 */
-	public Boolean isAutoRenewalRequired() {
-		return isAutoRenewalRequired;
-	}
-
-	/**
-	 * @param isAutoRenewalRequired the isAutoRenewalRequired to set
-	 */
-	public void setAutoRenewalRequired(Boolean isAutoRenewalRequired) {
-		this.isAutoRenewalRequired = isAutoRenewalRequired;
-	}	
 	
 }

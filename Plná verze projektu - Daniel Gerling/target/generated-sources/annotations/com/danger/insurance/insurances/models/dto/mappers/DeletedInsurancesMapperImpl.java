@@ -1,15 +1,15 @@
 package com.danger.insurance.insurances.models.dto.mappers;
 
 import com.danger.insurance.archive.data.entities.DeletedInsurancesEntity;
-import com.danger.insurance.insurances.models.dto.DeleteInsurancesReasonsDTO;
-import com.danger.insurance.insurances.models.dto.DeletedInsurancesDTO;
+import com.danger.insurance.archive.models.dto.DeleteInsurancesReasonsDTO;
+import com.danger.insurance.archive.models.dto.DeletedInsurancesDTO;
 import com.danger.insurance.insurances.models.dto.InsurancesDTO;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-07-13T00:25:53+0200",
+    date = "2025-07-13T06:25:00+0200",
     comments = "version: 1.6.3, compiler: javac, environment: Java 23.0.2 (Oracle Corporation)"
 )
 @Component
@@ -23,11 +23,9 @@ public class DeletedInsurancesMapperImpl implements DeletedInsurancesMapper {
 
         DeletedInsurancesEntity deletedInsurancesEntity = new DeletedInsurancesEntity();
 
-        deletedInsurancesEntity.setIsAnnualPaymentRequired( source.getIsAnnualPaymentRequired() );
-        deletedInsurancesEntity.setIsAutoRenewalRequired( source.getIsAutoRenewalRequired() );
-        deletedInsurancesEntity.setTodaysDate( source.getTodaysDate() );
         deletedInsurancesEntity.setRemovalReason( source.getRemovalReason() );
         deletedInsurancesEntity.setRequestDate( source.getRequestDate() );
+        deletedInsurancesEntity.setTodaysDate( source.getTodaysDate() );
         deletedInsurancesEntity.setDeleteDescription( source.getDeleteDescription() );
         deletedInsurancesEntity.setIfToRemoveAllContracts( source.getIfToRemoveAllContracts() );
         deletedInsurancesEntity.setName( source.getName() );
@@ -36,10 +34,6 @@ public class DeletedInsurancesMapperImpl implements DeletedInsurancesMapper {
         deletedInsurancesEntity.setMinimumInsuranceValue( source.getMinimumInsuranceValue() );
         deletedInsurancesEntity.setMaximumInsuranceValue( source.getMaximumInsuranceValue() );
         deletedInsurancesEntity.setMaximumPayoutValue( source.getMaximumPayoutValue() );
-        deletedInsurancesEntity.setAnnualPaymentRequired( source.isAnnualPaymentRequired() );
-        deletedInsurancesEntity.setRenewalPeriod( source.getRenewalPeriod() );
-        deletedInsurancesEntity.setMinimumPolicyTerm( source.getMinimumPolicyTerm() );
-        deletedInsurancesEntity.setAutoRenewalRequired( source.isAutoRenewalRequired() );
 
         return deletedInsurancesEntity;
     }
@@ -52,11 +46,9 @@ public class DeletedInsurancesMapperImpl implements DeletedInsurancesMapper {
 
         DeletedInsurancesEntity deletedInsurancesEntity = new DeletedInsurancesEntity();
 
-        deletedInsurancesEntity.setIsAnnualPaymentRequired( source.getIsAnnualPaymentRequired() );
-        deletedInsurancesEntity.setIsAutoRenewalRequired( source.getIsAutoRenewalRequired() );
-        deletedInsurancesEntity.setTodaysDate( source.getTodaysDate() );
         deletedInsurancesEntity.setRemovalReason( source.getRemovalReason() );
         deletedInsurancesEntity.setRequestDate( source.getRequestDate() );
+        deletedInsurancesEntity.setTodaysDate( source.getTodaysDate() );
         deletedInsurancesEntity.setDeleteDescription( source.getDeleteDescription() );
         deletedInsurancesEntity.setIfToRemoveAllContracts( source.getIfToRemoveAllContracts() );
         deletedInsurancesEntity.setName( source.getName() );
@@ -65,10 +57,6 @@ public class DeletedInsurancesMapperImpl implements DeletedInsurancesMapper {
         deletedInsurancesEntity.setMinimumInsuranceValue( source.getMinimumInsuranceValue() );
         deletedInsurancesEntity.setMaximumInsuranceValue( source.getMaximumInsuranceValue() );
         deletedInsurancesEntity.setMaximumPayoutValue( source.getMaximumPayoutValue() );
-        deletedInsurancesEntity.setAnnualPaymentRequired( source.isAnnualPaymentRequired() );
-        deletedInsurancesEntity.setRenewalPeriod( source.getRenewalPeriod() );
-        deletedInsurancesEntity.setMinimumPolicyTerm( source.getMinimumPolicyTerm() );
-        deletedInsurancesEntity.setAutoRenewalRequired( source.isAutoRenewalRequired() );
 
         return deletedInsurancesEntity;
     }
@@ -81,8 +69,6 @@ public class DeletedInsurancesMapperImpl implements DeletedInsurancesMapper {
 
         DeletedInsurancesDTO deletedInsurancesDTO = new DeletedInsurancesDTO();
 
-        deletedInsurancesDTO.setIsAnnualPaymentRequired( source.getIsAnnualPaymentRequired() );
-        deletedInsurancesDTO.setIsAutoRenewalRequired( source.getIsAutoRenewalRequired() );
         deletedInsurancesDTO.setTodaysDate( source.getTodaysDate() );
         deletedInsurancesDTO.setRemovalReason( source.getRemovalReason() );
         deletedInsurancesDTO.setRequestDate( source.getRequestDate() );
@@ -94,10 +80,6 @@ public class DeletedInsurancesMapperImpl implements DeletedInsurancesMapper {
         deletedInsurancesDTO.setMinimumInsuranceValue( source.getMinimumInsuranceValue() );
         deletedInsurancesDTO.setMaximumInsuranceValue( source.getMaximumInsuranceValue() );
         deletedInsurancesDTO.setMaximumPayoutValue( source.getMaximumPayoutValue() );
-        deletedInsurancesDTO.setAnnualPaymentRequired( source.isAnnualPaymentRequired() );
-        deletedInsurancesDTO.setRenewalPeriod( source.getRenewalPeriod() );
-        deletedInsurancesDTO.setMinimumPolicyTerm( source.getMinimumPolicyTerm() );
-        deletedInsurancesDTO.setAutoRenewalRequired( source.isAutoRenewalRequired() );
 
         return deletedInsurancesDTO;
     }
@@ -165,11 +147,9 @@ public class DeletedInsurancesMapperImpl implements DeletedInsurancesMapper {
             return;
         }
 
-        target.setIsAnnualPaymentRequired( source.getIsAnnualPaymentRequired() );
-        target.setIsAutoRenewalRequired( source.getIsAutoRenewalRequired() );
-        target.setTodaysDate( source.getTodaysDate() );
         target.setRemovalReason( source.getRemovalReason() );
         target.setRequestDate( source.getRequestDate() );
+        target.setTodaysDate( source.getTodaysDate() );
         target.setDeleteDescription( source.getDeleteDescription() );
         target.setIfToRemoveAllContracts( source.getIfToRemoveAllContracts() );
         target.setName( source.getName() );
@@ -178,9 +158,5 @@ public class DeletedInsurancesMapperImpl implements DeletedInsurancesMapper {
         target.setMinimumInsuranceValue( source.getMinimumInsuranceValue() );
         target.setMaximumInsuranceValue( source.getMaximumInsuranceValue() );
         target.setMaximumPayoutValue( source.getMaximumPayoutValue() );
-        target.setAnnualPaymentRequired( source.isAnnualPaymentRequired() );
-        target.setRenewalPeriod( source.getRenewalPeriod() );
-        target.setMinimumPolicyTerm( source.getMinimumPolicyTerm() );
-        target.setAutoRenewalRequired( source.isAutoRenewalRequired() );
     }
 }

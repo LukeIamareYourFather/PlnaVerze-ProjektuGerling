@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.danger.insurance.archive.models.dto.DeleteInsurancesReasonsDTO;
+import com.danger.insurance.archive.models.dto.DeletedInsurancesDTO;
 import com.danger.insurance.archive.models.services.DeletedInsurancesServiceImplementation;
-import com.danger.insurance.insurances.models.dto.DeleteInsurancesReasonsDTO;
-import com.danger.insurance.insurances.models.dto.DeletedInsurancesDTO;
 import com.danger.insurance.insurances.models.services.InsurancesServiceImplementation;
 
 @Controller
