@@ -11,8 +11,23 @@
 
     <body id="main-page">
         <article>
-            Text text taxt tats
+            <ul class="list-group" id="found-insurees">
+                <li th:each="news : ${newsList}" class="list-group-item">
+                    <div style="display: flex; align-items: center; gap: 20px;">
+                        <img th:src="@{${news.pictureUrl}}" alt="News Image" style="width: 150px; height: auto; object-fit: cover;">
+
+                        <div>
+                            <h2>
+                                <a th:href="@{'/news/' + ${news.newsId}}" th:text="${news.title}"></a>
+                            </h2>
+
+                            <p th:text="${news.description}"></p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </article>
+
         <footer th:replace="~{fragments/layout.html :: footer}"></footer>
     </body>
 </html>

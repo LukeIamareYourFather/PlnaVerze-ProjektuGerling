@@ -125,6 +125,20 @@ article {
     background-color: darkgreen;
 }
 
+.black-tile {
+    background-color: black;
+}
+
+.black-tile a {
+    color: white;
+}
+
+.white-tile {
+    background-color: white;
+}
+
+
+
 .tile-background {
     background-color: #2e3c47;
     width: 50vw;

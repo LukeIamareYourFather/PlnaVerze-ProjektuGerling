@@ -7,7 +7,7 @@ package com.danger.insurance.parties.models.exceptions;
  * and no matching {@code PartiesEntity} is returned.
  * </p>
  *
- * @see com.danger.insurance.parties.models.service.services.PartiesServiceImplementation#getById(long)
+ * @see com.danger.insurance.parties.models.service.IncidentsServiceImplementation.PartiesServiceImplementation#getById(long)
  * @see com.danger.insurance.parties.data.repositories.PartiesRepository
  */
 public class PartyNotFoundException extends RuntimeException {

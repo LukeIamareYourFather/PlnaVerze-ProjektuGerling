@@ -49,7 +49,7 @@ public class SearchContractsController {
 	@GetMapping("find/validated")
 	public String renderFoundContractsList(Model model) {
 		model.addAttribute("referenceLink", "/insurances/contract-");
-		
+
 		return "pages/insurances/contracts/list";
 	}
 

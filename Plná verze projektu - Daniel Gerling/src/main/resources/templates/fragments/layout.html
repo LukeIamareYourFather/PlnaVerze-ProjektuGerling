@@ -50,25 +50,25 @@
             <form class="d-flex flex-column gap-2" method="post" th:action="${formAction}" th:object="${formDTO}">
                 <div class="form-group">
                     <label for="name" class="control-label">Jméno:</label>
-                    <input id="name" th:field="*{name}" class="form-control"></input>
+                    <input id="name" th:field="*{name}" class="form-control"/>
                     <small class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
                 </div>
                 
                 <div class="form-group">
                     <label for="surname" class="control-label">Příjmení:</label>
-                    <input id="surname" class="form-control" th:field="*{surname}"></input>
+                    <input id="surname" class="form-control" th:field="*{surname}"/>
                     <small class="text-danger" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></small>
                 </div>
                 
                 <div class="form-group">
                     <label for="birth-day" class="control-label">Datum narození:</label>
-                    <input id="birth-day" type="date" class="form-control" th:field="*{birthDay}"></input>
+                    <input id="birth-day" type="date" class="form-control" th:field="*{birthDay}"/>
                     <small class="text-danger" th:if="${#fields.hasErrors('birthDay')}" th:errors="*{birthDay}"></small>
                 </div>
 
                 <div class="form-group">
                     <label for="birth-number" class="control-label">Rodné číslo:</label>
-                    <input id="birth-number" class="form-control" th:field="*{birthNumber}"></input>
+                    <input id="birth-number" class="form-control" th:field="*{birthNumber}"/>
                     <small class="text-danger" th:if="${#fields.hasErrors('birthNumber')}" th:errors="*{birthNumber}"></small>
                 </div>
                 
@@ -80,25 +80,25 @@
                 
                 <div class="form-group">
                     <label for="phone-number" class="control-label">Telefonní číslo:</label>
-                    <input id="phone-number" class="form-control" th:field="*{phoneNumber}"></input>
+                    <input id="phone-number" class="form-control" th:field="*{phoneNumber}"/>
                     <small class="text-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></small>
                 </div>
                 
                 <div class="form-group">
                     <label for="street" class="control-label">Adresa:</label>
-                    <input id="street" class="form-control" th:field="*{street}"></input>
+                    <input id="street" class="form-control" th:field="*{street}"/>
                     <small class="text-danger" th:if="${#fields.hasErrors('street')}" th:errors="*{street}"></small>
                 </div>
 
                 <div class="form-group">
                     <label for="city" class="control-label">Město:</label>
-                    <input id="city" class="form-control" th:field="*{city}"></input>
+                    <input id="city" class="form-control" th:field="*{city}"/>
                     <small class="text-danger" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></small>
                 </div>
 
                 <div class="form-group">
                     <label for="zip-code" class="control-label">PSČ:</label>
-                    <input id="zip-code" class="form-control" th:field="*{zipCode}"></input>
+                    <input id="zip-code" class="form-control" th:field="*{zipCode}"/>
                     <small class="text-danger" th:if="${#fields.hasErrors('zipCode')}" th:errors="*{zipCode}"></small>
                 </div>
                 
@@ -127,7 +127,7 @@
 
                 <div class="form-group">
                     <label for="date-of-request" class="control-label">Datum podaní požadavku:</label>
-                    <input id="date-of-request" type="date" class="form-control" th:field="*{dateOfRequest}"></input>
+                    <input id="date-of-request" type="date" class="form-control" th:field="*{dateOfRequest}"/>
                     <small class="text-danger" th:if="${#fields.hasErrors('dateOfRequest')}" th:errors="*{dateOfRequest}"></small>
                 </div>
                 
@@ -160,7 +160,7 @@
             <form class="d-flex flex-column gap-2" method="post" th:action="@{${formAction}}" th:object="${contractDTO}">
                 <div class="form-group">
                     <label for="contract-number" class="control-label">Číslo smlouvy:</label>
-                    <input id="contract-number" type="text" class="form-control" th:field="*{contractNumber}"></input>
+                    <input id="contract-number" type="text" class="form-control" th:field="*{contractNumber}"/>
                     <small class="text-danger" th:if="${#fields.hasErrors('contractNumber')}" th:errors="*{contractNumber}"></small>
                 </div>
 
@@ -188,25 +188,25 @@
                 
                 <div class="form-group">
                     <label for="begin-date" class="control-label">Datum zahájení:</label>
-                    <input id="begin-date" type="date" class="form-control" th:field="*{beginDate}"></input>
+                    <input id="begin-date" type="date" class="form-control" th:field="*{beginDate}"/>
                     <small class="text-danger" th:if="${#fields.hasErrors('beginDate')}" th:errors="*{beginDate}"></small>
                 </div>                
 
                 <div class="form-group">
                     <label for="signature-date" class="control-label">Datum podpisu smlouvy:</label>
-                    <input id="signature-date" type="date" class="form-control" th:field="*{signatureDate}"></input>
+                    <input id="signature-date" type="date" class="form-control" th:field="*{signatureDate}"/>
                     <small class="text-danger" th:if="${#fields.hasErrors('signatureDate')}" th:errors="*{signatureDate}"></small>
                 </div>
 
                 <div class="form-group" th:if="${ifShowCreateForm}">
                     <label for="price-per-period" class="control-label">Cena za období:</label>
-                    <input id="price-per-period" type="number" class="form-control" th:field="*{pricePerPeriod}"></input>
+                    <input id="price-per-period" type="number" class="form-control" th:field="*{pricePerPeriod}"/>
                     <small class="text-danger" th:if="${#fields.hasErrors('pricePerPeriod')}" th:errors="*{pricePerPeriod}"></small>
                 </div>
 
                 <div class="form-group" th:if="${ifShowCreateForm}">
                     <label for="liability-percentage" class="control-label">Procentuální spoluúčast:</label>
-                    <input id="liability-percentage" type="number" step="0.01" class="form-control" th:field="*{liabilityPercentage}"></input>
+                    <input id="liability-percentage" type="number" step="0.01" class="form-control" th:field="*{liabilityPercentage}"/>
                     <small class="text-danger" th:if="${#fields.hasErrors('liabilityPercentage')}" th:errors="*{liabilityPercentage}"></small>
                 </div>
 
@@ -224,7 +224,7 @@
             <form class="d-flex flex-column gap-2" method="post" th:action="${formAction}" th:object="${insurancesDTO}">
                 <div class="form-group">
                     <label for="name" class="control-label">Název pojištění:</label>
-                    <input id="name" th:field="*{name}" class="form-control"></input>
+                    <input id="name" th:field="*{name}" class="form-control"/>
                     <small class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
                 </div>
                 
@@ -247,7 +247,7 @@
 
                 <div class="form-group">
                     <label for="minimum-insurance-value" class="control-label">Minimální pojistná hodnota:</label>
-                    <input id="minimum-insurance-value" class="form-control" th:field="*{minimumInsuranceValue}"></input>
+                    <input id="minimum-insurance-value" class="form-control" th:field="*{minimumInsuranceValue}"/>
                     <small class="text-danger" th:if="${#fields.hasErrors('minimumInsuranceValue')}" th:errors="*{minimumInsuranceValue}"></small>
                 </div>
                 
@@ -259,7 +259,7 @@
                 
                 <div class="form-group">
                     <label for="maximum-payout-value" class="control-label">Maximální vyplacená částka:</label>
-                    <input id="maximum-payout-value" class="form-control" th:field="*{maximumPayoutValue}"></input>
+                    <input id="maximum-payout-value" class="form-control" th:field="*{maximumPayoutValue}"/>
                     <small class="text-danger" th:if="${#fields.hasErrors('maximumPayoutValue')}" th:errors="*{maximumPayoutValue}"></small>
                 </div>
                 
@@ -274,13 +274,13 @@
 
                 <div class="form-group">
                     <label for="renewal-period" class="control-label">Obnovovací doba:</label>
-                    <input id="renewal-period" class="form-control" th:field="*{renewalPeriod}"></input>
+                    <input id="renewal-period" class="form-control" th:field="*{renewalPeriod}"/>
                     <small class="text-danger" th:if="${#fields.hasErrors('renewalPeriod')}" th:errors="*{renewalPeriod}"></small>
                 </div>
 
                 <div class="form-group">
                     <label for="minimum-policy-term" class="control-label">Minimální doba trvání:</label>
-                    <input id="minimum-policy-term" class="form-control" th:field="*{minimumPolicyTerm}"></input>
+                    <input id="minimum-policy-term" class="form-control" th:field="*{minimumPolicyTerm}"/>
                     <small class="text-danger" th:if="${#fields.hasErrors('minimumPolicyTerm')}" th:errors="*{minimumPolicyTerm}"></small>
                 </div>
                 
@@ -428,6 +428,127 @@
                 <label for="liability-percentage" class="control-label">Procentuální spoluúčast:</label>
                 <input id="liability-percentage" type="number" step="0.01" th:value="${contract.liabilityPercentage}" class="form-control" readonly>
             </div>
+        </section>
+
+        <section th:fragment="incidentForm" class="py-4 px-4">
+            <div class="centered">
+                <h1 th:text="${formName}"></h1>
+            </div>
+
+            <form class="d-flex flex-column gap-2" method="post" th:action="${isCreateForm} ? ${formAction} : ''" th:object="${formDTO}">
+                <div class="form-group">
+                    <label for="case-number" class="control-label">Číslo případu:</label>
+                    <input id="case-number" type="text" th:readonly="${!isCreateForm}" th:field="*{caseNumber}" class="form-control"/>
+                    <small class="text-danger" th:if="${#fields.hasErrors('caseNumber')}" th:errors="*{caseNumber}"></small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="title" class="control-label">Předmět události:</label>
+                    <input id="title" type="text" th:readonly="${!isCreateForm}" th:field="*{title}" class="form-control"/>
+                    <small class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></small>
+                </div>
+                
+                <th:block th:unless="${isSearchForm}">
+                    <div class="form-group">
+                        <label for="description" class="control-label">Popis události:</label>
+                        <textarea id="description" th:readonly="${!isCreateForm}" th:field="*{description}" class="form-control"></textarea>
+                        <small class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
+                    </div>      
+                </th:block>
+
+                <div class="form-group">
+                    <label for="birth-number" class="control-label">Rodné číslo:</label>
+                    <input id="birth-number" type="text" th:readonly="${!isCreateForm}" class="form-control" th:field="*{birthNumber}" />
+                    <small class="text-danger" th:if="${#fields.hasErrors('birthNumber')}" th:errors="*{birthNumber}"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="incident-type" class="control-label">Druh události:</label>
+                    <select th:if="${isCreateForm}" id="incident-type" th:field="*{incidentType}" class="form-select">
+                        <option th:each="incident : ${T(com.danger.insurance.incidents.data.enums.IncidentType).values()}"
+                                th:value="${incident}"
+                                th:text="${incident.displayName}">
+                        </option>
+                    </select>
+                    <small class="text-danger" th:if="${#fields.hasErrors('incidentType')}" th:errors="*{incidentType}"></small>
+                    <input id="incident-type" th:unless="${isCreateForm}" th:value="${formDTO.incidentType.displayName}" class="form-select" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label for="incident-subject" class="control-label">Událostí poškozený:</label>
+                    <select th:if="${isCreateForm}" id="incident-subject" th:field="*{incidentSubject}" class="form-select">
+                        <option th:each="subject: ${T(com.danger.insurance.insurances.data.enums.InsurancesSubjects).values()}"
+                                th:value="${subject}"
+                                th:text="${subject.displayName}">
+                        </option>
+                    </select>
+                    <small class="text-danger" th:if="${#fields.hasErrors('incidentSubject')}" th:errors="*{incidentSubject}"></small>
+                    <input id="incident-subject" th:unless="${isCreateForm}" th:value="${formDTO.incidentSubject.displayName}" class="form-select" readonly>
+                </div>
+                
+                <div class="form-group" th:unless="${isCreateForm}">
+                    <label for="current-status" class="control-label">Status zpracování:</label>
+                    <input id="current-status" th:value="${formDTO.currentStatus.displayName}" class="form-select" readonly>
+                    <small class="text-danger" th:if="${#fields.hasErrors('currentStatus')}" th:errors="*{currentStatus}"></small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="accident-date" class="control-label">Datum události:</label>
+                    <input id="accident-date" th:unless="${isCreateForm}" type="date" class="form-control" th:value="*{accidentDate}" readonly/>
+                    <input id="accident-date" th:if="${isCreateForm}" type="date" class="form-control" th:field="*{accidentDate}"/>
+                    <small class="text-danger" th:if="${#fields.hasErrors('accidentDate')}" th:errors="*{accidentDate}"></small>
+                </div>
+
+                <div class="form-group" th:unless="${isSearchForm}">
+                    <label for="report-date" class="control-label">Datum ohlášení:</label>
+                    <input id="report-date" th:unless="${isCreateForm}" type="date" class="form-control" th:value="*{reportDate}" readonly/>
+                    <input id="report-date" th:if="${isCreateForm}" type="date" class="form-control" th:field="*{reportDate}"/>
+                    <small class="text-danger" th:if="${#fields.hasErrors('reportDate')}" th:errors="*{reportDate}"></small>
+                </div>
+
+                <div class="form-group" th:unless="${isCreateForm or isSearchForm}">
+                    <label for="todays-date" class="control-label">Datum evidence:</label>
+                    <input id="todays-date" th:unless="${isCreateForm}" type="date" class="form-control" th:value="*{todaysDate}" readonly/>
+                    <input id="todays-date" th:if="${isCreateForm}" type="date" class="form-control" th:field="*{todaysDate}"/>
+                    <small class="text-danger" th:if="${#fields.hasErrors('todaysDate')}" th:errors="*{todaysDate}"></small>
+                </div>
+                
+                <div class="form-group" th:unless="${isCreateForm or isSearchForm}">
+                    <label for="closure-date" class="control-label">Datum uzavření:</label>
+                    <input id="closure-date" type="date" th:if="${!isCreateForm and formDTO.closureDate != null}" class="form-control" th:value="*{closureDate}" readonly/>
+                    <input id="closure-date" type="text" th:if="${!isCreateForm and formDTO.closureDate == null}" class="form-control" value="Případ se stále zpracovává" readonly/>
+                    <input id="closure-date" th:if="${isCreateForm}" type="date" class="form-control" th:field="*{closureDate}"/>
+                    <small class="text-danger" th:if="${#fields.hasErrors('closureDate')}" th:errors="*{closureDate}"></small>
+                </div>
+
+                <div class="form-group" th:if="${isCreateForm}">
+                    <button type="submit" class="clanky-tlacitko" th:text="${buttonLabel}"></button>
+                </div>
+            </form>
+        </section>
+
+        <section th:fragment="incidentCommentForm" class="py-4 px-4">
+            <div class="centered">
+                <h1 th:text="${formName}"></h1>
+            </div>
+
+            <form class="d-flex flex-column gap-2" method="post" th:action="${formAction}" th:object="${incidentCommentDTO}">
+                <div class="form-group">
+                    <label for="comment-title" class="control-label">Předmět kroku zpracování:</label>
+                    <input id="comment-title" type="text" th:readonly="${!isCommentCreateForm}" th:field="${incidentCommentDTO.title}" class="form-control" />
+                    <small class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="comment-description" class="control-label">Popis kroku zpracování:</label>
+                    <textarea id="comment-description" th:readonly="${!isCommentCreateForm}" class="form-control" th:field="*{description}"></textarea>
+                    <small class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
+                </div>
+
+                <div class="form-group" th:if="${isCommentCreateForm or isConfirmationForm}">
+                    <button type="submit" class="clanky-tlacitko" th:text="${buttonLabel}"></button>
+                </div>
+            </form>
         </section>
 
         <footer th:fragment="footer">

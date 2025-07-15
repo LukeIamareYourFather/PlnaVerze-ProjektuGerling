@@ -1,0 +1,13 @@
+package com.danger.insurance.incidents.data.repositories;
+
+import org.springframework.data.repository.CrudRepository;
+
+import com.danger.insurance.incidents.data.entities.IncidentCommentsEntity;
+import com.danger.insurance.parties.data.entities.PartiesEntity;
+
+/**
+ * Repository interface for accessing and querying {@link PartiesEntity} objects.
+ * Provides standard CRUD methods and custom queries for advanced party lookups.
+ */
+public interface IncidentCommentsRepository extends CrudRepository<IncidentCommentsEntity, Long> {
+}
