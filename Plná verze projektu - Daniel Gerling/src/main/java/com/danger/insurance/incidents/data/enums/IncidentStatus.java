@@ -9,7 +9,7 @@ public enum IncidentStatus {
 	//Define enums
 	OPEN("Nová událost"),				// Person not yet registered
 	PROCESSING("Aktuálně se zpracovává"),				// Registered person without any active insurance contracts
-	CLOSED("Zpravování dokončeno");				// Person who owns and holds an active insurance policy
+	CLOSED("Zpracování dokončeno");				// Person who owns and holds an active insurance policy
 	
 	// Define Strings
 	private final String displayName;		// Stores display name in local language

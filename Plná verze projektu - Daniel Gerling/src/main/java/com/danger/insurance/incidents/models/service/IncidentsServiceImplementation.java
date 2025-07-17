@@ -12,6 +12,7 @@ import com.danger.insurance.incidents.models.dto.IncidentsDTO;
 import com.danger.insurance.incidents.models.dto.get.IncidentDetailsGetDTO;
 import com.danger.insurance.incidents.models.dto.mappers.IncidentsMapper;
 import com.danger.insurance.incidents.models.dto.post.IncidentsFindPostDTO;
+import com.danger.insurance.incidents.models.exceptions.IncidentNotFoundException;
 import com.danger.insurance.parties.models.exceptions.PartyNotFoundException;
 
 @Service
@@ -138,7 +139,7 @@ public class IncidentsServiceImplementation implements IncidentsService {
      * @throws PartyNotFoundException if no party with the given ID exists.
      */
     private IncidentsEntity getIncidentOrThrow(long incidentId) {
-        return incidentsRepository.findById(incidentId).orElseThrow(PartyNotFoundException::new);		// Return party entity or throw exception if not found
+        return incidentsRepository.findById(incidentId).orElseThrow(IncidentNotFoundException::new);		// Return party entity or throw exception if not found
     }
 
     /**

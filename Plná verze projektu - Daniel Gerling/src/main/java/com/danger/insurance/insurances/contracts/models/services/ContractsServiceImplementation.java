@@ -10,6 +10,7 @@ import com.danger.insurance.insurances.contracts.data.entities.ContractsEntity;
 import com.danger.insurance.insurances.contracts.data.repositories.ContractsRepository;
 import com.danger.insurance.insurances.contracts.models.dto.ContractsDTO;
 import com.danger.insurance.insurances.contracts.models.dto.mappers.ContractsMapper;
+import com.danger.insurance.insurances.contracts.models.exceptions.ContractNotFoundException;
 import com.danger.insurance.parties.models.exceptions.PartyNotFoundException;
 
 @Service
@@ -18,8 +19,8 @@ public class ContractsServiceImplementation implements ContractsService{
 	// Object initialization
 	
 	@Autowired
-	private ContractsRepository contractsRepository;				// Handles querying operations for the Parties entity
-		
+	private ContractsRepository contractsRepository;
+			
 	@Autowired
 	private ContractsMapper contractsMapper;
 	// Start of code
@@ -112,7 +113,7 @@ public class ContractsServiceImplementation implements ContractsService{
      * @throws PartyNotFoundException if no party with the given ID exists.
      */
     private ContractsEntity getInsuranceOrThrow(long partyId) {
-        return contractsRepository.findById(partyId).orElseThrow(PartyNotFoundException::new);		// Return party entity or throw exception if not found
+        return contractsRepository.findById(partyId).orElseThrow(ContractNotFoundException::new);		// Return party entity or throw exception if not found
     }
 
 	@Override

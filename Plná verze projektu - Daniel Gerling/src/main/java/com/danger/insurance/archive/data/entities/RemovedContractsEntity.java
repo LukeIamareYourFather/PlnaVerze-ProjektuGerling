@@ -23,7 +23,7 @@ public class RemovedContractsEntity {
 
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
-	private  ContractsRemovalReason deleteReason;
+	private ContractsRemovalReason deleteReason;
 	
 	@Column(nullable = false)
 	private String description;

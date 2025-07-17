@@ -1,5 +1,7 @@
 package com.danger.insurance.incidents.data.repositories;
 
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 
 import com.danger.insurance.incidents.data.entities.IncidentCommentsEntity;
@@ -10,4 +12,5 @@ import com.danger.insurance.parties.data.entities.PartiesEntity;
  * Provides standard CRUD methods and custom queries for advanced party lookups.
  */
 public interface IncidentCommentsRepository extends CrudRepository<IncidentCommentsEntity, Long> {
+	List<IncidentCommentsEntity> findByIncidentsEntity_IncidentId(Long incidentId);
 }

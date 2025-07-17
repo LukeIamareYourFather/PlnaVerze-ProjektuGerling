@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.danger.insurance.incidents.models.dto.IncidentCommentsDTO;
@@ -51,37 +52,23 @@ public class ProcessIncidentsController {
 
 	@GetMapping("process")
 	public String renderProcessIncidentForm(@ModelAttribute("incidentCommentDTO") IncidentCommentsCreatePostDTO incidentCommentsCreatePostDTO, Model model) {
-		model.addAttribute("formName", "Zpracovávání pojistných událostí");
-		model.addAttribute("buttonLabel", "Potvrdit");
-		model.addAttribute("formAction", "process/validate");
-		model.addAttribute("isCommentCreateForm", true);
-
-		return "pages/incidents/process";
+		return commonSupportService.addProcessIncidentFormAttributes(model, "Zpracovávání pojistných událostí", "Potvrdit", "process/validate", true, false, false);
 	}
 
 	@PostMapping("process/validate")
 	public String validateProcessIncidentFormPost(@ModelAttribute("incidentCommentDTO") IncidentCommentsCreatePostDTO incidentCommentsCreatePostDTO, Model model, BindingResult bindingResult) {
-
-		//
-		if (bindingResult.hasErrors()) {
-			model.addAttribute("incidentCommentDTO", incidentCommentsCreatePostDTO);
-			
-			return "pages/incidents/process";
-	    }
-		
-		return "redirect:/incidents/process/find";
+		return commonSupportService.validateProcessIncidentFormPost(model, bindingResult, incidentCommentsCreatePostDTO, null, "incidents/process/find");
 	}
 	
 	@GetMapping("process/find")
-	public String renderSearchIncidentToCommentForm(@ModelAttribute("incidentCommentDTO") IncidentCommentsCreatePostDTO incidentCommentsCreatePostDTO, Model model) {
-		return commonSupportService.addFindIncidentsAttributes(model, "Zpracovávání pojistných událostí - vyhledání pojistné událostí", "Vyhledej", true, true, "find/validate", "pages/incidents/find");
+	public String renderSearchIncidentToCommentForm(@SessionAttribute("incidentCommentDTO") IncidentCommentsCreatePostDTO incidentCommentsCreatePostDTO, Model model) {
+		return commonSupportService.addFindIncidentsAttributes(model, "Zpracovávání pojistných událostí - dohledání pojistné událostí", "Vyhledej", true, true, "find/validate");
 	}
 	
 	@PostMapping("process/find/validate")
-	public String validateSearchIncidentToCommentFormPost(
-			@SessionAttribute("incidentCommentDTO") IncidentCommentsCreatePostDTO incidentCommentsCreatePostDTO,
+	public String validateSearchIncidentToCommentFormPost(@SessionAttribute("incidentCommentDTO") IncidentCommentsCreatePostDTO incidentCommentsCreatePostDTO,
 			@ModelAttribute("formDTO") IncidentsFindPostDTO incidentsFindPostDTO, Model model, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-		return commonSupportService.validateFindIncidentsFormPost(model, incidentsFindPostDTO, "pages/incidents/find", "redirect:/incidents/process/find/select", bindingResult, redirectAttributes);
+		return commonSupportService.validateFindIncidentsFormPost(model, incidentsFindPostDTO, "redirect:/incidents/process/find/select", bindingResult, redirectAttributes);
 	}
 	
 	@GetMapping("process/find/select") 
@@ -91,26 +78,17 @@ public class ProcessIncidentsController {
 	
 	@GetMapping("process/find/selected-{incidentId}")
 	public String renderConfirmIncidentCommentForm(@PathVariable("incidentId") long incidentId, @ModelAttribute("incidentCommentDTO") IncidentCommentsCreatePostDTO incidentCommentsCreatePostDTO, Model model) {
-		model.addAttribute("pageTitle", "Zpracovávání pojistných událostí - potvrzení kroku zpracování");
-		model.addAttribute("formAction", "selected-" + incidentId + "/confirmed");
-		model.addAttribute("buttonLabel", "Potvrdit");
-		model.addAttribute("formDTO", incidentsService.getDetailsById(incidentId));
-		model.addAttribute("incidentCommentDTO", incidentCommentsCreatePostDTO);
-		model.addAttribute("isSearchForm", false);
-		model.addAttribute("isCreateForm", false);
-		model.addAttribute("isCommentCreateForm", false);
-		model.addAttribute("isConfirmationForm", true);
-		
-		
-		return "pages/incidents/confirm-comment";
+		return commonSupportService.addConfirmIncidentCommentFormAttributes(incidentId, incidentCommentsCreatePostDTO, null, model, "Zpracovávání pojistných událostí - potvrzení kroku zpracování",
+				false, false, false, true, false, false);
 	}
 	
 	@PostMapping("process/find/selected-{incidentId}/confirmed")
-	public String handleConfirmIncidentCommentForm(@PathVariable("incidentId") long incidentId, @ModelAttribute("incidentCommentsCreateDTO") IncidentCommentsCreatePostDTO incidentCommentsCreatePostDTO) {
+	public String handleConfirmIncidentCommentForm(@PathVariable("incidentId") long incidentId, @ModelAttribute("incidentCommentsCreateDTO") IncidentCommentsCreatePostDTO incidentCommentsCreatePostDTO, SessionStatus sessionStatus) {
 		IncidentCommentsDTO newIncidentComment = incidentCommentsMapper.mergeToIncidentCommentsDTO(new IncidentCommentsDTO(), incidentCommentsCreatePostDTO);
 		newIncidentComment.setCommentDate(LocalDate.now());
 		newIncidentComment.setIncidentsEntity(incidentsMapper.toEntity(incidentsService.getIncidentById(incidentId)));
 		incidentCommentsService.create(newIncidentComment);
+		sessionStatus.setComplete();
 		
 		return "redirect:/incidents/" + incidentId;
 	}

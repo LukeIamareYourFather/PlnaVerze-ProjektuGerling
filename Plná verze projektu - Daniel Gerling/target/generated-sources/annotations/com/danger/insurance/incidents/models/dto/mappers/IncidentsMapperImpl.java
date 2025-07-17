@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-07-15T09:28:28+0200",
+    date = "2025-07-17T07:25:27+0200",
     comments = "version: 1.6.3, compiler: javac, environment: Java 23.0.2 (Oracle Corporation)"
 )
 @Component
@@ -42,6 +42,7 @@ public class IncidentsMapperImpl implements IncidentsMapper {
         if ( list != null ) {
             incidentsEntity.setComments( new ArrayList<IncidentCommentsEntity>( list ) );
         }
+        incidentsEntity.setIncidentResolution( source.getIncidentResolution() );
 
         return incidentsEntity;
     }
@@ -70,6 +71,7 @@ public class IncidentsMapperImpl implements IncidentsMapper {
         if ( list != null ) {
             incidentsEntity.setComments( new ArrayList<IncidentCommentsEntity>( list ) );
         }
+        incidentsEntity.setIncidentResolution( source.getIncidentResolution() );
 
         return incidentsEntity;
     }
@@ -144,6 +146,7 @@ public class IncidentsMapperImpl implements IncidentsMapper {
         if ( list != null ) {
             incidentsDTO.setComments( new ArrayList<IncidentCommentsEntity>( list ) );
         }
+        incidentsDTO.setIncidentResolution( source.getIncidentResolution() );
 
         return incidentsDTO;
     }
@@ -182,6 +185,7 @@ public class IncidentsMapperImpl implements IncidentsMapper {
                 target.setComments( new ArrayList<IncidentCommentsEntity>( list ) );
             }
         }
+        target.setIncidentResolution( source.getIncidentResolution() );
     }
 
     @Override
@@ -218,5 +222,6 @@ public class IncidentsMapperImpl implements IncidentsMapper {
                 target.setComments( new ArrayList<IncidentCommentsEntity>( list ) );
             }
         }
+        target.setIncidentResolution( source.getIncidentResolution() );
     }
 }

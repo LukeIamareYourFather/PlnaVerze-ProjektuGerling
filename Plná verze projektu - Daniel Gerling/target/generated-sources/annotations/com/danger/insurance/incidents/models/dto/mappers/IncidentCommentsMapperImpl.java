@@ -3,12 +3,13 @@ package com.danger.insurance.incidents.models.dto.mappers;
 import com.danger.insurance.incidents.data.entities.IncidentCommentsEntity;
 import com.danger.insurance.incidents.models.dto.IncidentCommentsDTO;
 import com.danger.insurance.incidents.models.dto.post.IncidentCommentsCreatePostDTO;
+import com.danger.insurance.incidents.models.dto.post.IncidentsClosePostDTO;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-07-15T09:28:28+0200",
+    date = "2025-07-17T07:25:27+0200",
     comments = "version: 1.6.3, compiler: javac, environment: Java 23.0.2 (Oracle Corporation)"
 )
 @Component
@@ -57,6 +58,19 @@ public class IncidentCommentsMapperImpl implements IncidentCommentsMapper {
         incidentCommentsDTO.setTitle( incidentCommentsCreatePostDTO.getTitle() );
         incidentCommentsDTO.setDescription( incidentCommentsCreatePostDTO.getDescription() );
         incidentCommentsDTO.setCommentDate( incidentCommentsCreatePostDTO.getCommentDate() );
+
+        return incidentCommentsDTO;
+    }
+
+    @Override
+    public IncidentCommentsDTO splitToIncidentCommentsDTO(IncidentCommentsDTO incidentCommentsDTO, IncidentsClosePostDTO incidentsClosePostDTO) {
+        if ( incidentsClosePostDTO == null ) {
+            return incidentCommentsDTO;
+        }
+
+        incidentCommentsDTO.setTitle( incidentsClosePostDTO.getTitle() );
+        incidentCommentsDTO.setDescription( incidentsClosePostDTO.getDescription() );
+        incidentCommentsDTO.setCommentDate( incidentsClosePostDTO.getCommentDate() );
 
         return incidentCommentsDTO;
     }

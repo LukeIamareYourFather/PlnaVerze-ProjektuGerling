@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.danger.insurance.incidents.data.enums.IncidentResolutionsType;
 import com.danger.insurance.incidents.data.enums.IncidentStatus;
 import com.danger.insurance.incidents.data.enums.IncidentType;
 import com.danger.insurance.insurances.data.enums.InsurancesSubjects;
@@ -60,6 +61,9 @@ public class IncidentsEntity {
 	
 	@Column(nullable = true)
 	private LocalDate closureDate;
+	
+	@Column(nullable = true)
+	private IncidentResolutionsType incidentResolution;
 	
 	@OneToMany(mappedBy = "incidentsEntity", cascade = CascadeType.ALL)
 	private List<IncidentCommentsEntity> comments = new ArrayList<>();
@@ -244,6 +248,20 @@ public class IncidentsEntity {
 	 */
 	public void setComments(List<IncidentCommentsEntity> comments) {
 		this.comments = comments;
+	}
+
+	/**
+	 * @return the incidentResolution
+	 */
+	public IncidentResolutionsType getIncidentResolution() {
+		return incidentResolution;
+	}
+
+	/**
+	 * @param incidentResolution the incidentResolution to set
+	 */
+	public void setIncidentResolution(IncidentResolutionsType incidentResolution) {
+		this.incidentResolution = incidentResolution;
 	}
 	
 	// Getters and Setters Region

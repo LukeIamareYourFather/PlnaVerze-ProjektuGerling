@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.danger.insurance.incidents.data.entities.IncidentCommentsEntity;
+import com.danger.insurance.incidents.data.enums.IncidentResolutionsType;
 import com.danger.insurance.incidents.data.enums.IncidentStatus;
 import com.danger.insurance.incidents.data.enums.IncidentType;
 import com.danger.insurance.insurances.data.enums.InsurancesSubjects;
@@ -27,6 +28,8 @@ public class IncidentsDTO {
 	private LocalDate todaysDate;
 	private LocalDate closureDate;
 
+	private IncidentResolutionsType incidentResolution;
+	
 	private List<IncidentCommentsEntity> comments = new ArrayList<>();
 
 	/**
@@ -211,5 +214,18 @@ public class IncidentsDTO {
 		this.comments = comments;
 	}
 
-	
+	/**
+	 * @return the incidentResolution
+	 */
+	public IncidentResolutionsType getIncidentResolution() {
+		return incidentResolution;
+	}
+
+	/**
+	 * @param incidentResolution the incidentResolution to set
+	 */
+	public void setIncidentResolution(IncidentResolutionsType incidentResolution) {
+		this.incidentResolution = incidentResolution;
+	}
+
 }

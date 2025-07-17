@@ -22,12 +22,12 @@ public class FindIncidentsController {
 	
 	@GetMapping("find")
 	public String renderSearchIncidentForm(Model model) {
-		return commonSupportService.addFindIncidentsAttributes(model, "Vyhledávání pojistných událostí", "Vyhledej", true, true, "find/validate", "pages/incidents/find");
+		return commonSupportService.addFindIncidentsAttributes(model, "Vyhledávání pojistných událostí", "Vyhledej", true, true, "find/validate");
 	}
 	
 	@PostMapping("find/validate")
 	public String validateSearchIncidentForm(@ModelAttribute("formDTO") IncidentsFindPostDTO incidentsFindPostDTO, Model model, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-		return commonSupportService.validateFindIncidentsFormPost(model, incidentsFindPostDTO, "pages/incidents/find", "redirect:/incidents/find/select", bindingResult, redirectAttributes);
+		return commonSupportService.validateFindIncidentsFormPost(model, incidentsFindPostDTO, "redirect:/incidents/find/select", bindingResult, redirectAttributes);
 	}
 	
 	@GetMapping("find/select")

@@ -10,8 +10,20 @@
     </header>
 
     <body id="main-page">
-        <article class="tile-background pb-5">
-            <section th:replace="~{fragments/layout.html :: incidentForm}"></section>
+        <article class="pb-5">
+            <div class="tile-background">
+                <section th:replace="~{fragments/layout.html :: incidentForm}"></section>
+
+                <ul class="list-group px-4 py-4" id="found-incidents">
+                    <li th:each="incidentComment: ${incidentCommentsList}" class="list-group-item">
+                        <h2>
+                            <p th:text="${incidentComment.title + '  —  ' + incidentComment.commentDate}"></p>
+
+                            <p th:text="${incidentComment.description}"></p>
+                        </h2>
+                    </li>
+                </ul>
+            </div>
         </article>
 
         <footer th:replace="~{fragments/layout.html :: footer}"></footer>

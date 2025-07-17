@@ -19,11 +19,21 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.danger.insurance.archive.models.dto.DeletedPartiesDTO;
+import com.danger.insurance.archive.models.dto.RemoveContractReasonsDTO;
+import com.danger.insurance.archive.models.dto.mappers.RemovedContractsMapper;
+import com.danger.insurance.archive.models.services.DeletedPartiesServiceImplementation;
+import com.danger.insurance.archive.models.services.RemovedContractsServiceImplementation;
+import com.danger.insurance.insurances.contracts.data.entities.ContractsEntity;
+import com.danger.insurance.insurances.contracts.data.enums.ContractsRemovalReason;
+import com.danger.insurance.insurances.contracts.data.repositories.PartyContractsRepository;
+import com.danger.insurance.insurances.contracts.models.dto.mappers.ContractsMapper;
+import com.danger.insurance.insurances.contracts.models.services.ContractsServiceImplementation;
+import com.danger.insurance.insurances.models.dto.InsurancesDTO;
+import com.danger.insurance.insurances.models.services.InsurancesServiceImplementation;
 import com.danger.insurance.parties.data.entities.PartiesEntity;
 import com.danger.insurance.parties.data.enums.PartyStatus;
 import com.danger.insurance.parties.models.dto.PartiesDetailsDTO;
 import com.danger.insurance.parties.models.dto.PartiesReasonsFormDTO;
-import com.danger.insurance.parties.models.service.DeletedPartiesServiceImplementation;
 import com.danger.insurance.parties.models.service.PartiesServiceImplementation;
 
 @Controller
@@ -38,6 +48,24 @@ public class DeletePartiesController {
 	
 	@Autowired
 	private DeletedPartiesServiceImplementation deleterService;
+	
+	@Autowired 
+	private ContractsServiceImplementation contractsService;
+	
+	@Autowired
+	private PartyContractsRepository partyContractsRepository;	
+	
+	@Autowired
+	private RemovedContractsServiceImplementation removedContractsService;
+	
+	@Autowired
+	private RemovedContractsMapper removedContractsMapper;
+	
+	@Autowired
+	private InsurancesServiceImplementation insurancesService;
+	
+	@Autowired
+	private ContractsMapper contractsMapper;
 	
 	@ModelAttribute("reasonsDTO")
 	public PartiesReasonsFormDTO reasonsDto() {
@@ -129,6 +157,30 @@ public class DeletePartiesController {
 	
 	//
 	private void processConfirmedRemoval(PartiesReasonsFormDTO reasonsDto, long partyId, SessionStatus sessionStatus) {
+		List<ContractsEntity> partyOwnedContracts = partyContractsRepository.findContractsByPartyId(partyId);
+		
+		//
+		for (ContractsEntity partyOwnedContract : partyOwnedContracts) {
+			LocalDate todaysDate = LocalDate.now();
+			
+			//
+			if (partyContractsRepository.findPartyStatus(partyOwnedContract.getContractId(), partyId) == PartyStatus.POLICY_OWNER) {
+				RemoveContractReasonsDTO removalReasonsDTO = new RemoveContractReasonsDTO(); 
+				InsurancesDTO insuranceDTO = insurancesService.getById(partyOwnedContract.getInsurancesEntity().getInsurancesId());
+				removalReasonsDTO = removedContractsMapper.mergeToRemoveContractReasonsDTO(contractsMapper.toDTO(partyOwnedContract), insuranceDTO, removalReasonsDTO);
+				removalReasonsDTO.setDateOfCancellation(todaysDate);
+				removalReasonsDTO.setDateOfRequest(todaysDate);
+				removalReasonsDTO.setDeleteReason(ContractsRemovalReason.AUTOMATED);
+				removalReasonsDTO.setDescription("Smlouva uzavřena, jelikož byla osoba odstraněna ze systému");
+				removalReasonsDTO.setTodaysDate(todaysDate);
+				removalReasonsDTO.setBirthNumber(partiesService.getById(partyId).getBirthNumber());
+				removalReasonsDTO.setInsuranceName(insuranceDTO.getName());
+				removedContractsService.create(removalReasonsDTO);
+				contractsService.delete(partyOwnedContract.getContractId());
+			}
+			
+		}
+		
 		reasonsDto.setTodaysDate(LocalDate.now());
 		PartiesDetailsDTO partyDTO = partiesService.getById(partyId);
 		DeletedPartiesDTO deleteDTO = deleterService.createDeleteDTO(reasonsDto, partyDTO);

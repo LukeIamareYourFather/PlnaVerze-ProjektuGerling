@@ -545,7 +545,55 @@
                     <small class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
                 </div>
 
+                <div class="form-group" th:if="${isClosureForm or isClosureDetail}">
+                    <label for="incident-resolution" class="control-label">Výsledek události:</label>
+                    
+                    <select id="incident-resolution" th:unless="${isClosureDetail}" th:field="*{incidentResolution}" class="form-select">
+                        <option th:each="incidentResolutionType: ${T(com.danger.insurance.incidents.data.enums.IncidentResolutionsType).values()}"
+                                th:value="${incidentResolutionType}"
+                                th:text="${incidentResolutionType.displayName}">
+                        </option>
+                    </select>
+
+                    <small class="text-danger" th:if="${#fields.hasErrors('incidentResolution')}" th:errors="*{incidentResolution}"></small>
+
+                    <input id="incident-resolution" th:if="${isClosureDetail}" type="text" th:value="${incidentCommentDTO.incidentResolution.displayName}" class="form-select" readonly>
+                </div>
+
                 <div class="form-group" th:if="${isCommentCreateForm or isConfirmationForm}">
+                    <button type="submit" class="clanky-tlacitko" th:text="${buttonLabel}"></button>
+                </div>
+            </form>
+        </section>
+
+        <section th:fragment="incidentRemovalForm" class="py-4 px-4">
+            <div class="centered">
+                <h1 th:text="${formName}"></h1>
+            </div>
+
+            <form class="d-flex flex-column gap-2" method="post" th:action="${formAction}" th:object="${incidentRemovalReasonsDTO}">
+                <div class="form-group">
+                    <label for="removal-reason" class="control-label">Důvod odstranění pojištění:</label>
+
+                    <select id="removal-reason" th:if="${isDeleteIncidentCreateForm}" th:field="*{incidentRemovalReason}" class="form-select">
+                        <option th:each="removalReason : ${T(com.danger.insurance.incidents.data.enums.IncidentRemovalReasons).values()}"
+                                th:value="${removalReason}"
+                                th:text="${removalReason.displayName}">
+                        </option>
+                    </select>
+
+                    <small class="text-danger" th:if="${#fields.hasErrors('incidentRemovalReason')}" th:errors="*{incidentRemovalReason}"></small>
+
+                    <input id="incident-resolution" th:unless="${isDeleteIncidentCreateForm}" type="text" th:value="${incidentRemovalReasonsDTO.incidentRemovalReason.displayName}" class="form-select" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label for="removal-description" class="control-label">Popis důvodu odstranění:</label>
+                    <textarea id="removal-description" th:readonly="${!isDeleteIncidentCreateForm}" class="form-control" th:field="*{removalDescription}"></textarea>
+                    <small class="text-danger" th:if="${#fields.hasErrors('removalDescription')}" th:errors="*{removalDescription}"></small>
+                </div>
+
+                <div class="form-group">
                     <button type="submit" class="clanky-tlacitko" th:text="${buttonLabel}"></button>
                 </div>
             </form>

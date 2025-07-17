@@ -9,7 +9,8 @@ public enum ContractsRemovalReason {
 	UPGRADE("Vylepšení"),
 	CEASED("Zaniklý"),
 	RELOCATION("Odstěhování"),
-	MISCONDUCT("Nedodržení smlouvy");
+	MISCONDUCT("Nedodržení smlouvy"),
+	AUTOMATED("Automatizované");
 	
 	// Define Strings
 	private final String displayName;		// Stores display name in local language

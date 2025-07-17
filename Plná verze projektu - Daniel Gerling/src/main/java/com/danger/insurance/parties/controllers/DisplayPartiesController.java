@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.danger.insurance.archive.models.dto.DeletedPartiesDTO;
+import com.danger.insurance.archive.models.services.DeletedPartiesServiceImplementation;
 import com.danger.insurance.insurances.contracts.data.entities.ContractsEntity;
 import com.danger.insurance.insurances.contracts.data.repositories.PartyContractsRepository;
 import com.danger.insurance.insurances.contracts.models.dto.PartyContractsProfileDTO;
 import com.danger.insurance.parties.data.entities.PartiesEntity;
 import com.danger.insurance.parties.models.dto.PartiesDetailsDTO;
 import com.danger.insurance.parties.models.dto.PartiesFoundSendDTO;
-import com.danger.insurance.parties.models.service.DeletedPartiesServiceImplementation;
 import com.danger.insurance.parties.models.service.PartiesServiceImplementation;
 
 /**

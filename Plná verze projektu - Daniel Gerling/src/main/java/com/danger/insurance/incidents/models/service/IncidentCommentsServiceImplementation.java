@@ -10,6 +10,7 @@ import com.danger.insurance.incidents.data.entities.IncidentCommentsEntity;
 import com.danger.insurance.incidents.data.repositories.IncidentCommentsRepository;
 import com.danger.insurance.incidents.models.dto.IncidentCommentsDTO;
 import com.danger.insurance.incidents.models.dto.mappers.IncidentCommentsMapper;
+import com.danger.insurance.incidents.models.exceptions.IncidentCommentNotFoundException;
 import com.danger.insurance.parties.models.exceptions.PartyNotFoundException;
 
 @Service
@@ -91,7 +92,7 @@ public class IncidentCommentsServiceImplementation implements IncidentCommentsSe
      * @throws PartyNotFoundException if no party with the given ID exists.
      */
     private IncidentCommentsEntity getInsureeOrThrow(long partyId) {
-        return incidentCommentsRepository.findById(partyId).orElseThrow(PartyNotFoundException::new);		// Return party entity or throw exception if not found
+        return incidentCommentsRepository.findById(partyId).orElseThrow(IncidentCommentNotFoundException::new);		// Return party entity or throw exception if not found
     }
 
     /**

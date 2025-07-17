@@ -7,6 +7,7 @@ import org.mapstruct.MappingTarget;
 import com.danger.insurance.incidents.data.entities.IncidentCommentsEntity;
 import com.danger.insurance.incidents.models.dto.IncidentCommentsDTO;
 import com.danger.insurance.incidents.models.dto.post.IncidentCommentsCreatePostDTO;
+import com.danger.insurance.incidents.models.dto.post.IncidentsClosePostDTO;
 import com.danger.insurance.parties.data.entities.PartiesEntity;
 import com.danger.insurance.parties.models.dto.PartiesCreateDTO;
 import com.danger.insurance.parties.models.dto.PartiesDetailsDTO;
@@ -37,6 +38,10 @@ public interface IncidentCommentsMapper {
 	@Mapping(target = ".", source = "incidentCommentsCreatePostDTO")
 	IncidentCommentsDTO mergeToIncidentCommentsDTO(@MappingTarget IncidentCommentsDTO incidentCommentsDTO, IncidentCommentsCreatePostDTO incidentCommentsCreatePostDTO);
 
+	@Mapping(target = ".", source = "incidentsClosePostDTO")
+	IncidentCommentsDTO splitToIncidentCommentsDTO(@MappingTarget IncidentCommentsDTO incidentCommentsDTO, IncidentsClosePostDTO incidentsClosePostDTO);
+
+	
 	/**
      * Maps a {@link PartiesEntity} to a new {@link PartiesDetailsDTO}.
      *

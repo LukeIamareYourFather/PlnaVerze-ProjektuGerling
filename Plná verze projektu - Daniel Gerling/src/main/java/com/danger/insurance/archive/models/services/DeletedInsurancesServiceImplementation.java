@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import com.danger.insurance.archive.data.repositories.DeletedInsurancesRepository;
 import com.danger.insurance.archive.models.dto.DeleteInsurancesReasonsDTO;
 import com.danger.insurance.archive.models.dto.DeletedInsurancesDTO;
+import com.danger.insurance.archive.models.dto.mappers.DeletedInsurancesMapper;
 import com.danger.insurance.archive.data.entities.DeletedInsurancesEntity;
 import com.danger.insurance.insurances.models.dto.InsurancesDTO;
-import com.danger.insurance.insurances.models.dto.mappers.DeletedInsurancesMapper;
 import com.danger.insurance.parties.models.exceptions.PartyNotFoundException;
 
 @Service

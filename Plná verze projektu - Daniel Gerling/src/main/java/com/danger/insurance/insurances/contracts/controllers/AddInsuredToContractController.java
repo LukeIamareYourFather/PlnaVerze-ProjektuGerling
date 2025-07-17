@@ -81,6 +81,7 @@ public class AddInsuredToContractController {
 	public String renderContractSearchForm(@PathVariable("partyId") long partyId, Model model) {
 		model.addAttribute("contractDTO", new ContractsDTO());
 		model.addAttribute("formAction", "party-" + partyId + "/validate");
+		model.addAttribute("buttonLabel", "Vyhledat");
 		
 		return "pages/insurances/contracts/find";
 	}
