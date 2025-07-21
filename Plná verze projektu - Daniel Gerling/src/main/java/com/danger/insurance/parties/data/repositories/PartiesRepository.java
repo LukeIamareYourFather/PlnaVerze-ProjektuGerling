@@ -56,4 +56,8 @@ public interface PartiesRepository extends CrudRepository<PartiesEntity, Long> {
 	    	@Param("phoneNumber") String phoneNumber,
 	        @Param("birthDay") LocalDate birthDay
 		);
+	
+	@Query("SELECT COUNT(p) FROM PartiesEntity p")
+    long getTotalUserCount();
+
 }

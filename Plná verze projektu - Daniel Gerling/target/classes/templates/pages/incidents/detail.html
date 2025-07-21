@@ -12,6 +12,10 @@
     <body id="main-page">
         <article class="pb-5">
             <div class="tile-background">
+                    <button sec:authorize="hasAnyRole('MANAGER', 'ADMINISTRATOR')" onclick="return confirm('Opravdu si přejete pozměnit tuto pojistnou událost?');">
+                        <a th:href="@{${incidentId} + '/edit'}">Upravit incident</a>
+                    </button>
+
                 <section th:replace="~{fragments/layout.html :: incidentForm}"></section>
 
                 <ul class="list-group px-4 py-4" id="found-incidents">

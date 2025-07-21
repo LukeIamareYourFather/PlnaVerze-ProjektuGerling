@@ -23,4 +23,17 @@ public interface PartyContractsRepository extends CrudRepository<PartyContractsE
     
     @Query("SELECT pc.contractRole FROM PartyContractsEntity pc WHERE pc.contractEntity.contractId = :contractId AND pc.partyEntity.partyId = :partyId")
    	PartyStatus findPartyStatus(@Param("contractId") Long contractId, @Param("partyId") Long partyId);
+    
+    @Query("SELECT COUNT(p) FROM PartyContractsEntity p WHERE p.contractRole = :contractRole")
+    long getTotalUserCount(@Param("contractRole") PartyStatus contractRole);
+ 
+    @Query(value = "SELECT COUNT(*) " +
+            "FROM party_contracts_entity p " +
+            "JOIN contracts_entity c ON p.contract_id = c.contract_id " +
+            "WHERE c.insured_subject = :insuredSubject",
+    nativeQuery = true)
+	long getTotalContractsOfType(@Param("insuredSubject") String insuredSubject);
+
+    @Query("SELECT pc.id FROM PartyContractsEntity pc WHERE pc.contractEntity.contractId = :contractId AND pc.partyEntity.partyId = :partyId")
+   	long findContractPartyIdOfPartyContract(@Param("contractId") Long contractId, @Param("partyId") Long partyId);
 }

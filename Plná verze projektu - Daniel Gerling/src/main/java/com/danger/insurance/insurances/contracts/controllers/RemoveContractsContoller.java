@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,7 @@ import com.danger.insurance.insurances.models.services.InsurancesServiceImplemen
 import com.danger.insurance.parties.data.entities.PartiesEntity;
 import com.danger.insurance.parties.models.service.PartiesServiceImplementation;
 
+@PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ADMINISTRATOR')")
 @Controller
 @RequestMapping("insurances")
 @SessionAttributes("removalReasonsDTO")

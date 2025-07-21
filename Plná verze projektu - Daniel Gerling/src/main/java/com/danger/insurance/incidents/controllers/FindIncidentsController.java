@@ -1,6 +1,7 @@
 package com.danger.insurance.incidents.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.danger.insurance.incidents.models.dto.post.IncidentsFindPostDTO;
 import com.danger.insurance.incidents.models.service.CommonSupportServiceIncidents;
 
+@PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ADMINISTRATOR')")
 @Controller
 @RequestMapping("incidents")
 public class FindIncidentsController {

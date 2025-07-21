@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,8 @@ import com.danger.insurance.archive.models.dto.RemoveContractReasonsDTO;
 import com.danger.insurance.archive.models.dto.mappers.RemovedContractsMapper;
 import com.danger.insurance.archive.models.services.DeletedPartiesServiceImplementation;
 import com.danger.insurance.archive.models.services.RemovedContractsServiceImplementation;
+import com.danger.insurance.infopages.data.enums.ButtonLabels;
+import com.danger.insurance.infopages.data.enums.FormNames;
 import com.danger.insurance.insurances.contracts.data.entities.ContractsEntity;
 import com.danger.insurance.insurances.contracts.data.enums.ContractsRemovalReason;
 import com.danger.insurance.insurances.contracts.data.repositories.PartyContractsRepository;
@@ -36,6 +39,7 @@ import com.danger.insurance.parties.models.dto.PartiesDetailsDTO;
 import com.danger.insurance.parties.models.dto.PartiesReasonsFormDTO;
 import com.danger.insurance.parties.models.service.PartiesServiceImplementation;
 
+@PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ADMINISTRATOR')")
 @Controller
 @RequestMapping("/parties")
 @SessionAttributes("reasonsDTO")
@@ -89,14 +93,14 @@ public class DeletePartiesController {
 	
 	@PostMapping("delete/find")
 	public String renderFindPolicyOwnerToDeleteForm(@ModelAttribute("reasonsDTO") PartiesReasonsFormDTO reasonsDto, Model model, RedirectAttributes redirectAttributes) {
-		assignSearchAttributes("formDTO", "formAction", "/parties/delete/found", null, null, model, true);
+		assignSearchAttributes("formDTO", "formAction", "/parties/delete/found", null, null, model, true, FormNames.PARTY_DELETE.getDisplayName() + " - " + FormNames.PARTY_FIND.getDisplayName().toLowerCase());
 		
 		return "pages/parties/policy-owners/find";
 	}
 	
 	@PostMapping("delete/found")
 	public String handleFoundPolicyOwnersToDelete(@ModelAttribute("reasonsDTO") PartiesReasonsFormDTO reasonsDto, PartiesDetailsDTO partyDto, Model model, RedirectAttributes redirectAttributes) {
-		assignSearchAttributes("foundParties", "referenceLink", "/parties/delete/party-", partyDto, PartyStatus.REGISTERED, model, false);
+		assignSearchAttributes("foundParties", "referenceLink", "/parties/delete/party-", partyDto, PartyStatus.REGISTERED, model, false, null);
 		
 		return "pages/parties/found-parties";
 	}
@@ -131,24 +135,25 @@ public class DeletePartiesController {
 	 * @param model the Spring model used to pass data to the view
 	 * @param ifFindAssignmentRequested whether to perform the
 	 */
-	private void assignSearchAttributes(String firstKeyName, String secondKeyName, String referenceLink, PartiesDetailsDTO partyDto, PartyStatus partyStatus, Model model, boolean ifFindAssignmentRequested) {
+	private void assignSearchAttributes(String firstKeyName, String secondKeyName, String referenceLink, PartiesDetailsDTO partyDto, PartyStatus partyStatus, Model model, boolean ifFindAssignmentRequested, String formName) {
 		
 		//
 		if(ifFindAssignmentRequested) {
 			model.addAttribute(firstKeyName, new PartiesDetailsDTO());
+			model.addAttribute("formName", formName);
 		} else {		//
 			List<PartiesEntity> foundParties = partiesService.findUserId(partyDto, partyStatus);
 			model.addAttribute(firstKeyName, foundParties);
-			
 		}
 		
 		model.addAttribute(secondKeyName, referenceLink);
+		model.addAttribute("buttonLabel", ButtonLabels.FIND.getDisplayName());
 	}
 	
 	//
 	private void assignDeleteConfirmationAttributes(long partyId, PartiesReasonsFormDTO reasonsDto, Model model) {
 		PartiesDetailsDTO partyDto = partiesService.getById(partyId);
-		model.addAttribute("pageTitle", "Potvrzení odebrání pojistníka");
+		model.addAttribute("pageTitle", FormNames.PARTY_DELETE.getDisplayName() + " - potvrzení vyžádaného smazání");
 		model.addAttribute("ifShowDeleteForm", true);
 		model.addAttribute("reasonsDTO", reasonsDto);
 		model.addAttribute("party", partyDto);

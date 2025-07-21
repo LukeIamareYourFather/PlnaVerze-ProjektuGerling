@@ -38,4 +38,13 @@ public interface IncidentsRepository extends CrudRepository<IncidentsEntity, Lon
 	    	@Param("currentStatus") IncidentStatus currentStatus,
 	    	@Param("accidentDate") LocalDate accidentDate
 		);
+	
+	@Query("SELECT COUNT(i) FROM IncidentsEntity i")
+	long getTotalIncidentsCount();
+
+	@Query("SELECT COUNT(i) FROM IncidentsEntity i WHERE i.currentStatus = :incidentStatus")
+    long getTotalStatusIncidentCount(@Param("incidentStatus") IncidentStatus incidentStatus);
+	
+	@Query("SELECT COUNT(i) FROM IncidentsEntity i WHERE i.incidentType = :incidentType")
+    long getTotalIncidentTypeCount(@Param("incidentType") IncidentType incidentType);
 }

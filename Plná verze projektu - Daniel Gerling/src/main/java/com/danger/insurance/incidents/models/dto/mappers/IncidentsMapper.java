@@ -38,7 +38,10 @@ public interface IncidentsMapper {
 	IncidentDetailsGetDTO toDetailsToDTO(IncidentsEntity source);			// Can be split into getDto and setDto in bigger projects
 	
 	@Mapping(target = ".", source = "incidentsCreateDTO")
-	IncidentsDTO mergeToIncidentsDTO(@MappingTarget IncidentsDTO incidentsDTO, IncidentsCreatePostDTO incidentsCreateDTO);
+	IncidentsDTO mergeCreatePostDTOToIncidentsDTO(@MappingTarget IncidentsDTO incidentsDTO, IncidentsCreatePostDTO incidentsCreateDTO);
+
+	@Mapping(target = ".", source = "incidentDetailsGetDTO")
+	IncidentsDTO mergeDetailsDTOToIncidentsDTO(@MappingTarget IncidentsDTO incidentsDTO, IncidentDetailsGetDTO incidentDetailsGetDTO);
 
 	/**
      * Maps a {@link PartiesEntity} to a new {@link PartiesDetailsDTO}.

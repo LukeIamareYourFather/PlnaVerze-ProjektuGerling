@@ -3,6 +3,7 @@ package com.danger.insurance.incidents.controllers;
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,6 +26,7 @@ import com.danger.insurance.incidents.models.service.CommonSupportServiceInciden
 import com.danger.insurance.incidents.models.service.IncidentCommentsServiceImplementation;
 import com.danger.insurance.incidents.models.service.IncidentsServiceImplementation;
 
+@PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ADMINISTRATOR')")
 @Controller
 @RequestMapping("incidents")
 @SessionAttributes("incidentCommentDTO")

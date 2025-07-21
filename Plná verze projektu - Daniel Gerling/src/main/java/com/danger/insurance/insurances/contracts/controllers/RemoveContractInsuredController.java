@@ -3,6 +3,7 @@ package com.danger.insurance.insurances.contracts.controllers;
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,7 @@ import com.danger.insurance.parties.data.enums.PartyStatus;
 import com.danger.insurance.parties.models.dto.PartiesDetailsDTO;
 import com.danger.insurance.parties.models.service.PartiesServiceImplementation;
 
+@PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ADMINISTRATOR')")
 @Controller
 @RequestMapping("insurances")
 @SessionAttributes("removalReasonsDTO")
@@ -104,8 +106,8 @@ public class RemoveContractInsuredController {
 		removeContractReasonsDTO.setBirthNumber(partiesService.getById(partyId).getBirthNumber());
 		removeContractReasonsDTO.setTodaysDate(LocalDate.now());
 		removeContractReasonsDTO.setInsuranceName(contractInsuranceDTO.getName());
-		partyContractsRepository.deleteById(partyId);
 		removedContractsMapper.mergeToRemoveContractReasonsDTO(contractsService.getById(contractId), contractInsuranceDTO, removeContractReasonsDTO);
+		partyContractsRepository.deleteById(partyContractsRepository.findContractPartyIdOfPartyContract(contractId, partyId));
 		removedContractsService.create(removeContractReasonsDTO);
 		
 		return "redirect:/insurances";

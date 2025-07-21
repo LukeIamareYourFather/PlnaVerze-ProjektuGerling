@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<html lang="cs-cz">
+    <head th:replace="~{fragments/layout.html :: head}">
+    
+    </head>
+
+    <header th:replace="~{fragments/layout.html :: header}">
+
+    </header>
+
+    <body id="main-page">
+        <article class="pb-5">
+            <div class="container-fluid">
+                <div class="tile-background">
+                    <div class="row justify-content-center">
+                        <div class="col-auto mx-4 my-4">
+                            <button class="btn insuree-tile lime-tile">
+                                <a href="/reports/company">Detailní report</a>
+                            </button>
+                        </div>
+
+                        <div class="col-auto mx-4 my-4">
+                            <button class="btn insuree-tile green-tile">
+                                <a href="/reports/segments">Rozdělené reporty</a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <footer th:replace="~{fragments/layout.html :: footer}">
+            
+        </footer>
+    </body>
+</html>

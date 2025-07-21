@@ -3,6 +3,7 @@ package com.danger.insurance.insurances.contracts.controllers;
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.danger.insurance.infopages.data.enums.ButtonLabels;
+import com.danger.insurance.infopages.data.enums.FormNames;
 import com.danger.insurance.insurances.contracts.models.dto.ContractsDTO;
 import com.danger.insurance.insurances.contracts.models.dto.PartyContractsDTO;
 import com.danger.insurance.insurances.contracts.models.dto.mappers.ContractsMapper;
@@ -24,6 +27,7 @@ import com.danger.insurance.parties.data.enums.PartyStatus;
 import com.danger.insurance.parties.models.dto.mappers.PartiesMapper;
 import com.danger.insurance.parties.models.service.PartiesServiceImplementation;
 
+@PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ADMINISTRATOR')")
 @Controller
 @RequestMapping("insurances")
 @SessionAttributes("contractDTO")
@@ -58,7 +62,8 @@ public class InsurancesAssigningController {
 	@GetMapping("create")
 	public String renderInsuranceAssignFormSelect(@ModelAttribute("contractDTO") ContractsDTO contractsDTO, Model model) {		
 		model.addAttribute("formAction", "create/select");
-		model.addAttribute("buttonLabel", "Potvrdit");
+		model.addAttribute("buttonLabel", ButtonLabels.CREATE.getDisplayName());
+		model.addAttribute("formName", FormNames.CONTRACTS_CREATE.getDisplayName());
 		model.addAttribute("ifShowCreateForm", true);
 		
 		return "pages/insurances/assign";

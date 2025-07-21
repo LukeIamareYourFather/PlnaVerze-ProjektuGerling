@@ -3,6 +3,7 @@ package com.danger.insurance.incidents.controllers.crud;
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +21,7 @@ import com.danger.insurance.incidents.models.dto.post.IncidentsCreatePostDTO;
 import com.danger.insurance.incidents.models.service.IncidentsServiceImplementation;
 import com.danger.insurance.validation.groups.OnCreateIncidentAsEmployee;
 
+@PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ADMINISTRATOR')")
 @Controller
 @RequestMapping("incidents")
 public class CreateIncidentsController {
@@ -52,7 +54,7 @@ public class CreateIncidentsController {
 			return "pages/incidents/create";
 	    }
 		
-		IncidentsDTO newIncident = incidentsMapper.mergeToIncidentsDTO(new IncidentsDTO(), createDTO);
+		IncidentsDTO newIncident = incidentsMapper.mergeCreatePostDTOToIncidentsDTO(new IncidentsDTO(), createDTO);
 		newIncident.setCurrentStatus(IncidentStatus.OPEN);
 		newIncident.setTodaysDate(LocalDate.now());
 		long incidentId = incidentsService.create(newIncident);

@@ -12,7 +12,7 @@
     <body id="main-page">
         <article>
             <div class="container-fluid">
-                <div class="tile-background">
+                <div class="tile-background pb-5">
                     <div class="row justify-content-center">
                         <div class="col-auto mx-4 my-4">
                             <button class="btn insuree-tile blue-tile">
@@ -55,14 +55,14 @@
                         </div>
                     </div>
 
-                    <div class="row justify-content-center mt-4">
+                    <div sec:authorize="hasAnyRole('MANAGER', 'ADMINISTRATOR')" class="row justify-content-center mt-4">
                         <div class="col-auto mx-4 my-4">
                             <button class="btn insuree-tile white-tile">
                                 <a href="insurances/make">Vytvořit pojištění</a>
                             </button>
                         </div>
 
-                        <div class="col-auto mx-4 my-4">
+                        <div sec:authorize="hasAnyRole('MANAGER', 'ADMINISTRATOR')" class="col-auto mx-4 my-4">
                             <button class="btn insuree-tile black-tile">
                                 <a href="insurances/delete">Odstranit pojištění</a>
                             </button>

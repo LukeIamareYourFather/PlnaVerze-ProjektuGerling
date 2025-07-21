@@ -1,13 +1,14 @@
 package com.danger.insurance.news.models.dto.mappers;
 
 import com.danger.insurance.news.data.entities.NewsEntity;
+import com.danger.insurance.news.models.dto.NewsCreateDTO;
 import com.danger.insurance.news.models.dto.NewsDTO;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-07-17T07:25:27+0200",
+    date = "2025-07-21T08:28:47+0200",
     comments = "version: 1.6.3, compiler: javac, environment: Java 23.0.2 (Oracle Corporation)"
 )
 @Component
@@ -50,6 +51,19 @@ public class NewsMapperImpl implements NewsMapper {
     }
 
     @Override
+    public NewsDTO mergeToNewsDTO(NewsDTO newsDTO, NewsCreateDTO newsCreateDTO) {
+        if ( newsCreateDTO == null ) {
+            return newsDTO;
+        }
+
+        newsDTO.setTitle( newsCreateDTO.getTitle() );
+        newsDTO.setDescription( newsCreateDTO.getDescription() );
+        newsDTO.setContent( newsCreateDTO.getContent() );
+
+        return newsDTO;
+    }
+
+    @Override
     public NewsDTO toDTO(NewsEntity source) {
         if ( source == null ) {
             return null;
@@ -65,6 +79,19 @@ public class NewsMapperImpl implements NewsMapper {
         newsDTO.setPostDate( source.getPostDate() );
 
         return newsDTO;
+    }
+
+    @Override
+    public NewsCreateDTO mergeToNewsCreateDTO(NewsCreateDTO newsCreateDTO, NewsDTO newsDTO) {
+        if ( newsDTO == null ) {
+            return newsCreateDTO;
+        }
+
+        newsCreateDTO.setTitle( newsDTO.getTitle() );
+        newsCreateDTO.setDescription( newsDTO.getDescription() );
+        newsCreateDTO.setContent( newsDTO.getContent() );
+
+        return newsCreateDTO;
     }
 
     @Override

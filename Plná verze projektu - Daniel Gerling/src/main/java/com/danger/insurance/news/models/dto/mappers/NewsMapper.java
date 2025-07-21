@@ -1,9 +1,11 @@
 package com.danger.insurance.news.models.dto.mappers;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 import com.danger.insurance.news.data.entities.NewsEntity;
+import com.danger.insurance.news.models.dto.NewsCreateDTO;
 import com.danger.insurance.news.models.dto.NewsDTO;
 import com.danger.insurance.parties.data.entities.PartiesEntity;
 import com.danger.insurance.parties.models.dto.PartiesCreateDTO;
@@ -32,6 +34,9 @@ public interface NewsMapper {
      */
 	NewsEntity newsCreateToEntity(NewsDTO source);
 	
+	@Mapping(target = ".", source = "newsCreateDTO")
+	NewsDTO mergeToNewsDTO(@MappingTarget NewsDTO newsDTO, NewsCreateDTO newsCreateDTO);
+	
 	/**
      * Maps a {@link PartiesEntity} to a new {@link PartiesDetailsDTO}.
      *
@@ -39,6 +44,9 @@ public interface NewsMapper {
      * @return a new {@link PartiesDetailsDTO} populated from the entity.
      */
 	NewsDTO toDTO(NewsEntity source);			// Can be split into getDto and setDto in bigger projects
+	
+	@Mapping(target = ".", source = "newsDTO")
+	NewsCreateDTO mergeToNewsCreateDTO(@MappingTarget NewsCreateDTO newsCreateDTO, NewsDTO newsDTO);
 	
 	/**
      * Updates an existing {@link PartiesDetailsDTO} with values from another DTO.

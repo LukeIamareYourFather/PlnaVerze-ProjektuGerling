@@ -14,51 +14,62 @@
             <div class="tile-background">
                 <h2 th:text="${pageTitle}"></h2>
 
+                <button sec:authorize="hasAnyRole('MANAGER', 'ADMINISTRATOR')">
+                    <a th:href="@{${editLink}}">Upravit osobu</a>
+                </button>
+
                 <section th:replace="~{fragments/layout.html :: partyDetailsForm}"></section>
+
+
+                <div th:if="${ifShowDeleteForm}">
+                    <section class="px-4 py-4">
+                        <div class="form-group">
+                            <label for="name" class="control-label">Důvod odebrání:</label>
+                            <input id="name" type="text" th:value="${reasonsDTO.removalReason.displayName}" class="form-control" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name" class="control-label">Datum podaní požadavku:</label>
+                            <input id="name" type="date" th:value="${reasonsDTO.dateOfRequest}" class="form-control" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name" class="control-label">Požadovaná akce:</label>
+                            <input id="name" type="text" th:value="${reasonsDTO.ifToDeleteParty}" class="form-control" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name" class="control-label">Dodatečné informace:</label>
+                            <textarea id="name" th:field="${reasonsDTO.additionalInformation}" class="form-control" readonly></textarea>
+                        </div>
+                    </section>
+
+                    <form id="hiddenForm" method="post" th:action="@{${confirmationLink}}" style="display: none;"></form>
+
+                    <button type="submit" form="hiddenForm" class="btn btn-primary">Odebrat</button>
+                </div>
+
+                <div>
+                    <section class="px-4 py-4">
+                        <ul class="list-group" id="found-insurees">
+                            <li th:each="contract: ${activeContractsWithRoles}" class="list-group-item">
+                                <h2>
+                                    <a th:href="@{${referenceLink} + ${contract.contractId}}"
+                                    th:text="${contract.contractNumber + ' — ' + contract.contractRole.displayName}">
+                                    </a>
+                                    <p th:text="${contract.insuranceType.displayName + ' — ' + contract.insuranceName}"></p>
+                                </h2>
+                            </li>
+                        </ul>
+                    </section>
+                </div>
+
+                <button th:unless="@{ifShowDeleteForm}">
+                    <a a href="#" onclick="history.back(); return false;"></a>
+                </button>
             </div>
 
-            <div class="tile-background" th:if="${ifShowDeleteForm}">
-                <section class="px-4 py-4">
-                    <div class="form-group">
-                        <label for="name" class="control-label">Důvod odebrání:</label>
-                        <input id="name" type="text" th:value="${reasonsDTO.removalReason.displayName}" class="form-control" readonly>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="name" class="control-label">Datum podaní požadavku:</label>
-                        <input id="name" type="date" th:value="${reasonsDTO.dateOfRequest}" class="form-control" readonly>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="name" class="control-label">Požadovaná akce:</label>
-                        <input id="name" type="text" th:value="${reasonsDTO.ifToDeleteParty}" class="form-control" readonly>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="name" class="control-label">Dodatečné informace:</label>
-                        <textarea id="name" th:field="${reasonsDTO.additionalInformation}" class="form-control" readonly></textarea>
-                    </div>
-                </section>
-
-                <form id="hiddenForm" method="post" th:action="@{${confirmationLink}}" style="display: none;"></form>
-
-                <button type="submit" form="hiddenForm" class="btn btn-primary">Odebrat</button>
-            </div>
-
-            <div>
-                <section class="tile-background px-4 py-4">
-                    <ul class="list-group" id="found-insurees">
-                        <li th:each="contract: ${activeContractsWithRoles}" class="list-group-item">
-                            <h2>
-                                <a th:href="@{${referenceLink} + ${contract.contractId}}"
-                                th:text="${contract.contractNumber + ' — ' + contract.contractRole.displayName}">
-                                </a>
-                                <p th:text="${contract.insuranceType.displayName + ' — ' + contract.insuranceName}"></p>
-                            </h2>
-                        </li>
-                    </ul>
-                </section>
-            </div>
+            
         </article>
 
         <footer th:replace="~{fragments/layout.html :: footer}"></footer>

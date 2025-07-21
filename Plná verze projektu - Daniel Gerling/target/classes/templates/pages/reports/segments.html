@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<html lang="cs-cz">
+    <head th:replace="~{fragments/layout.html :: head}">
+    
+    </head>
+
+    <header th:replace="~{fragments/layout.html :: header}">
+
+    </header>
+
+    <body id="main-page">
+        <article class="pb-5">
+            <div class="tile-background">
+                <section class="px-4 py-4">
+                    <details>
+                        <summary class="h4">Zobrazit detailní report smluv</summary>
+
+                        <div class="form-group">
+                            <label for="name" class="control-label">Průměrná hodnota smlouvy na osobu:</label>
+                            <input id="name" type="number" th:value="${segmentReportDTO.averageContractValuePerPerson}" class="form-control" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name" class="control-label">Celkový počet smluv pojištění osob:</label>
+                            <input id="name" type="number" th:value="${segmentReportDTO.totalPersonContracts}" class="form-control" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name" class="control-label">Celkový počet smluv pojištění nemovitostí:</label>
+                            <input id="name" type="number" th:value="${segmentReportDTO.totalPropertyContracts}" class="form-control" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name" class="control-label">Celkový počet smluv pojištění majetku:</label>
+                            <input id="name" type="number" th:value="${segmentReportDTO.totalAssetContracts}" class="form-control" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name" class="control-label">Celkový počet smluv pojištění právních subjektů:</label>
+                            <input id="name" type="number" th:value="${segmentReportDTO.totalLegalContracts}" class="form-control" readonly>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="name" class="control-label">Celkový počet smluv pojištění zvířat:</label>
+                            <input id="name" type="number" th:value="${segmentReportDTO.totalAnimalContracts}" class="form-control" readonly>
+                        </div>
+                    </details>
+
+                    <details>
+                        <summary class="h4">Zobrazit detailní report pojistných událostí</summary>
+
+                        <div class="form-group">
+                            <label for="name" class="control-label">Celkový počet pojistných událostí poškození:</label>
+                            <input id="name" type="number" th:value="${segmentReportDTO.totalDamageIncidents}" class="form-control" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name" class="control-label">Celkový počet pojistných událostí odcizení:</label>
+                            <input id="name" type="number" th:value="${segmentReportDTO.totalTheftIncidents}" class="form-control" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name" class="control-label">Celkový počet pojistných událostí ztrát:</label>
+                            <input id="name" type="number" th:value="${segmentReportDTO.totalLostIncidents}" class="form-control" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name" class="control-label">Celkový počet pojistných událostí živlů:</label>
+                            <input id="name" type="number" th:value="${segmentReportDTO.totalElementsIncidents}" class="form-control" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name" class="control-label">Celkový počet pojistných událostí zranění:</label>
+                            <input id="name" type="number" th:value="${segmentReportDTO.totalInjuryIncidents}" class="form-control" readonly>
+                        </div>
+                    </details>
+
+                    <details>
+                        <summary class="h4">Zobrazit detailní report archívu</summary>
+
+                        <div class="form-group">
+                            <label for="name" class="control-label">Celkový počet smazaných osob:</label>
+                            <input id="name" type="number" th:value="${segmentReportDTO.totalPartiesRemoved}" class="form-control" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name" class="control-label">Celkový počet smazaných pojištění:</label>
+                            <input id="name" type="number" th:value="${segmentReportDTO.totalInsurancesRemoved}" class="form-control" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name" class="control-label">Celkový počet smazaných smluv:</label>
+                            <input id="name" type="number" th:value="${segmentReportDTO.totalContractsRemoved}" class="form-control" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name" class="control-label">Celkový počet smazaných incidetů:</label>
+                            <input id="name" type="number" th:value="${segmentReportDTO.totalIncidentsRemoved}" class="form-control" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name" class="control-label">Celkový počet smazaných komentářů incidentů:</label>
+                            <input id="name" type="number" th:value="${segmentReportDTO.totalIncidentCommentsRemoved}" class="form-control" readonly>
+                        </div>
+                    </details>
+                </section>
+
+                <button type="button" class="btn btn-primary">
+                    <a href="/reports/select">Zpět</a>
+                </button>
+            </div>
+        </article>
+
+        <footer th:replace="~{fragments/layout.html :: footer}"></footer>
+    </body>
+</html>

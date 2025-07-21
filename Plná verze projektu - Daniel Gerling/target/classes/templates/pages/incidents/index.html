@@ -41,7 +41,7 @@
                         </div>
                     </div>
 
-                    <div class="row justify-content-center mt-4">
+                    <div sec:authorize="hasAnyRole('MANAGER', 'ADMINISTRATOR')" class="row justify-content-center mt-4">
                         <div class="col-auto mx-4 my-4">
                             <button class="btn insuree-tile red-tile">
                                 <a href="incidents/delete">Smazat událost</a>

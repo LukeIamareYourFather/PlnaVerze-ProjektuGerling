@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html lang="cs-cz">
+    <head th:replace="~{fragments/layout.html :: head}">
+    
+    </head>
+
+    <header th:replace="~{fragments/layout.html :: header}">
+
+    </header>
+
+    <body id="main-page">
+        <article class="pb-5">
+            <div class="tile-background">
+                <section class="px-4 py-4">
+                    <div class="form-group">
+                        <label for="policy-owner-count" class="control-label">Počet pojistníků:</label>
+                        <input id="policy-owner-count" type="number" th:value="${companyReportDTO.policyOwnerCount}" class="form-control" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="insured-count" class="control-label">Počet pojištěnců:</label>
+                        <input id="insured-count" type="number" th:value="${companyReportDTO.insuredCount}" class="form-control" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="person-count" class="control-label">Celkový počet osob:</label>
+                        <input id="person-count" type="number" step="0.01" th:value="${companyReportDTO.personCount}" class="form-control" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="active-contracts-count" class="control-label">Počet aktivních smluv:</label>
+                        <input id="active-contracts-count" type="number" th:value="${companyReportDTO.activeContractsCount}" class="form-control" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contracts-value" class="control-label">Roční hodnota smluv:</label>
+                        <input id="contracts-value" type="number" th:value="${companyReportDTO.contractsValue}" class="form-control" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="incidents-count" class="control-label">Celkový počet pojistných událostí:</label>
+                        <input id="incidents-count" type="number" th:value="${companyReportDTO.incidentsCount}" class="form-control" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="processing-incidents-count" class="control-label">Počet událostí ve zpracování:</label>
+                        <input id="processing-incidents-count" type="number" th:value="${companyReportDTO.processingIncidentsCount}" class="form-control" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="processed-incidents-count" class="control-label">Počet zpracovaných událostí:</label>
+                        <input id="processed-incidents-count" type="number" th:value="${companyReportDTO.processedIncidentsCount}" class="form-control" readonly>
+                    </div>
+                </section>
+
+                <button type="button" class="btn btn-primary">
+                    <a href="/reports/select">Zpět</a>
+                </button>
+            </div>
+        </article>
+
+        <footer th:replace="~{fragments/layout.html :: footer}"></footer>
+    </body>
+</html>

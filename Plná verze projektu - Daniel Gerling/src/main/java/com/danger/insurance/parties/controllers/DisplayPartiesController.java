@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +29,7 @@ import com.danger.insurance.parties.models.service.PartiesServiceImplementation;
  * Mapped to the {@code /parties} URL path.
  * </p>
  */
+@PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ADMINISTRATOR')")
 @Controller
 @RequestMapping("/parties")
 public class DisplayPartiesController {
@@ -84,6 +86,8 @@ public class DisplayPartiesController {
 		model.addAttribute("party", fetchedParty);												// Add party details to the model for display
 		model.addAttribute("activeContractsWithRoles", addPartyStatusesToContracts(partyId));
 		model.addAttribute("referenceLink", "/insurances/contract-");
+		model.addAttribute("editLink", "/parties/profile-" + partyId + "/update");
+		model.addAttribute("ifShowDeleteForm", false);
 		
 		return "pages/parties/profile";															// Render the profile page
 	}

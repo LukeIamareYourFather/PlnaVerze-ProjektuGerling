@@ -1,5 +1,6 @@
 package com.danger.insurance.insurances.contracts.data.repositories;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -30,4 +31,13 @@ public interface ContractsRepository extends CrudRepository<ContractsEntity, Lon
    		@Param("signatureDate") LocalDate signatureDate,
     	@Param("pricePerPeriod") Long pricePerPeriod
 	);
+	
+	@Query("SELECT COUNT(c) FROM ContractsEntity c")
+	long getTotalContractsCount();
+
+	@Query(value = "SELECT SUM(c.price_per_period * (12.0 / i.renewal_period)) " +
+            	   "FROM contracts_entity c " +
+            	   "JOIN insurances_entity i ON c.insurances_id = i.insurances_id", nativeQuery = true)
+	BigDecimal getTotalContractValue();
+
 }

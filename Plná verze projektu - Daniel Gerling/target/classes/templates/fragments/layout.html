@@ -11,9 +11,6 @@
 		<link rel="stylesheet" th:href="@{/styles/lightbox.min.css}" type="text/css" />
 		<link rel="stylesheet" th:href="@{/styles/styles.css}" type="text/css" />
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.0.3/tinymce.min.js"></script>
-        <script>tinymce.init({selector: "textarea[id*=content]", entities: "160,nbsp", entity_encoding: "named", entity_encoding: "raw"});</script>
-
         <title>Meyers Insured & Co.</title>
     </head>
 
@@ -27,22 +24,23 @@
                 <ul class="menu flex-wrap">
                     <li><a href="/about-us">O nás</a></li>
                     <li><a href="/news">Novinky</a></li>
-                    <li><a href="#">Mé pojištění</a></li>
-                    <li><a href="/insurances">Pojištění</a></li>
-                    <li><a href="/parties">Pojištěnci</a></li>
-                    <li><a href="/incidents">Události</a></li>
-                    <li><a href="#">Nápověda</a></li>
-                    <li><a href="#">Přihlášení</a></li>
-                    <li><a href="#">Odhlášení</a></li>
-                    <li><a href="#">Registrace</a></li>
-                    <li><a href="#">Chci se pojistit</a></li>
+                    <li sec:authorize="hasRole('PARTY')"><a href="#">Mé pojištění</a></li>
+                    <li sec:authorize="hasAnyRole('EMPLOYEE', 'MANAGER', 'ADMINISTRATOR')"><a href="/insurances">Pojištění</a></li>
+                    <li sec:authorize="hasAnyRole('EMPLOYEE', 'MANAGER', 'ADMINISTRATOR')"><a href="/parties">Pojištěnci</a></li>
+                    <li sec:authorize="hasAnyRole('EMPLOYEE', 'MANAGER', 'ADMINISTRATOR')"><a href="/incidents">Události</a></li>
+                    <li sec:authorize="hasAnyRole('ADMINISTRATOR')"><a href="/reports/select">Reporty</a></li>  
+                    <li sec:authorize="hasRole('PARTY')"><a href="#">Nápověda</a></li>
+                    <li sec:authorize="!hasRole('EMPLOYEE') and !hasRole('JOURNALIST') and !hasRole('MANAGER') and !hasRole('ADMINISTRATOR')"><a href="#">Chci se pojistit</a></li>
+                    <li sec:authorize="!hasRole('EMPLOYEE') and !hasRole('JOURNALIST') and !hasRole('MANAGER') and !hasRole('ADMINISTRATOR')"><a href="/account/log-in">Přihlášení</a></li>
+                    <li sec:authorize="hasRole('ADMINISTRATOR')" href="/account/register"><a href="/account/register">Registrace</a></li> 
+                    <li sec:authorize="hasAnyRole('EMPLOYEE', 'JOURNALIST', 'MANAGER', 'ADMINISTRATOR')"><a href="/account/log-out">Odhlášení</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
     <body>
-        <section th:fragment="personForm(formName, buttonLabel)" class="tile-background py-4 px-4">
+        <section th:fragment="personForm()" class="tile-background py-4 px-4">
             <div class="centered">
                 <h1 th:text="${formName}"></h1>
             </div>
@@ -152,7 +150,7 @@
             </form>
         </section>
 
-        <section th:fragment="createContractForm(formName)"  class="tile-background py-4 px-4">
+        <section th:fragment="createContractForm"  class="tile-background py-4 px-4">
             <div class="centered">
                 <h1 th:text="${formName}"></h1>
             </div>
@@ -216,7 +214,7 @@
             </form>
         </section>
 
-        <section th:fragment="createInsurancesForm(formName, buttonLabel)" class="tile-background py-4 px-4">
+        <section th:fragment="createInsurancesForm" class="tile-background py-4 px-4">
             <div class="centered">
                 <h1 th:text="${formName}"></h1>
             </div>
@@ -313,6 +311,11 @@
             <div class="form-group">
                 <label for="birth-day" class="control-label">Datum narození:</label>
                 <input id="birth-day" type="date" th:value="${party.birthDay}" class="form-control" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="birth-number" class="control-label">Rodné číslo:</label>
+                <input id="birth-number" type="text" th:value="${party.birthNumber}" class="form-control" readonly>
             </div>
 
             <div class="form-group">
@@ -591,6 +594,42 @@
                     <label for="removal-description" class="control-label">Popis důvodu odstranění:</label>
                     <textarea id="removal-description" th:readonly="${!isDeleteIncidentCreateForm}" class="form-control" th:field="*{removalDescription}"></textarea>
                     <small class="text-danger" th:if="${#fields.hasErrors('removalDescription')}" th:errors="*{removalDescription}"></small>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="clanky-tlacitko" th:text="${buttonLabel}"></button>
+                </div>
+            </form>
+        </section>
+
+        <section th:fragment="newsCreateForm" class="py-4 px-4">
+            <div class="centered">
+                <h1 th:text="${formName}"></h1>
+            </div>
+
+            <form class="d-flex flex-column gap-2" method="post" th:action="${formAction}" th:object="${newsCreateDTO}" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="title" class="control-label">Titulek novinky:</label>
+                    <input id="title" class="form-control" th:field="*{title}" />
+                    <small class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description" class="control-label">Popisek novinky:</label>
+                    <input id="description" class="form-control" th:field="*{description}" />
+                    <small class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="content" class="control-label">Obsah novinky:</label>
+                    <textarea id="content" class="form-control" th:field="*{content}"></textarea>
+                    <small class="text-danger" th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></small>
+                </div>
+
+                <div th:unless="${isEditForm}" class="form-group">
+                    <label for="file" class="control-label">Obrázek novinky:</label>
+                    <input id="file" type="file" name="file" accept="image/*" />
+                    <small class="text-danger" th:text="${fileError}" th:if="${fileError}"></small>
                 </div>
 
                 <div class="form-group">

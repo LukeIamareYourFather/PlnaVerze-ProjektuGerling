@@ -1,6 +1,7 @@
 package com.danger.insurance.parties.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,10 +11,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.danger.insurance.infopages.data.enums.ButtonLabels;
+import com.danger.insurance.infopages.data.enums.FormNames;
 import com.danger.insurance.parties.models.dto.PartiesCreateDTO;
 import com.danger.insurance.parties.models.service.PartiesServiceImplementation;
 import com.danger.insurance.validation.groups.OnCreatePolicyOwner;
 
+@PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ADMINISTRATOR')")
 @Controller
 @RequestMapping("/parties")
 public class CreatePartiesController {
@@ -48,6 +52,8 @@ public class CreatePartiesController {
 	
 	//
 	private void addCreateFormAttributes(String formAction, Model model) {
+		model.addAttribute("formName", FormNames.PARTY_CREATE.getDisplayName());
+		model.addAttribute("buttonLabel", ButtonLabels.CREATE.getDisplayName());
 		model.addAttribute("formDTO", new PartiesCreateDTO());
 		model.addAttribute("formAction", formAction);
 	}

@@ -23,6 +23,10 @@
                 </section>
 
                 <section class="px-4 py-4">
+                    <button sec:authorize="hasAnyRole('MANAGER', 'ADMINISTRATOR')" onclick="return confirm('Opravdu si přejete pozměnit tuto smlouvu?');">
+                        <a th:href="@{'contract-' + ${contractId} + '/edit'}">Upravit smlouvu</a>
+                    </button>
+
                     <div class="form-group">
                         <label for="contract-number" class="control-label">Číslo smlouvy:</label>
                         <input id="contract-number" type="text" class="form-control" th:field="${contractDetails.contractNumber}" readonly>

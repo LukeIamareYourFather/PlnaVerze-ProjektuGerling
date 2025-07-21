@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-07-17T07:25:27+0200",
+    date = "2025-07-21T08:28:47+0200",
     comments = "version: 1.6.3, compiler: javac, environment: Java 23.0.2 (Oracle Corporation)"
 )
 @Component
@@ -104,7 +104,7 @@ public class IncidentsMapperImpl implements IncidentsMapper {
     }
 
     @Override
-    public IncidentsDTO mergeToIncidentsDTO(IncidentsDTO incidentsDTO, IncidentsCreatePostDTO incidentsCreateDTO) {
+    public IncidentsDTO mergeCreatePostDTOToIncidentsDTO(IncidentsDTO incidentsDTO, IncidentsCreatePostDTO incidentsCreateDTO) {
         if ( incidentsCreateDTO == null ) {
             return incidentsDTO;
         }
@@ -118,6 +118,43 @@ public class IncidentsMapperImpl implements IncidentsMapper {
         incidentsDTO.setAccidentDate( incidentsCreateDTO.getAccidentDate() );
         incidentsDTO.setReportDate( incidentsCreateDTO.getReportDate() );
         incidentsDTO.setTodaysDate( incidentsCreateDTO.getTodaysDate() );
+
+        return incidentsDTO;
+    }
+
+    @Override
+    public IncidentsDTO mergeDetailsDTOToIncidentsDTO(IncidentsDTO incidentsDTO, IncidentDetailsGetDTO incidentDetailsGetDTO) {
+        if ( incidentDetailsGetDTO == null ) {
+            return incidentsDTO;
+        }
+
+        incidentsDTO.setCaseNumber( incidentDetailsGetDTO.getCaseNumber() );
+        incidentsDTO.setTitle( incidentDetailsGetDTO.getTitle() );
+        incidentsDTO.setDescription( incidentDetailsGetDTO.getDescription() );
+        incidentsDTO.setBirthNumber( incidentDetailsGetDTO.getBirthNumber() );
+        incidentsDTO.setIncidentType( incidentDetailsGetDTO.getIncidentType() );
+        incidentsDTO.setIncidentSubject( incidentDetailsGetDTO.getIncidentSubject() );
+        incidentsDTO.setCurrentStatus( incidentDetailsGetDTO.getCurrentStatus() );
+        incidentsDTO.setAccidentDate( incidentDetailsGetDTO.getAccidentDate() );
+        incidentsDTO.setReportDate( incidentDetailsGetDTO.getReportDate() );
+        incidentsDTO.setTodaysDate( incidentDetailsGetDTO.getTodaysDate() );
+        incidentsDTO.setClosureDate( incidentDetailsGetDTO.getClosureDate() );
+        if ( incidentsDTO.getComments() != null ) {
+            List<IncidentCommentsEntity> list = incidentDetailsGetDTO.getComments();
+            if ( list != null ) {
+                incidentsDTO.getComments().clear();
+                incidentsDTO.getComments().addAll( list );
+            }
+            else {
+                incidentsDTO.setComments( null );
+            }
+        }
+        else {
+            List<IncidentCommentsEntity> list = incidentDetailsGetDTO.getComments();
+            if ( list != null ) {
+                incidentsDTO.setComments( new ArrayList<IncidentCommentsEntity>( list ) );
+            }
+        }
 
         return incidentsDTO;
     }

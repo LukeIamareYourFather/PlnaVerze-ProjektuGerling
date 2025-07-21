@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.danger.insurance.news.models.service.NewsServiceImplementation;
 
-
 @Controller
 @RequestMapping("news")
 public class DisplayNewsController {
