@@ -4,14 +4,14 @@
     <head th:replace="~{fragments/layout.html :: head}">
     
     </head>
-
-    <header th:replace="~{fragments/layout.html :: header}">
-
+        <header th:replace="~{fragments/layout.html :: header}">
     </header>
 
     <body id="main-page">
         <article class="pb-5">
             <div class="tile-background">
+                <div class="py-2 flash-message message-error" th:text="${error}" th:if="${error}"></div>
+                
                 <section th:replace="~{fragments/layout.html :: incidentForm}"></section>
             </div>
         </article>

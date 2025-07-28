@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +33,8 @@ import com.danger.insurance.incidents.models.dto.post.IncidentsFindPostDTO;
 import com.danger.insurance.incidents.models.service.CommonSupportServiceIncidents;
 import com.danger.insurance.incidents.models.service.IncidentCommentsServiceImplementation;
 import com.danger.insurance.incidents.models.service.IncidentsServiceImplementation;
+import com.danger.insurance.infopages.data.enums.FlashMessages;
+import com.danger.insurance.validation.groups.OnRemoveIncident;
 
 @PreAuthorize("hasAnyRole('MANAGER', 'ADMINISTRATOR')")
 @Controller
@@ -72,17 +75,29 @@ public class RemoveIncidentsController {
 	}
 	
 	@GetMapping("delete")
-	public String renderIncidentToRemoveForm(@ModelAttribute("incidentRemovalReasonsDTO") RemoveIncidentReasonsDTO removeIncidentReasonsDTO, Model model) {
+	public String renderIncidentToRemoveForm(Model model) {
 		model.addAttribute("formName", "Odstranění pojistné události - vyplnění údajů");
 		model.addAttribute("formAction", "delete/validate");
 		model.addAttribute("buttonLabel", "Potvrdit");
 		model.addAttribute("isDeleteIncidentCreateForm", true);
 		
+		if (!model.containsAttribute("incidentRemovalReasonsDTO")) {
+			model.addAttribute("incidentRemovalReasonsDTO", removeIncidentReasonsDTO());
+		}
+		
 		return "pages/incidents/remove";
 	}
 	
 	@PostMapping("delete/validate")
-	public String validateIncidentToRemoveFormPost(@ModelAttribute("incidentRemovalReasonsDTO") RemoveIncidentReasonsDTO removeIncidentReasonsDTO) {
+	public String validateIncidentToRemoveFormPost(@Validated(OnRemoveIncident.class) @ModelAttribute("incidentRemovalReasonsDTO") RemoveIncidentReasonsDTO removeIncidentReasonsDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+		
+		if (bindingResult.hasErrors()) {
+			redirectAttributes.addFlashAttribute("incidentRemovalReasonsDTO", removeIncidentReasonsDTO);
+			redirectAttributes.addFlashAttribute("error", FlashMessages.INVALID_INPUT.getDisplayName());
+			redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.incidentRemovalReasonsDTO", bindingResult);
+			
+			return "redirect:/incidents/delete";
+		}
 		
 		return "redirect:/incidents/delete/find";
 	}
@@ -94,8 +109,8 @@ public class RemoveIncidentsController {
 	
 	@PostMapping("delete/find/validate")
 	public String validateFindIncidentToRemoveFormPost(@ModelAttribute("incidentRemovalReasonsDTO") RemoveIncidentReasonsDTO removeIncidentReasonsDTO, 
-			@ModelAttribute("formDTO") IncidentsFindPostDTO incidentsFindPostDTO , Model model, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-		return commonSupportServiceIncidents.validateFindIncidentsFormPost(model, incidentsFindPostDTO, "redirect:/incidents/delete/find/select", bindingResult, redirectAttributes);
+			@ModelAttribute("formDTO") IncidentsFindPostDTO incidentsFindPostDTO , Model model, RedirectAttributes redirectAttributes) {
+		return commonSupportServiceIncidents.validateFindIncidentsFormPost(model, incidentsFindPostDTO, "redirect:/incidents/delete/find/select", "incidents/delete/find", redirectAttributes);
 	}
 	
 	@GetMapping("delete/find/select") 
@@ -117,7 +132,7 @@ public class RemoveIncidentsController {
 	}
 	
 	@PostMapping("delete/find/selected-{incidentId}/confirmed")
-	public String handleConfirmIncidentToRemoveFormPost(@PathVariable("incidentId") long incidentId, @ModelAttribute("incidentRemovalReasonsDTO") RemoveIncidentReasonsDTO removeIncidentReasonsDTO, SessionStatus sessionStatus) {
+	public String handleConfirmIncidentToRemoveFormPost(@PathVariable("incidentId") long incidentId, @ModelAttribute("incidentRemovalReasonsDTO") RemoveIncidentReasonsDTO removeIncidentReasonsDTO, SessionStatus sessionStatus, RedirectAttributes redirectAttributes) {
 		RemovedIncidentsDTO removedIncident = removedIncidentsMapper.mergeToRemovedIncidentsDTO(incidentsService.getIncidentById(incidentId), removeIncidentReasonsDTO);
 		removedIncident.setRemovalDate(LocalDate.now());
 		long removedIncidentID = removedIncidentsService.create(removedIncident);
@@ -134,6 +149,7 @@ public class RemoveIncidentsController {
 		
 		incidentsService.delete(incidentId);
 		sessionStatus.setComplete();
+		redirectAttributes.addFlashAttribute("success", FlashMessages.INCIDENT_REMOVED.getDisplayName());
 		
 		return "redirect:/incidents";
 	}

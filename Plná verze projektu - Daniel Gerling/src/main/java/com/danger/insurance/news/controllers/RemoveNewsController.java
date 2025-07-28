@@ -11,7 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.danger.insurance.infopages.data.enums.FlashMessages;
 import com.danger.insurance.news.models.service.NewsService;
 
 @PreAuthorize("hasAnyRole('MANAGER', 'ADMINISTRATOR')")
@@ -25,7 +27,7 @@ public class RemoveNewsController {
 	public static final String UPLOAD_DIR = System.getProperty("user.dir") + "/src/main/resources/static/uploads/news-pictures";
 
 	@GetMapping("/remove/{newsId}")
-	public String handleDeleteNewsForm(@PathVariable("newsId") long newsId) {
+	public String handleDeleteNewsForm(@PathVariable("newsId") long newsId, RedirectAttributes redirectAttributes) {
 	    
 		//
 		try {
@@ -37,7 +39,7 @@ public class RemoveNewsController {
 	        Files.deleteIfExists(filePath); 
 
 	        newsService.delete(newsId); 
-
+	        redirectAttributes.addFlashAttribute("success", FlashMessages.NEWS_REMOVED.getDisplayName());
 	    } catch (IOException | NullPointerException e) {
 
 	        return "redirect:/news/" + newsId; 

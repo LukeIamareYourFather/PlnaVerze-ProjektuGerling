@@ -5,23 +5,25 @@ import java.time.LocalDate;
 import com.danger.insurance.insurances.contracts.data.enums.ContractsRemovalReason;
 import com.danger.insurance.insurances.data.enums.InsurancesSubjects;
 import com.danger.insurance.insurances.data.enums.InsurancesType;
+import com.danger.insurance.validation.groups.OnRemoveContract;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public class RemoveContractReasonsDTO {
 
 	private long removedInsurancesId;
 	
-	@NotNull(message = "Prosím zadejte důvod ukončení pojištění")
+	@NotNull(message = "Prosím zadejte důvod ukončení pojištění", groups = {OnRemoveContract.class})
 	private  ContractsRemovalReason deleteReason;	
 
-	@NotNull(message = "Prosím zadejte popis důvodu ukončení pojištění")
+	@NotBlank(message = "Prosím zadejte popis důvodu ukončení pojištění", groups = {OnRemoveContract.class})
 	private String description;
 	
-	@NotNull(message = "Prosím zadejte datum požadavku ukončení pojištění")
+	@NotNull(message = "Prosím zadejte datum požadavku ukončení pojištění", groups = {OnRemoveContract.class})
 	private LocalDate dateOfRequest;
 	
-	@NotNull(message = "Prosím zadejte ke kterému datu ukončit pojištění")
+	@NotNull(message = "Prosím zadejte ke kterému datu ukončit pojištění", groups = {OnRemoveContract.class})
 	private LocalDate dateOfCancellation;
 	
 	private LocalDate todaysDate;

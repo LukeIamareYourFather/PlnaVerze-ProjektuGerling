@@ -3,8 +3,6 @@
 // /    \   Code
 package com.danger.insurance.parties.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -14,24 +12,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.danger.insurance.infopages.data.enums.ButtonLabels;
 import com.danger.insurance.infopages.data.enums.FormNames;
-import com.danger.insurance.parties.data.entities.PartiesEntity;
 import com.danger.insurance.parties.data.enums.PartyStatus;
 import com.danger.insurance.parties.models.dto.PartiesDetailsDTO;
-import com.danger.insurance.parties.models.dto.PartiesFoundSendDTO;
-import com.danger.insurance.parties.models.service.PartiesServiceImplementation;
+import com.danger.insurance.parties.models.service.CommonSupportServiceParties;
 
 @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ADMINISTRATOR')")
 @Controller
-@RequestMapping("/parties")
+@RequestMapping("parties")
 public class FindPartiesController {
 
 	// Object initialization
 	
 	@Autowired
-	private PartiesServiceImplementation partiesService;										// Handles logic related to parties
-	
+	private CommonSupportServiceParties commonSupportParties;
 	// Start of code
 	
 	/**
@@ -42,9 +36,10 @@ public class FindPartiesController {
 	 */
 	@GetMapping("find/policy-owner")
 	public String renderFindPolicyOwner(Model model) {
-		addFindPartyAttributes("policy-owners", FormNames.POLICY_OWNER_FIND, model);
+		String formAction = "policy-owners";
 		
-		return "pages/parties/policy-owners/find";												// Redirect to the find Policy Owner page
+		return commonSupportParties.addFindPartyAttributes(formAction, FormNames.POLICY_OWNER_FIND, model);
+		
 	}
 	
 	/**
@@ -55,9 +50,9 @@ public class FindPartiesController {
 	 */
 	@GetMapping("find/insured")
 	public String renderFindInsured(Model model) {
-		addFindPartyAttributes("insured", FormNames.INSURED_FIND, model);
-			
-		return "pages/parties/insured/find";													// Redirect to the find Insured page
+		String formAction = "insured";
+		
+		return commonSupportParties.addFindPartyAttributes(formAction, FormNames.INSURED_FIND, model);
 	}
 	
 	/**
@@ -68,9 +63,10 @@ public class FindPartiesController {
 	 */
 	@GetMapping("find/uninsured")
 	public String renderFindUninsured(Model model) {
-		addFindPartyAttributes("uninsured", FormNames.PARTY_FIND, model);
-			
-		return "pages/parties/insured/find";													// Redirect to the find Insured page
+		String formAction = "uninsured";
+		
+		return commonSupportParties.addFindPartyAttributes(formAction, FormNames.PARTY_FIND, model);
+
 	}
 	
 	/**
@@ -82,7 +78,10 @@ public class FindPartiesController {
 	 */
 	@PostMapping("find/policy-owners")
 	public String handleSearchPolicyOwnerFormSubmit(PartiesDetailsDTO dto, RedirectAttributes redirectAttributes) {
-		return validateSearchParty(dto, PartyStatus.POLICY_OWNER, redirectAttributes);
+		String failRedirect = "parties/find/policy-owner";
+		String successRedirect = "parties/found/profiles";
+		
+		return commonSupportParties.validateFindPartyFormPost(dto, PartyStatus.POLICY_OWNER, failRedirect, successRedirect, redirectAttributes);
 	}
 	
 	/**
@@ -94,7 +93,10 @@ public class FindPartiesController {
 	 */
 	@PostMapping("find/insured")
 	public String handleSearchInsuredFormSubmit(PartiesDetailsDTO dto, RedirectAttributes redirectAttributes) {
-		return validateSearchParty(dto, PartyStatus.INSURED, redirectAttributes);
+		String failRedirect = "parties/find/insured";
+		String successRedirect = "parties/found/profiles";
+		
+		return commonSupportParties.validateFindPartyFormPost(dto, PartyStatus.INSURED, failRedirect, successRedirect, redirectAttributes);
 	}
 	
 	/**
@@ -106,93 +108,10 @@ public class FindPartiesController {
 	 */
 	@PostMapping("find/uninsured")
 	public String handleSearchUninsuredFormSubmit(PartiesDetailsDTO dto, RedirectAttributes redirectAttributes) {
-		return validateSearchParty(dto, null, redirectAttributes);
+		String failRedirect = "parties/find/uninsured";
+		String successRedirect = "parties/found/profiles";
+		
+		return commonSupportParties.validateFindPartyFormPost(dto, null, failRedirect, successRedirect, redirectAttributes);
 	}
-	
-	// Helper methods
-	
-	//
-	private void addFindPartyAttributes(String partyToFind, FormNames formName, Model model) {
-		model.addAttribute("formDTO", new PartiesDetailsDTO());
-		model.addAttribute("formAction", partyToFind);
-		model.addAttribute("showInsuredStatusColumn", true);
-		model.addAttribute("formName", formName.getDisplayName());
-		model.addAttribute("buttonLabel", ButtonLabels.FIND.getDisplayName());
-	}
-	
-	private String validateSearchParty(PartiesDetailsDTO dto, PartyStatus partyStatus, RedirectAttributes redirectAttributes) {
-		String redirectResult = "redirect:/parties/";
-		List<PartiesEntity> foundParties = partiesService.findUserId(dto, partyStatus);				// Find all insured matching the search criteria from the submitted DTO
 
-		if(foundParties.isEmpty()) {
-			redirectResult += "not-found";												// Redirect to "not found" page if no matches occur
-		} else if(!isSearchRequestValid(dto)) {		// Or should the validation check fail
-			redirectResult += "find/insured";											// Reload the form page if the request is invalid
-		}
-		
-		attachFoundPartiesToRedirect(foundParties, redirectAttributes);							// Attach found Insured parties to the redirect attributes for display
-		
-		return redirectResult + "found/profiles";
-	}
-	
-	/**
-	 * Attaches a list of found parties to the redirect using a flash attribute.
-	 * This enables the target page (after redirect) to access and display the results.
-	 *
-	 * @param foundParties retrieved list containing found parties.
-	 * @param redirectAttributes the redirect context used to carry temporary attributes across the redirect.
-	 */
-	private void attachFoundPartiesToRedirect(List<PartiesEntity> foundParties, RedirectAttributes redirectAttributes) {
-	    PartiesFoundSendDTO sendDto = new PartiesFoundSendDTO();								// Create a DTO to carry search results
-	    sendDto.setFoundParties(foundParties);													// Assign the found parties to the created DTO
-	    redirectAttributes.addFlashAttribute("findingsDto", sendDto);							// Pass the populated DTO as attribute for the redirected page to display found parties
-	}	
-	
-	/**
-     * Validates the submitted search criteria to ensure the request is valid.
-     *
-     * @param dto a DTO containing the search criteria; includes personal details such as name, surname, birth date, birth number, email, street, and phone number.
-     * @return {@code true} if the submitted criteria meet the minimum requirements for a valid search; {@code false} otherwise.
-     */
-    public final boolean isSearchRequestValid(PartiesDetailsDTO dto) {
-    	
-    	// Should the birth number be provided
-    	if(dto.getBirthNumber() != null) {
-    		return true;										// Return evaluation as passed
-    	} else {		// Or should the birth number be missing
-			int checksPassed = 0;								// Initialize counter of passed checks
-    		
-			// Should the name be provided...
-			if (!dto.getName().equals("")) {
-				checksPassed++;									// Increase the number of passed checks...
-			}
-    		
-			if (!dto.getSurname().equals("")) {
-				checksPassed++;							
-			}
-    		
-			if (!dto.getStreet().equals("")) {
-				checksPassed++;					
-			}
-    		
-			if (!dto.getEmail().equals("")) {
-				checksPassed++;
-			}
-    		
-			if (!dto.getPhoneNumber().equals("")) {
-    			checksPassed++;
-    		}
-			
-			if (dto.getBirthDay() != null) {
-				checksPassed++;
-			}
-    		
-			// Should the desired amount of checks be passed
-			if (checksPassed >= 3) {							
-				return true;									// Return evaluation as passed
-			}
-		}
-    	
-    	return false;											// Since no requirement was met, return evaluation as failed
-    }
 }

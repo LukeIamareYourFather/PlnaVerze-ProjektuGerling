@@ -21,7 +21,7 @@ public class InsurancesEntity {
 
 	@Id
 	@GeneratedValue(strategy =  GenerationType.IDENTITY)
-	private long insurancesId;
+	private Long insurancesId;
 
 	@Column(nullable = false)
 	private String name;
@@ -34,22 +34,22 @@ public class InsurancesEntity {
 	private String description;
 	
 	@Column(nullable = false)
-	private long minimumInsuranceValue;
+	private Long minimumInsuranceValue;
 	
 	@Column(nullable = false)
-	private long maximumInsuranceValue;
+	private Long maximumInsuranceValue;
 	
 	@Column(nullable = false)
-	private long maximumPayoutValue;
+	private Long maximumPayoutValue;
 	
 	
 	private Boolean isAnnualPaymentRequired;
 	
 	@Column(nullable = false)
-	private int renewalPeriod;
+	private Integer renewalPeriod;
 	
 	@Column(nullable = false)
-	private long minimumPolicyTerm;
+	private Long minimumPolicyTerm;
 	
 	private Boolean isAutoRenewalRequired;
 	
@@ -76,14 +76,14 @@ public class InsurancesEntity {
 	/**
 	 * @return the insurancesId
 	 */
-	public long getInsurancesId() {
+	public Long getInsurancesId() {
 		return insurancesId;
 	}
 
 	/**
 	 * @param insurancesId the insurancesId to set
 	 */
-	public void setInsurancesId(long insurancesId) {
+	public void setInsurancesId(Long insurancesId) {
 		this.insurancesId = insurancesId;
 	}
 
@@ -132,42 +132,42 @@ public class InsurancesEntity {
 	/**
 	 * @return the minimumInsuranceValue
 	 */
-	public long getMinimumInsuranceValue() {
+	public Long getMinimumInsuranceValue() {
 		return minimumInsuranceValue;
 	}
 
 	/**
 	 * @param minimumInsuranceValue the minimumInsuranceValue to set
 	 */
-	public void setMinimumInsuranceValue(long minimumInsuranceValue) {
+	public void setMinimumInsuranceValue(Long minimumInsuranceValue) {
 		this.minimumInsuranceValue = minimumInsuranceValue;
 	}
 
 	/**
 	 * @return the maximumInsuranceValue
 	 */
-	public long getMaximumInsuranceValue() {
+	public Long getMaximumInsuranceValue() {
 		return maximumInsuranceValue;
 	}
 
 	/**
 	 * @param maximumInsuranceValue the maximumInsuranceValue to set
 	 */
-	public void setMaximumInsuranceValue(long maximumInsuranceValue) {
+	public void setMaximumInsuranceValue(Long maximumInsuranceValue) {
 		this.maximumInsuranceValue = maximumInsuranceValue;
 	}
 
 	/**
 	 * @return the maximumPayoutValue
 	 */
-	public long getMaximumPayoutValue() {
+	public Long getMaximumPayoutValue() {
 		return maximumPayoutValue;
 	}
 
 	/**
 	 * @param maximumPayoutValue the maximumPayoutValue to set
 	 */
-	public void setMaximumPayoutValue(long maximumPayoutValue) {
+	public void setMaximumPayoutValue(Long maximumPayoutValue) {
 		this.maximumPayoutValue = maximumPayoutValue;
 	}
 
@@ -188,28 +188,28 @@ public class InsurancesEntity {
 	/**
 	 * @return the renewalPeriod
 	 */
-	public int getRenewalPeriod() {
+	public Integer getRenewalPeriod() {
 		return renewalPeriod;
 	}
 
 	/**
 	 * @param renewalPeriod the renewalPeriod to set
 	 */
-	public void setRenewalPeriod(int renewalPeriod) {
+	public void setRenewalPeriod(Integer renewalPeriod) {
 		this.renewalPeriod = renewalPeriod;
 	}
 
 	/**
 	 * @return the minimumPolicyTerm
 	 */
-	public long getMinimumPolicyTerm() {
+	public Long getMinimumPolicyTerm() {
 		return minimumPolicyTerm;
 	}
 
 	/**
 	 * @param minimumPolicyTerm the minimumPolicyTerm to set
 	 */
-	public void setMinimumPolicyTerm(long minimumPolicyTerm) {
+	public void setMinimumPolicyTerm(Long minimumPolicyTerm) {
 		this.minimumPolicyTerm = minimumPolicyTerm;
 	}
 

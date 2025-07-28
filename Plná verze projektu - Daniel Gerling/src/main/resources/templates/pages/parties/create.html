@@ -10,11 +10,14 @@
     </header>
 
     <body id="main-page">
-        <article>
-            <section th:replace="~{fragments/layout.html :: personForm()}">
-
-            </section>
+        <article class="pb-5">
+            <div class="tile-background">
+                <div class="py-2 flash-message message-error" th:text="${error}" th:if="${error}"></div>
+                
+                <section th:replace="~{fragments/layout.html :: personForm()}"></section>
+            </div>
         </article>
+        
         <footer th:replace="~{fragments/layout.html :: footer}"></footer>
     </body>
 </html>

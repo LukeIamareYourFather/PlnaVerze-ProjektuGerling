@@ -11,8 +11,13 @@
 
     <body id="main-page">
         <article class="pb-5">
-            <header th:replace="~{fragments/layout.html :: createInsurancesForm}"></header>
+            <div class="tile-background">
+                <div class="py-2 flash-message message-error" th:text="${error}" th:if="${error}"></div>
+
+                <section th:replace="~{fragments/layout.html :: createInsurancesForm}"></section>
+            </div>
         </article>
+
         <footer th:replace="~{fragments/layout.html :: footer}"></footer>
     </body>
 </html>

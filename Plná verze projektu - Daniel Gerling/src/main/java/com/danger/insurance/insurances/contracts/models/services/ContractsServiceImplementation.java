@@ -12,6 +12,7 @@ import com.danger.insurance.insurances.contracts.models.dto.ContractsDTO;
 import com.danger.insurance.insurances.contracts.models.dto.mappers.ContractsMapper;
 import com.danger.insurance.insurances.contracts.models.exceptions.ContractNotFoundException;
 import com.danger.insurance.parties.models.exceptions.PartyNotFoundException;
+import com.danger.insurance.specifications.ContractsSpecifications;
 
 @Service
 public class ContractsServiceImplementation implements ContractsService{
@@ -85,14 +86,13 @@ public class ContractsServiceImplementation implements ContractsService{
 	
 	public List<ContractsEntity> findContractId(ContractsDTO dto) {
     	
-    	return contractsRepository.searchContracts(
+    	return contractsRepository.findAll(ContractsSpecifications.dynamicContractSearch(
     	        emptyToNull(dto.getContractNumber()),
     	        dto.getInsuredSubject(),
     	        dto.getInsuranceType(),
     	        dto.getBeginDate(),
-    	        dto.getSignatureDate(),
-    	        dto.getPricePerPeriod()
-    	    );													// Return list of all matching parties
+    	        dto.getSignatureDate()
+    	    ));													// Return list of all matching parties
     }
     
     /**

@@ -5,28 +5,39 @@ import java.time.LocalDate;
 import com.danger.insurance.insurances.data.entities.InsurancesEntity;
 import com.danger.insurance.insurances.data.enums.InsurancesSubjects;
 import com.danger.insurance.insurances.data.enums.InsurancesType;
+import com.danger.insurance.validation.groups.OnCreateContract;
+import com.danger.insurance.validation.groups.OnUpdateContract;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class ContractsDTO {
-	//make nullable false when using for creation or a new DTO
+	
 	private long contractId;
 	
+	@NotBlank(message = "Prosím zadejte číslo smlouvy", groups = {OnUpdateContract.class, OnCreateContract.class})
 	private String contractNumber;
 	
+	@NotNull(message = "Prosím zadejte pojištěný subjekt", groups = {OnUpdateContract.class, OnCreateContract.class})
 	@Enumerated(EnumType.STRING)
 	private InsurancesSubjects insuredSubject;
 	
+	@NotNull(message = "Prosím zadejte typ pojištění", groups = {OnUpdateContract.class, OnCreateContract.class})
 	@Enumerated(EnumType.STRING)
 	private InsurancesType insuranceType;
 	
+	@NotNull(message = "Prosím zadejte datum zahájení", groups = {OnUpdateContract.class, OnCreateContract.class})
 	private LocalDate beginDate;
 	
+	@NotNull(message = "Prosím zadejte datum podpisu", groups = {OnUpdateContract.class, OnCreateContract.class})
 	private LocalDate signatureDate;
 	
+	@NotNull(message = "Prosím zadejte cenu za období", groups = {OnUpdateContract.class, OnCreateContract.class})
 	private Long pricePerPeriod;
 	
+	@NotNull(message = "Prosím zadejte procentualní spoluúčast", groups = {OnUpdateContract.class, OnCreateContract.class})
 	private float liabilityPercentage;
 	
 	private InsurancesEntity insurancesEntity;

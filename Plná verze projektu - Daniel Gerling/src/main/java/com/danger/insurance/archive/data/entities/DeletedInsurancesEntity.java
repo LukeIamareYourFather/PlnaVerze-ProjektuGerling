@@ -34,9 +34,6 @@ public class DeletedInsurancesEntity {
 	private String deleteDescription;
 	
 	@Column(nullable = false)
-	private Boolean ifToRemoveAllContracts;
-	
-	@Column(nullable = false)
 	private String name;
 	
 	@Column(nullable = false)
@@ -123,20 +120,6 @@ public class DeletedInsurancesEntity {
 	 */
 	public void setDeleteDescription(String deleteDescription) {
 		this.deleteDescription = deleteDescription;
-	}
-
-	/**
-	 * @return the ifToRemoveAllContracts
-	 */
-	public Boolean getIfToRemoveAllContracts() {
-		return ifToRemoveAllContracts;
-	}
-
-	/**
-	 * @param ifToRemoveAllContracts the ifToRemoveAllContracts to set
-	 */
-	public void setIfToRemoveAllContracts(Boolean ifToRemoveAllContracts) {
-		this.ifToRemoveAllContracts = ifToRemoveAllContracts;
 	}
 
 	/**

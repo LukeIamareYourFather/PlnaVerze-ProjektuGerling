@@ -8,20 +8,39 @@ import com.danger.insurance.incidents.data.entities.IncidentCommentsEntity;
 import com.danger.insurance.incidents.data.enums.IncidentStatus;
 import com.danger.insurance.incidents.data.enums.IncidentType;
 import com.danger.insurance.insurances.data.enums.InsurancesSubjects;
+import com.danger.insurance.validation.groups.OnUpdateIncident;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class IncidentDetailsGetDTO {
 	
+	@NotBlank(message = "Prosím zadejte číslo pojistné události", groups = {OnUpdateIncident.class})
 	private String caseNumber;
+	
+	@NotBlank(message = "Prosím zadejte předmět pojistné události", groups = {OnUpdateIncident.class})
 	private String title;
+	
+	@NotBlank(message = "Prosím zadejte popis pojistné události", groups = {OnUpdateIncident.class})
 	private String description;
+	
+	@NotBlank(message = "Prosím zadejte rodné číslo vázané na událost", groups = {OnUpdateIncident.class})
 	private String birthNumber;
 
+	@NotNull(message = "Prosím zadejte druh pojistné události", groups = {OnUpdateIncident.class})
 	private IncidentType incidentType;
+	
+	@NotNull(message = "Prosím zadejte pojistnou událostí poškozený subjekt", groups = {OnUpdateIncident.class})
 	private InsurancesSubjects incidentSubject;
+	
 	private IncidentStatus currentStatus;
 	
+	@NotNull(message = "Prosím zadejte kdy vznikla pojistná událost", groups = {OnUpdateIncident.class})
 	private LocalDate accidentDate;
+	
+	@NotNull(message = "Prosím zadejte kdy byla pojistná událost nahlášena", groups = {OnUpdateIncident.class})
 	private LocalDate reportDate;
+	
 	private LocalDate todaysDate;
 	private LocalDate closureDate;
 

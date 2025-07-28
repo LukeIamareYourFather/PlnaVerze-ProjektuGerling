@@ -14,6 +14,7 @@ import com.danger.insurance.parties.models.dto.PartiesCreateDTO;
 import com.danger.insurance.parties.models.dto.PartiesDetailsDTO;
 import com.danger.insurance.parties.models.dto.mappers.PartiesMapper;
 import com.danger.insurance.parties.models.exceptions.PartyNotFoundException;
+import com.danger.insurance.specifications.PartiesSpecifications;
 
 @Service
 public class PartiesServiceImplementation implements PartiesService {
@@ -116,18 +117,18 @@ public class PartiesServiceImplementation implements PartiesService {
      * @return a list of matching {@link PartiesEntity} objects.
      */
     public List<PartiesEntity> findUserId(PartiesDetailsDTO dto, PartyStatus contractRole) {
-    	List<PartiesEntity> foundParties = partiesRepository.searchParties(
-    	        emptyToNull(dto.getName()),
-    	        emptyToNull(dto.getSurname()),
-    	        emptyToNull(dto.getStreet()),
-    	        emptyToNull(dto.getEmail()),
-    	        emptyToNull(dto.getPhoneNumber()),
-    	        dto.getBirthDay()
-    	    );			
+    	List<PartiesEntity> foundParties = partiesRepository.findAll(PartiesSpecifications.dynamicPartySearch(
+    			emptyToNull(dto.getName()), 
+    			emptyToNull(dto.getSurname()), 
+    			emptyToNull(dto.getStreet()), 
+    			emptyToNull(dto.getEmail()), 
+    			emptyToNull(dto.getPhoneNumber()), 
+    			dto.getBirthDay(), 
+    			emptyToNull(dto.getBirthNumber())));			
     	
     	return filterFoundParties(foundParties, contractRole);								// Return list of all matching parties
     }
-    
+
     /**
      * Converts an empty or blank string to {@code null}.
      *
@@ -173,6 +174,7 @@ public class PartiesServiceImplementation implements PartiesService {
     			
 			}
     		
+    		//
     		if (!partyContainsDesiredStatus) {
 				partiesToFilter.remove(i);
 				i--;

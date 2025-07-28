@@ -11,46 +11,11 @@
 
     <body id="main-page">
         <article class="pb-5">
-            <section th:fragment="contractRemovalReasons(formName, buttonLabel)" class="tile-background py-4 px-4">
-                <div class="centered">
-                    <h1 th:text="${formName}"></h1>
-                </div>
+            <div class="tile-background">
+                <div class="py-2 flash-message message-error" th:text="${error}" th:if="${error}"></div>
 
-                <form class="d-flex flex-column gap-2" method="post" th:action="${formAction}" th:object="${removalReasonsDTO}">
-                    <div class="form-group">
-                        <label for="delete-reason" class="control-label">Důvod odebrání smlouvy:</label>
-                        <select id="delete-reason" th:field="*{deleteReason}" class="form-select">
-                            <option th:each="deleteReason : ${T(com.danger.insurance.insurances.contracts.data.enums.ContractsRemovalReason).values()}"
-                                    th:value="${deleteReason}"
-                                    th:text="${deleteReason.displayName}">
-                            </option>
-                        </select>
-                        <small class="text-danger" th:if="${#fields.hasErrors('deleteReason')}" th:errors="*{deleteReason}"></small>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="date-of-request" class="control-label">Datum požadavku:</label>
-                        <input id="date-of-request" type="date" class="form-control" th:field="*{dateOfRequest}"></input>
-                        <small class="text-danger" th:if="${#fields.hasErrors('dateOfRequest')}" th:errors="*{dateOfRequest}"></small>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="date-of-cancellation" class="control-label">Datum ukončení:</label>
-                        <input id="date-of-cancellation" type="date" class="form-control" th:field="*{dateOfCancellation}"></input>
-                        <small class="text-danger" th:if="${#fields.hasErrors('dateOfCancellation')}" th:errors="*{dateOfCancellation}"></small>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="description" class="control-label">Popis důvodu odstranění:</label>
-                        <textarea id="description" class="form-control" th:field="*{description}"></textarea>
-                        <small class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
-                    </div>
-
-                    <div class="form-group">
-                        <button type="submit" class="clanky-tlacitko" th:text="${buttonLabel}"></button>
-                    </div>
-                </form>
-            </section>
+                <section th:replace="~{fragments/layout.html :: contractRemovalReasons}">
+            </div>
         </article>
 
         <footer th:replace="~{fragments/layout.html :: footer}"></footer>

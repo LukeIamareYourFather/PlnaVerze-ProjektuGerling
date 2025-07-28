@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-07-21T08:28:47+0200",
+    date = "2025-07-28T13:23:39+0200",
     comments = "version: 1.6.3, compiler: javac, environment: Java 23.0.2 (Oracle Corporation)"
 )
 @Component
@@ -27,7 +27,6 @@ public class DeletedPartiesMapperImpl implements DeletedPartiesMapper {
         deletedPartiesEntity.setRemovalReason( source.getRemovalReason() );
         deletedPartiesEntity.setDateOfRequest( source.getDateOfRequest() );
         deletedPartiesEntity.setTodaysDate( source.getTodaysDate() );
-        deletedPartiesEntity.setIfToDeleteParty( source.isIfToDeleteParty() );
         deletedPartiesEntity.setAdditionalInformation( source.getAdditionalInformation() );
         deletedPartiesEntity.setPartyId( source.getPartyId() );
         deletedPartiesEntity.setName( source.getName() );
@@ -55,7 +54,6 @@ public class DeletedPartiesMapperImpl implements DeletedPartiesMapper {
         deletedPartiesEntity.setRemovalReason( source.getRemovalReason() );
         deletedPartiesEntity.setDateOfRequest( source.getDateOfRequest() );
         deletedPartiesEntity.setTodaysDate( source.getTodaysDate() );
-        deletedPartiesEntity.setIfToDeleteParty( source.isIfToDeleteParty() );
         deletedPartiesEntity.setAdditionalInformation( source.getAdditionalInformation() );
         deletedPartiesEntity.setPartyId( source.getPartyId() );
         deletedPartiesEntity.setName( source.getName() );
@@ -93,7 +91,6 @@ public class DeletedPartiesMapperImpl implements DeletedPartiesMapper {
         deletedPartiesDTO.setRemovalReason( source.getRemovalReason() );
         deletedPartiesDTO.setDateOfRequest( source.getDateOfRequest() );
         deletedPartiesDTO.setTodaysDate( source.getTodaysDate() );
-        deletedPartiesDTO.setIfToDeleteParty( source.getIfToDeleteParty() );
         deletedPartiesDTO.setAdditionalInformation( source.getAdditionalInformation() );
 
         return deletedPartiesDTO;
@@ -112,7 +109,6 @@ public class DeletedPartiesMapperImpl implements DeletedPartiesMapper {
             deletedPartiesDTO.setRemovalReason( reasonsDto.getRemovalReason() );
             deletedPartiesDTO.setDateOfRequest( reasonsDto.getDateOfRequest() );
             deletedPartiesDTO.setTodaysDate( reasonsDto.getTodaysDate() );
-            deletedPartiesDTO.setIfToDeleteParty( reasonsDto.getIfToDeleteParty() );
             deletedPartiesDTO.setAdditionalInformation( reasonsDto.getAdditionalInformation() );
         }
         if ( partiesDTO != null ) {
@@ -151,7 +147,6 @@ public class DeletedPartiesMapperImpl implements DeletedPartiesMapper {
         target.setRemovalReason( source.getRemovalReason() );
         target.setDateOfRequest( source.getDateOfRequest() );
         target.setTodaysDate( source.getTodaysDate() );
-        target.setIfToDeleteParty( source.isIfToDeleteParty() );
         target.setAdditionalInformation( source.getAdditionalInformation() );
     }
 
@@ -165,7 +160,6 @@ public class DeletedPartiesMapperImpl implements DeletedPartiesMapper {
         target.setRemovalReason( source.getRemovalReason() );
         target.setDateOfRequest( source.getDateOfRequest() );
         target.setTodaysDate( source.getTodaysDate() );
-        target.setIfToDeleteParty( source.isIfToDeleteParty() );
         target.setAdditionalInformation( source.getAdditionalInformation() );
         target.setPartyId( source.getPartyId() );
         target.setName( source.getName() );

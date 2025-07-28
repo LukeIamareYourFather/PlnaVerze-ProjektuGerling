@@ -11,8 +11,12 @@
 
     <body id="main-page">
         <article class="pb-5">
-            <div class="tile-background py-4 px-4">
-                <section th:replace="~{fragments/layout.html :: newsCreateForm}"></section>
+            <div class="tile-background ">
+                <div class="py-2 flash-message message-error" th:text="${error}" th:if="${error}"></div>
+
+                <div class="py-4 px-4">
+                    <section th:replace="~{fragments/layout.html :: newsCreateForm}"></section>
+                </div>
             </div>
         </article>
 

@@ -26,7 +26,6 @@ public class DeletedPartiesDTO {
 	private PartiesRemovalReason removalReason;
 	private LocalDate dateOfRequest;
 	private LocalDate todaysDate;
-	private Boolean ifToDeleteParty;
 	private String additionalInformation;
 	
 	/**
@@ -201,15 +200,6 @@ public class DeletedPartiesDTO {
 	/**
 	 * @return the ifToDeleteParty
 	 */
-	public Boolean isIfToDeleteParty() {
-		return ifToDeleteParty;
-	}
-	/**
-	 * @param ifToDeleteParty the ifToDeleteParty to set
-	 */
-	public void setIfToDeleteParty(Boolean ifToDeleteParty) {
-		this.ifToDeleteParty = ifToDeleteParty;
-	}
 	/**
 	 * @return the additionalInformation
 	 */

@@ -1,0 +1,98 @@
+package com.danger.insurance.insurances.contracts.controllers;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.danger.insurance.infopages.data.enums.ButtonLabels;
+import com.danger.insurance.infopages.data.enums.FlashMessages;
+import com.danger.insurance.infopages.data.enums.FormNames;
+import com.danger.insurance.insurances.contracts.data.entities.ContractsEntity;
+import com.danger.insurance.insurances.contracts.models.dto.ContractsDTO;
+import com.danger.insurance.insurances.contracts.models.services.ContractsServiceImplementation;
+
+@PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ADMINISTRATOR')")
+@Controller
+@RequestMapping("insurances")
+public class FindContractsController {
+	
+	@Autowired
+	private  ContractsServiceImplementation contractsService;
+
+	@GetMapping("find")
+	public String renderFindContractsForm(Model model) {
+		model.addAttribute("formAction", "find/validate");
+		model.addAttribute("buttonLabel", ButtonLabels.FIND.getDisplayName());
+		model.addAttribute("formName", FormNames.CONTRACTS_FIND.getDisplayName());
+		
+		if (!model.containsAttribute("contractDTO")) {
+			model.addAttribute("contractDTO", new ContractsDTO());
+		}
+		
+		return "pages/insurances/contracts/find";
+	}
+	
+	@PostMapping("find/validate")
+	public String handleFindContractsFormSubmit(@ModelAttribute("contractDTO") ContractsDTO contractsDTO, Model model, RedirectAttributes redirectAttributes) {
+		
+		//
+		if (!validateFormSubmit(contractsDTO)) {
+			redirectAttributes.addFlashAttribute("contractDTO", contractsDTO);
+			redirectAttributes.addFlashAttribute("error", FlashMessages.INSUFFICIENT_INPUT.getDisplayName());
+			
+			return "redirect:/insurances/find";
+		}
+		
+		List<ContractsEntity> foundContracts = contractsService.findContractId(contractsDTO);
+		redirectAttributes.addFlashAttribute("foundContractsList", foundContracts);
+		
+		return "redirect:/insurances/find/validated";
+	}
+	
+	@GetMapping("find/validated")
+	public String renderFoundContractsList(Model model) {
+		model.addAttribute("referenceLink", "/insurances/contract-");
+
+		return "pages/insurances/contracts/list";
+	}
+
+	private boolean validateFormSubmit(ContractsDTO contractsDTO) {
+		int secondaryValueChecksPassed = 0;
+		
+		if (!contractsDTO.getContractNumber().equals("")) {
+			return true;
+		}
+		
+		if (contractsDTO.getInsuranceType() != null) {
+			secondaryValueChecksPassed++;
+		}
+		
+		if (contractsDTO.getInsuredSubject() != null) {
+			secondaryValueChecksPassed++;
+		}
+		
+		if (contractsDTO.getBeginDate() != null) {
+			secondaryValueChecksPassed++;
+		}
+				
+		if (contractsDTO.getSignatureDate() != null) {
+			secondaryValueChecksPassed++;
+		}
+		
+		
+		if (secondaryValueChecksPassed >= 3) {
+			return true;
+		}
+		
+		return false;
+	}
+}
+

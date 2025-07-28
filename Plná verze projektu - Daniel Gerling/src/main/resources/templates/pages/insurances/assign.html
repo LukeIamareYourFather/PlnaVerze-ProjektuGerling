@@ -11,7 +11,11 @@
 
     <body id="main-page">
         <article class="pb-5">
-            <section th:replace="~{fragments/layout.html :: createContractForm}"></section>
+            <div class="tile-background">
+                <div class="py-2 flash-message message-error" th:text="${error}" th:if="${error}"></div>
+                
+                <section th:replace="~{fragments/layout.html :: createContractForm}"></section>
+            </div>
         </article>
 
         <footer th:replace="~{fragments/layout.html :: footer}"></footer>

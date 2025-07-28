@@ -10,9 +10,11 @@
     </header>
 
     <body id="main-page">
-        <article>
+        <article class="pb-5">
             <div class="container-fluid">
-                <div class="tile-background pb-5">
+                <div class="tile-background">
+                    <div class="py-2 flash-message message-success" th:text="${success}" th:if="${success}"></div>
+                    
                     <div class="row justify-content-center">
                         <div class="col-auto mx-4 my-4">
                             <button class="btn insuree-tile blue-tile">

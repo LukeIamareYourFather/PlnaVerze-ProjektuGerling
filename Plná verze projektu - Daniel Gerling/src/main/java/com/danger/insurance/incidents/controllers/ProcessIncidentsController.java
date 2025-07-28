@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,10 +22,15 @@ import com.danger.insurance.incidents.models.dto.IncidentCommentsDTO;
 import com.danger.insurance.incidents.models.dto.mappers.IncidentCommentsMapper;
 import com.danger.insurance.incidents.models.dto.mappers.IncidentsMapper;
 import com.danger.insurance.incidents.models.dto.post.IncidentCommentsCreatePostDTO;
+import com.danger.insurance.incidents.models.dto.post.IncidentsClosePostDTO;
 import com.danger.insurance.incidents.models.dto.post.IncidentsFindPostDTO;
 import com.danger.insurance.incidents.models.service.CommonSupportServiceIncidents;
 import com.danger.insurance.incidents.models.service.IncidentCommentsServiceImplementation;
 import com.danger.insurance.incidents.models.service.IncidentsServiceImplementation;
+import com.danger.insurance.infopages.data.enums.ButtonLabels;
+import com.danger.insurance.infopages.data.enums.FlashMessages;
+import com.danger.insurance.infopages.data.enums.FormNames;
+import com.danger.insurance.validation.groups.OnProcessIncident;
 
 @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ADMINISTRATOR')")
 @Controller
@@ -53,13 +59,23 @@ public class ProcessIncidentsController {
 	}
 
 	@GetMapping("process")
-	public String renderProcessIncidentForm(@ModelAttribute("incidentCommentDTO") IncidentCommentsCreatePostDTO incidentCommentsCreatePostDTO, Model model) {
-		return commonSupportService.addProcessIncidentFormAttributes(model, "Zpracovávání pojistných událostí", "Potvrdit", "process/validate", true, false, false);
+	public String renderProcessIncidentForm(Model model) {
+		String formAction ="process/validate";
+		boolean isCommentCreateForm = true;
+		boolean isClosureForm = false;
+		boolean isClosureDetailForm = false;
+		IncidentsClosePostDTO incidentCloseDTO = null;
+		
+		return commonSupportService.addProcessIncidentFormAttributes(incidentCommentsCreatePostDTO(), incidentCloseDTO, model, FormNames.INCIDENTS_PROCESS, ButtonLabels.CONFIRM, formAction, isCommentCreateForm, isClosureForm, isClosureDetailForm);
 	}
 
 	@PostMapping("process/validate")
-	public String validateProcessIncidentFormPost(@ModelAttribute("incidentCommentDTO") IncidentCommentsCreatePostDTO incidentCommentsCreatePostDTO, Model model, BindingResult bindingResult) {
-		return commonSupportService.validateProcessIncidentFormPost(model, bindingResult, incidentCommentsCreatePostDTO, null, "incidents/process/find");
+	public String validateProcessIncidentFormPost(@Validated(OnProcessIncident.class) @ModelAttribute("incidentCommentDTO") IncidentCommentsCreatePostDTO incidentCommentsCreatePostDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+		String failRedirect = "incidents/process";
+		String sucessRedirect = failRedirect + "/find";
+		IncidentsClosePostDTO incidentCloseDTO = null;
+		
+		return commonSupportService.validateProcessIncidentFormPost(incidentCommentsCreatePostDTO, incidentCloseDTO, failRedirect,  sucessRedirect, bindingResult, redirectAttributes);
 	}
 	
 	@GetMapping("process/find")
@@ -69,8 +85,8 @@ public class ProcessIncidentsController {
 	
 	@PostMapping("process/find/validate")
 	public String validateSearchIncidentToCommentFormPost(@SessionAttribute("incidentCommentDTO") IncidentCommentsCreatePostDTO incidentCommentsCreatePostDTO,
-			@ModelAttribute("formDTO") IncidentsFindPostDTO incidentsFindPostDTO, Model model, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-		return commonSupportService.validateFindIncidentsFormPost(model, incidentsFindPostDTO, "redirect:/incidents/process/find/select", bindingResult, redirectAttributes);
+			@ModelAttribute("formDTO") IncidentsFindPostDTO incidentsFindPostDTO, Model model, RedirectAttributes redirectAttributes) {
+		return commonSupportService.validateFindIncidentsFormPost(model, incidentsFindPostDTO, "redirect:/incidents/process/find/select", "incidents/process/find", redirectAttributes);
 	}
 	
 	@GetMapping("process/find/select") 
@@ -85,12 +101,13 @@ public class ProcessIncidentsController {
 	}
 	
 	@PostMapping("process/find/selected-{incidentId}/confirmed")
-	public String handleConfirmIncidentCommentForm(@PathVariable("incidentId") long incidentId, @ModelAttribute("incidentCommentsCreateDTO") IncidentCommentsCreatePostDTO incidentCommentsCreatePostDTO, SessionStatus sessionStatus) {
+	public String handleConfirmIncidentCommentForm(@PathVariable("incidentId") long incidentId, @ModelAttribute("incidentCommentsCreateDTO") IncidentCommentsCreatePostDTO incidentCommentsCreatePostDTO, SessionStatus sessionStatus, RedirectAttributes redirectAttributes) {
 		IncidentCommentsDTO newIncidentComment = incidentCommentsMapper.mergeToIncidentCommentsDTO(new IncidentCommentsDTO(), incidentCommentsCreatePostDTO);
 		newIncidentComment.setCommentDate(LocalDate.now());
 		newIncidentComment.setIncidentsEntity(incidentsMapper.toEntity(incidentsService.getIncidentById(incidentId)));
 		incidentCommentsService.create(newIncidentComment);
 		sessionStatus.setComplete();
+		redirectAttributes.addFlashAttribute("success", FlashMessages.INCIDENT_PROCESSED.getDisplayName());
 		
 		return "redirect:/incidents/" + incidentId;
 	}

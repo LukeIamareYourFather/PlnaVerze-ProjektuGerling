@@ -1,18 +1,26 @@
 package com.danger.insurance.parties.models.dto;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 
 import com.danger.insurance.parties.data.enums.PartiesRemovalReason;
+import com.danger.insurance.validation.groups.OnDeleteParty;
 
-public class PartiesReasonsFormDTO implements Serializable {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
-	private static final long serialVersionUID = 1L;
+public class PartiesReasonsFormDTO {
+
 	private long deleteReasonId;
+	
+	@NotNull(message = "Prosím zadejte důvod odebrání", groups = {OnDeleteParty.class})
 	private PartiesRemovalReason removalReason;
+	
+	@NotNull(message = "Prosím zadejte datum požadavku", groups = {OnDeleteParty.class})
 	private LocalDate dateOfRequest;
+	
 	private LocalDate todaysDate;
-	private Boolean ifToDeleteParty;
+	
+	@NotBlank(message = "Prosím zadejte dodatečné informace", groups = {OnDeleteParty.class})
 	private String additionalInformation;
 	
 	
@@ -67,15 +75,6 @@ public class PartiesReasonsFormDTO implements Serializable {
 	/**
 	 * @return the ifToDeleteParty
 	 */
-	public Boolean getIfToDeleteParty() {
-		return ifToDeleteParty;
-	}
-	/**
-	 * @param ifToDeleteParty the ifToDeleteParty to set
-	 */
-	public void setIfToDeleteParty(Boolean ifToDeleteParty) {
-		this.ifToDeleteParty = ifToDeleteParty;
-	}
 	/**
 	 * @return the additionalInformation
 	 */

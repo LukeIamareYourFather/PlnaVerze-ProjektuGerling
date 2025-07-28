@@ -1,63 +1,23 @@
 <!DOCTYPE html>
 
 <html lang="cs-cz">
-	<head th:replace="~{fragments/layout.html :: head}"></head>
-	
-	<body>
-	<header th:replace="~{fragments/layout.html :: header}"></header>
-	
-	<div class="py-2 flash-message message-error" th:text="${error}" th:if="${error}"></div>
-	
-	<article>
-	    <div id="tile-background px-4 py-4">
-	        <header>
-	            <h1>Registrace nového uživatele</h1>
-	        </header>
-	
-	        <section>
-	            <div class="row">
-	                <div class="col-md-4 col-md-offset-4">
-						<form th:action="@{/account/register}" th:object="${accountDTO}" method="post" class="d-flex flex-column gap-2">
-						    <div class="form-group">
-						        <label for="user-email">E-mail nového uživatele:</label>
-						        <input id="user-email" name="user-email" type="email" th:field="*{userEmail}" class="form-control"/>
-						        <small class="text-danger" th:errors="*{userEmail}"></small>
-						    </div>
+    <head th:replace="~{fragments/layout.html :: head}">
+    
+    </head>
 
-						    <div class="form-group">
-						        <label for="user-password">Heslo nového uživatele</label>
-						        <input id="user-password" name="user-password" type="text" th:field="*{userPassword}" class="form-control"/>
-						        <small class="text-danger" th:errors="*{userPassword}"></small>
-						    </div>
+    <header th:replace="~{fragments/layout.html :: header}">
 
-						    <div class="form-group">
-						        <label for="confirm-password">Zopakujte nové heslo pro kontrolu:</label>
-						        <input id="confirm-password" name="password" type="password" th:field="*{confirmPassword}" class="form-control"/>
-						        <small class="text-danger" th:errors="*{confirmPassword}"></small>
-						    </div>
+    </header>
 
-							<div class="form-group">
-								<label for="user-role" class="control-label">Role nového uživatele:</label>
+	<body id="main-page">
+		<article class="pb-5">
+			<div class="tile-background">
+				<div class="py-2 flash-message message-error" th:text="${error}" th:if="${error}"></div>
 
-								<select id="user-role" th:field="*{userRole}" class="form-select">
-									<option th:each="role : ${T(com.danger.insurance.accounts.data.enums.AccountRoles).values()}"
-											th:value="${role}"
-											th:text="${role.displayName}">
-									</option>
-								</select>
-
-								<small class="text-danger" th:if="${#fields.hasErrors('userRole')}" th:errors="*{userRole}"></small>
-							</div>
-
-						    <div class="form-group">
-						        <button type="submit" class="clanky-tlacitko align-self-start">Zaregistrovat</button>
-						    </div>
-						</form>
-	                </div>
-	            </div>
-	        </section>
-	    </div>
-	</article>
+				<section th:replace="~{fragments/layout.html :: accountsForm}"></section>
+			</div>
+		</article>
+	</body>
 	
 	<footer th:replace="~{fragments/layout.html :: footer}"></footer>
 	</body>

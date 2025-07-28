@@ -14,7 +14,7 @@ public class IncidentsFindPostDTO {
 	private String caseNumber;
 	
 	@NotNull(message = "Prosím zadejte předmět pojistné události")
-	private String Title;
+	private String title;
 
 	@NotNull(message = "Prosím zadejte rodné číslo pojistné události")
 	private String birthNumber;
@@ -51,14 +51,14 @@ public class IncidentsFindPostDTO {
 	 * @return the title
 	 */
 	public String getTitle() {
-		return Title;
+		return title;
 	}
 
 	/**
 	 * @param title the title to set
 	 */
 	public void setTitle(String title) {
-		Title = title;
+		this.title = title;
 	}
 
 	/**

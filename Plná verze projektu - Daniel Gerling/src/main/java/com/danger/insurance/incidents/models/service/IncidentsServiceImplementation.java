@@ -14,6 +14,7 @@ import com.danger.insurance.incidents.models.dto.mappers.IncidentsMapper;
 import com.danger.insurance.incidents.models.dto.post.IncidentsFindPostDTO;
 import com.danger.insurance.incidents.models.exceptions.IncidentNotFoundException;
 import com.danger.insurance.parties.models.exceptions.PartyNotFoundException;
+import com.danger.insurance.specifications.IncidentsSpecifications;
 
 @Service
 public class IncidentsServiceImplementation implements IncidentsService {
@@ -107,7 +108,7 @@ public class IncidentsServiceImplementation implements IncidentsService {
     }
     
     public List<IncidentsEntity> findIncidentId(IncidentsFindPostDTO findDTO) {
-    	List<IncidentsEntity> foundIncidents = incidentsRepository.searchIncidents(
+    	List<IncidentsEntity> foundIncidents = incidentsRepository.findAll(IncidentsSpecifications.dynamicIncidentSearch(
     			emptyToNull(findDTO.getCaseNumber()),
     	        emptyToNull(findDTO.getBirthNumber()),
     	        emptyToNull(findDTO.getTitle()),
@@ -115,7 +116,7 @@ public class IncidentsServiceImplementation implements IncidentsService {
     	        findDTO.getIncidentSubject(),
     	        findDTO.getCurrentStatus(),
     	        findDTO.getAccidentDate()
-    	    );			
+    	    ));			
     	
     	return foundIncidents;							// Return list of all matching parties
     }

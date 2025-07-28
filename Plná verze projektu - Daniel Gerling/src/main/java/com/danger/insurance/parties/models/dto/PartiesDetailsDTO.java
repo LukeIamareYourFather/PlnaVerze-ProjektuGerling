@@ -2,19 +2,40 @@ package com.danger.insurance.parties.models.dto;
 
 import java.time.LocalDate;
 
+import com.danger.insurance.validation.groups.OnUpdateParty;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class PartiesDetailsDTO {
 	
 	// Define Dates
+	@NotNull(message = "Prosím zadejte datum narození", groups = {OnUpdateParty.class})
 	private LocalDate birthDay;	
 	
 	// Define Strings
+	@NotBlank(message = "Prosím zadejte jméno", groups = {OnUpdateParty.class})
 	private String name;
+	
+	@NotBlank(message = "Prosím zadejte příjmení", groups = {OnUpdateParty.class})
 	private String surname;
+	
+	@NotBlank(message = "Prosím zadejte rodné číslo", groups = {OnUpdateParty.class})
 	private String birthNumber;	
+	
+	@NotBlank(message = "Prosím zadejte E-mail", groups = {OnUpdateParty.class})
 	private String email;	
+	
+	@NotBlank(message = "Prosím zadejte telefonní číslo", groups = {OnUpdateParty.class})
 	private String phoneNumber;	
+
+	@NotBlank(message = "Prosím zadejte ulici", groups = {OnUpdateParty.class})
 	private String street;	
+
+	@NotBlank(message = "Prosím zadejte město", groups = {OnUpdateParty.class})
 	private String city;	
+
+	@NotBlank(message = "Prosím zadejte poštovní směrovací číslo", groups = {OnUpdateParty.class})
 	private String zipCode;
 	
 	// Define numbers

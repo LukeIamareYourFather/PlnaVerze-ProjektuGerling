@@ -74,7 +74,7 @@ article {
 .flash-message {
     text-align: center;
     color: white;
-    width: 100vw;
+    width: 100%;
     margin: 0 auto;
     margin-top: 14px;
 }
@@ -137,10 +137,12 @@ article {
     background-color: white;
 }
 
-
-
 .tile-background {
     background-color: #2e3c47;
     width: 50vw;
     margin-left: 25vw;
+}
+
+.red-border {
+    border: solid 2px red;
 }

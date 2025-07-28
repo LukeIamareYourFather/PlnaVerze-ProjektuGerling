@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,11 +23,15 @@ import com.danger.insurance.incidents.models.dto.IncidentCommentsDTO;
 import com.danger.insurance.incidents.models.dto.IncidentsDTO;
 import com.danger.insurance.incidents.models.dto.mappers.IncidentCommentsMapper;
 import com.danger.insurance.incidents.models.dto.mappers.IncidentsMapper;
+import com.danger.insurance.incidents.models.dto.post.IncidentCommentsCreatePostDTO;
 import com.danger.insurance.incidents.models.dto.post.IncidentsClosePostDTO;
 import com.danger.insurance.incidents.models.dto.post.IncidentsFindPostDTO;
 import com.danger.insurance.incidents.models.service.CommonSupportServiceIncidents;
 import com.danger.insurance.incidents.models.service.IncidentCommentsServiceImplementation;
 import com.danger.insurance.incidents.models.service.IncidentsServiceImplementation;
+import com.danger.insurance.infopages.data.enums.ButtonLabels;
+import com.danger.insurance.infopages.data.enums.FormNames;
+import com.danger.insurance.validation.groups.OnCloseIncident;
 
 @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ADMINISTRATOR')")
 @Controller
@@ -55,13 +60,23 @@ public class CloseIncidentController {
 	}
 
 	@GetMapping("close")
-	public String renderCloseIncidentForm(@ModelAttribute("incidentCommentDTO") IncidentsClosePostDTO incidentsCloseDTO, Model model) {
-		return commonSupportService.addProcessIncidentFormAttributes(model, "Uzavření pojistné události", "Potvrdit", "close/validate", true, true, false);
+	public String renderCloseIncidentForm(Model model) {
+		String formAction ="close/validate";
+		boolean isCommentCreateForm = true;
+		boolean isClosureForm = true;
+		boolean isClosureDetailForm = false;
+		IncidentCommentsCreatePostDTO incidentCommentCreateDTO = null;
+		
+		return commonSupportService.addProcessIncidentFormAttributes(incidentCommentCreateDTO, incidentsClosePostDTO(), model, FormNames.INCIDENTS_CLOSE, ButtonLabels.CONFIRM, formAction, isCommentCreateForm, isClosureForm, isClosureDetailForm);
 	}
 	
 	@PostMapping("close/validate")
-	public String validateCloseIncidentFormPost(@ModelAttribute("incidentCommentDTO") IncidentsClosePostDTO incidentsClosePostDTO, Model model, BindingResult bindingResult) {
-		return commonSupportService.validateProcessIncidentFormPost(model, bindingResult, null, incidentsClosePostDTO, "incidents/close/find");
+	public String validateCloseIncidentFormPost(@Validated(OnCloseIncident.class) @ModelAttribute("incidentCommentDTO") IncidentsClosePostDTO incidentsClosePostDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+		String failRedirect = "incidents/close";
+		String sucessRedirect = failRedirect + "/find";
+		IncidentCommentsCreatePostDTO incidentCommentCreateDTO = null;
+		
+		return commonSupportService.validateProcessIncidentFormPost(incidentCommentCreateDTO, incidentsClosePostDTO, failRedirect, sucessRedirect, bindingResult, redirectAttributes);
 	}
 	
 	@GetMapping("close/find")
@@ -71,8 +86,8 @@ public class CloseIncidentController {
 	
 	@PostMapping("close/find/validate")
 	public String validateSearchIncidentToCloseFormPost(@SessionAttribute("incidentCommentDTO") IncidentsClosePostDTO incidentsClosePostDTO,
-			@ModelAttribute("formDTO") IncidentsFindPostDTO incidentsFindPostDTO, Model model, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-		return commonSupportService.validateFindIncidentsFormPost(model, incidentsFindPostDTO, "redirect:/incidents/close/find/select", bindingResult, redirectAttributes);
+			@ModelAttribute("formDTO") IncidentsFindPostDTO incidentsFindPostDTO, Model model, RedirectAttributes redirectAttributes) {
+		return commonSupportService.validateFindIncidentsFormPost(model, incidentsFindPostDTO, "redirect:/incidents/close/find/select", "incidents/close/find", redirectAttributes);
 	}
 	
 	@GetMapping("close/find/select") 

@@ -31,16 +31,16 @@
                     <li sec:authorize="hasAnyRole('ADMINISTRATOR')"><a href="/reports/select">Reporty</a></li>  
                     <li sec:authorize="hasRole('PARTY')"><a href="#">Nápověda</a></li>
                     <li sec:authorize="!hasRole('EMPLOYEE') and !hasRole('JOURNALIST') and !hasRole('MANAGER') and !hasRole('ADMINISTRATOR')"><a href="#">Chci se pojistit</a></li>
-                    <li sec:authorize="!hasRole('EMPLOYEE') and !hasRole('JOURNALIST') and !hasRole('MANAGER') and !hasRole('ADMINISTRATOR')"><a href="/account/log-in">Přihlášení</a></li>
-                    <li sec:authorize="hasRole('ADMINISTRATOR')" href="/account/register"><a href="/account/register">Registrace</a></li> 
-                    <li sec:authorize="hasAnyRole('EMPLOYEE', 'JOURNALIST', 'MANAGER', 'ADMINISTRATOR')"><a href="/account/log-out">Odhlášení</a></li>
+                    <li sec:authorize="!hasRole('EMPLOYEE') and !hasRole('JOURNALIST') and !hasRole('MANAGER') and !hasRole('ADMINISTRATOR')"><a href="/accounts/log-in">Přihlášení</a></li>
+                    <li sec:authorize="hasRole('ADMINISTRATOR')"><a href="/accounts">Uživatelé</a></li> 
+                    <li sec:authorize="hasAnyRole('EMPLOYEE', 'JOURNALIST', 'MANAGER', 'ADMINISTRATOR')"><a href="/accounts/log-out">Odhlášení</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
     <body>
-        <section th:fragment="personForm()" class="tile-background py-4 px-4">
+        <section th:fragment="personForm()" class="py-4 px-4">
             <div class="centered">
                 <h1 th:text="${formName}"></h1>
             </div>
@@ -106,7 +106,7 @@
             </form>
         </section>
 
-        <section th:fragment="deleteForm(formName, buttonLabel)" class="tile-background py-4 px-4">
+        <section th:fragment="deleteForm(formName, buttonLabel)" class="py-4 px-4">
             <div class="centered">
                 <h1 th:text="${formName}"></h1>
             </div>
@@ -114,12 +114,16 @@
             <form class="d-flex flex-column gap-2" method="post" th:action="${formAction}" th:object="${reasonsDTO}">
                 <div class="form-group">
                     <label for="removal-reason" class="control-label">Důvod odebrání:</label>
+
                     <select id="removal-reason" th:field="*{removalReason}" class="form-select">
+                        <option value="" selected="selected">Prosím vyberte důvod odebrání</option>
+
                         <option th:each="reason : ${T(com.danger.insurance.parties.data.enums.PartiesRemovalReason).values()}"
                                 th:value="${reason}"
                                 th:text="${reason.displayName}">
                         </option>
                     </select>
+
                     <small class="text-danger" th:if="${#fields.hasErrors('removalReason')}" th:errors="*{removalReason}"></small>
                 </div>
 
@@ -129,15 +133,6 @@
                     <small class="text-danger" th:if="${#fields.hasErrors('dateOfRequest')}" th:errors="*{dateOfRequest}"></small>
                 </div>
                 
-                <div class="form-group">
-                    <label for="if-to-delete" class="control-label">Požadovaná akce:</label>
-                    <select id="if-to-delete" class="form-select" th:field="*{ifToDeleteParty}">
-                        <option th:value="false">Ponechat v registru bez pojištění</option>
-                        <option th:value="true">Kompletně odstranit z registru</option>
-                    </select>
-                    <small class="text-danger" th:if="${#fields.hasErrors('ifToDeleteParty')}" th:errors="*{ifToDeleteParty}"></small>
-                </div>                
-
                 <div class="form-group">
                     <label for="additional-information" class="control-label">Dodatečné informace:</label>
                     <textarea id="additional-information" class="form-control" th:field="*{additionalInformation}"></textarea>
@@ -150,7 +145,7 @@
             </form>
         </section>
 
-        <section th:fragment="createContractForm"  class="tile-background py-4 px-4">
+        <section th:fragment="createContractForm"  class="py-4 px-4">
             <div class="centered">
                 <h1 th:text="${formName}"></h1>
             </div>
@@ -164,23 +159,31 @@
 
                 <div class="form-group">
                     <label for="removal-reason" class="control-label">Subjekt k Pojištění:</label>
+
                     <select id="removal-reason" th:field="*{insuredSubject}" class="form-select">
+                        <option value="" th:text="'Prosím vyberte pojištěný subjekt'" selected="selected"></option>
+
                         <option th:each="subject : ${T(com.danger.insurance.insurances.data.enums.InsurancesSubjects).values()}"
                                 th:value="${subject}"
                                 th:text="${subject.displayName}">
                         </option>
                     </select>
+
                     <small class="text-danger" th:if="${#fields.hasErrors('insuredSubject')}" th:errors="*{insuredSubject}"></small>
                 </div>
 
                 <div class="form-group">
                     <label for="insurance-type" class="control-label">Typ pojištění:</label>
+
                     <select id="removal-reason" th:field="*{insuranceType}" class="form-select">
+                        <option value="" th:text="'Prosím vyberte typ pojištění'" selected="selected"></option>
+
                         <option th:each="insuranceType : ${T(com.danger.insurance.insurances.data.enums.InsurancesType).values()}"
                                 th:value="${insuranceType}"
                                 th:text="${insuranceType.displayName}">
                         </option>
                     </select>
+
                     <small class="text-danger" th:if="${#fields.hasErrors('insuranceType')}" th:errors="*{insuranceType}"></small>
                 </div>
                 
@@ -214,7 +217,7 @@
             </form>
         </section>
 
-        <section th:fragment="createInsurancesForm" class="tile-background py-4 px-4">
+        <section th:fragment="createInsurancesForm" class="py-4 px-4">
             <div class="centered">
                 <h1 th:text="${formName}"></h1>
             </div>
@@ -228,12 +231,16 @@
                 
                 <div class="form-group">
                     <label for="insurances-type" class="control-label">Typ pojištění:</label>
+
                     <select id="insurances-type" th:field="*{insurancesType}" class="form-select">
+                        <option value="" selected="selected">Prosím vyberte typ pojištění</option>
+                        
                         <option th:each="insuranceType : ${T(com.danger.insurance.insurances.data.enums.InsurancesType).values()}"
                                 th:value="${insuranceType}"
                                 th:text="${insuranceType.displayName}">
                         </option>
                     </select>
+
                     <small class="text-danger" th:if="${#fields.hasErrors('insurancesType')}" th:errors="*{insurancesType}"></small>
                 </div>
                 
@@ -262,10 +269,11 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="is-annual-payment-required" class="control-label">Je roční platba požadována:</label>
+                    <label for="is-annual-payment-required" class="control-label">Frekvence plateb:</label>
                     <select id="is-annual-payment-required" class="form-select" th:field="*{isAnnualPaymentRequired}">
-                        <option th:value="true">Požadovat roční platbu</option>
-                        <option th:value="false">Umožnit měsíční platby</option>
+                        <option value="" selected="selected">Prosím vyberte frekvenci plateb</option>
+                        <option value="true">Požadovat roční platbu</option>
+                        <option value="false">Umožnit měsíční platby</option>
                     </select>
                     <small class="text-danger" th:if="${#fields.hasErrors('isAnnualPaymentRequired')}" th:errors="*{isAnnualPaymentRequired}"></small>
                 </div>
@@ -283,12 +291,68 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="is-auto-renewal-required" class="control-label">Je automatická obnova požadována:</label>
+                    <label for="is-auto-renewal-required" class="control-label">Povinnost automatického prodloužení:</label>
                     <select id="is-auto-renewal-required" class="form-select" th:field="*{isAutoRenewalRequired}">
-                        <option th:value="true">Požadovat automatické prodloužení</option>
-                        <option th:value="false">Umožnit výběr prodlužování</option>
+                        <option value="" selected="selected">Prosím vyberte podmínku prodloužení smlouvy</option>
+                        <option value="true">Požadovat automatické prodloužení</option>
+                        <option value="false">Umožnit výběr prodlužování</option>
                     </select>
                     <small class="text-danger" th:if="${#fields.hasErrors('isAutoRenewalRequired')}" th:errors="*{isAutoRenewalRequired}"></small>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="clanky-tlacitko" th:text="${buttonLabel}"></button>
+                </div>
+            </form>
+        </section>
+
+        <section th:fragment="contractRemovalReasons" class="px-4 py-4">        
+            <div class="centered">
+                <h1 th:text="${formName}"></h1>
+            </div>
+
+            <form class="d-flex flex-column gap-2 py-4 px-4" method="post" th:action="${formAction}" th:object="${removalReasonsDTO}">
+                <div class="form-group">
+                    <label for="delete-reason" class="control-label">Důvod odebrání smlouvy:</label>
+
+                    <select id="delete-reason" th:unless="${isConfirmForm}" th:field="*{deleteReason}" class="form-select">
+                        <option value="" selected="selected">Prosím vyberte důvod ukončení</option>
+
+                        <option th:each="deleteReason : ${T(com.danger.insurance.insurances.contracts.data.enums.ContractsRemovalReason).values()}"
+                                th:value="${deleteReason}"
+                                th:text="${deleteReason.displayName}">
+                        </option>
+                    </select>
+
+                    <input id="incident-resolution" th:if="${isConfirmForm}" type="text" th:value="${removalReasonsDTO.deleteReason.displayName}" class="form-select" readonly>
+
+                    <small class="text-danger" th:if="${#fields.hasErrors('deleteReason')}" th:errors="*{deleteReason}"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="date-of-request" class="control-label">Datum požadavku:</label>
+
+                    <input id="date-of-request" th:unless="${isConfirmForm}" type="date" class="form-control" th:field="*{dateOfRequest}"></input>
+                    
+                    <input id="date-of-request" th:if="${isConfirmForm}" type="date" class="form-control" th:value="*{dateOfRequest}" readonly></input>
+                    
+                    <small class="text-danger" th:if="${#fields.hasErrors('dateOfRequest')}" th:errors="*{dateOfRequest}"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="date-of-cancellation" class="control-label">Datum ukončení:</label>
+
+                    <input id="date-of-cancellation" th:unless="${isConfirmForm}" type="date" class="form-control" th:field="*{dateOfCancellation}"></input>
+
+                    <input id="date-of-cancellation" th:if="${isConfirmForm}" type="date" class="form-control" th:value="*{dateOfCancellation}" readonly></input>
+
+                    <small class="text-danger" th:if="${#fields.hasErrors('dateOfCancellation')}" th:errors="*{dateOfCancellation}"></small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description" class="control-label">Popis důvodu odstranění:</label>
+                    <textarea id="description" th:readonly="${isConfirmForm}" class="form-control" th:field="*{description}"></textarea>
+                    <small class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
                 </div>
 
                 <div class="form-group">
@@ -467,25 +531,35 @@
 
                 <div class="form-group">
                     <label for="incident-type" class="control-label">Druh události:</label>
+
                     <select th:if="${isCreateForm}" id="incident-type" th:field="*{incidentType}" class="form-select">
+                        <option value="" selected="selected">Prosím vyberte druh události</option>
+
                         <option th:each="incident : ${T(com.danger.insurance.incidents.data.enums.IncidentType).values()}"
                                 th:value="${incident}"
                                 th:text="${incident.displayName}">
                         </option>
                     </select>
+
                     <small class="text-danger" th:if="${#fields.hasErrors('incidentType')}" th:errors="*{incidentType}"></small>
+
                     <input id="incident-type" th:unless="${isCreateForm}" th:value="${formDTO.incidentType.displayName}" class="form-select" readonly>
                 </div>
                 
                 <div class="form-group">
                     <label for="incident-subject" class="control-label">Událostí poškozený:</label>
+
                     <select th:if="${isCreateForm}" id="incident-subject" th:field="*{incidentSubject}" class="form-select">
+                        <option value="" selected="selected">Prosím vyberte událostí poškozený subjekt</option>
+
                         <option th:each="subject: ${T(com.danger.insurance.insurances.data.enums.InsurancesSubjects).values()}"
                                 th:value="${subject}"
                                 th:text="${subject.displayName}">
                         </option>
                     </select>
+
                     <small class="text-danger" th:if="${#fields.hasErrors('incidentSubject')}" th:errors="*{incidentSubject}"></small>
+
                     <input id="incident-subject" th:unless="${isCreateForm}" th:value="${formDTO.incidentSubject.displayName}" class="form-select" readonly>
                 </div>
                 
@@ -550,8 +624,10 @@
 
                 <div class="form-group" th:if="${isClosureForm or isClosureDetail}">
                     <label for="incident-resolution" class="control-label">Výsledek události:</label>
-                    
+
                     <select id="incident-resolution" th:unless="${isClosureDetail}" th:field="*{incidentResolution}" class="form-select">
+                        <option value="" selected="selected">Prosím vyberte výsledek zpracování pojistné události</option>
+                        
                         <option th:each="incidentResolutionType: ${T(com.danger.insurance.incidents.data.enums.IncidentResolutionsType).values()}"
                                 th:value="${incidentResolutionType}"
                                 th:text="${incidentResolutionType.displayName}">
@@ -579,6 +655,8 @@
                     <label for="removal-reason" class="control-label">Důvod odstranění pojištění:</label>
 
                     <select id="removal-reason" th:if="${isDeleteIncidentCreateForm}" th:field="*{incidentRemovalReason}" class="form-select">
+                        <option value="" selected="selected">Prosím vyberte důvod odstranění pojistné události</option>
+
                         <option th:each="removalReason : ${T(com.danger.insurance.incidents.data.enums.IncidentRemovalReasons).values()}"
                                 th:value="${removalReason}"
                                 th:text="${removalReason.displayName}">
@@ -636,6 +714,124 @@
                     <button type="submit" class="clanky-tlacitko" th:text="${buttonLabel}"></button>
                 </div>
             </form>
+        </section>
+
+        <section th:fragment="accountsForm" class="py-4 px-4">
+            <div class="centered">
+                <h1 th:text="${formName}"></h1>
+            </div>
+
+            <div th:if="${isDetailForm}" class="d-flex gap-2">
+                <button>
+                    <a th:href="@{${editEmailLink}}" onclick="return confirm('Opravdu si přejete pozměnit E-mail uživatele?');">Aktualizovat E-mail</a>
+                </button>
+
+                <button>
+                    <a th:href="@{${editPasswordLink}}" onclick="return confirm('Opravdu si přejete pozměnit heslo uživatele?');">Aktualizovat heslo</a>
+                </button>
+
+                <button>
+                    <a th:href="@{${editRoleLink}}" onclick="return confirm('Opravdu si přejete pozměnit uživatelskou roli?');">Aktualizovat roli</a>
+                </button>
+
+                <button>
+                    <a th:href="@{${removeLink}}" onclick="return confirm('Opravdu si přejete zrušit účet tohoto uživatele?');">Zrušit uživatele</a>
+                </button>
+            </div>
+
+            <div class="row">
+                <div>
+                    <form th:action="@{${formAction}}" th:object="${accountDTO}" method="post" class="d-flex flex-column gap-2">
+                        <div class="form-group">
+                            <label for="user-email">E-mail uživatele:</label>
+                            <input id="user-email" th:readonly="${isDetailForm}" name="user-email" type="email" th:field="*{userEmail}" class="form-control"/>
+                            <small class="text-danger" th:errors="*{userEmail}"></small>
+                        </div>
+
+                        <div th:unless="${isSearchForm or isDetailForm}" class="form-group">
+                            <label for="user-password">Heslo uživatele</label>
+                            <input id="user-password" th:readonly="${isDetailForm}" name="user-password" type="text" th:field="*{userPassword}" class="form-control"/>
+                            <small class="text-danger" th:errors="*{userPassword}"></small>
+                        </div>
+
+                        <div th:unless="${isSearchForm or isDetailForm}" class="form-group">
+                            <label for="confirm-password">Zopakujte heslo pro kontrolu:</label>
+                            <input id="confirm-password" name="password" type="password" th:field="*{confirmPassword}" class="form-control"/>
+                            <small class="text-danger" th:errors="*{confirmPassword}"></small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="user-role" class="control-label">Role uživatele:</label>
+                            
+                            <select id="user-role" th:unless="${isDetailForm}" th:field="*{userRole}" class="form-select">
+                                <option value="" selected="selected">Prosím vyberte roli nového uživatele</option>
+
+                                <option th:each="role : ${T(com.danger.insurance.accounts.data.enums.AccountRoles).values()}"
+                                        th:value="${role}"
+                                        th:text="${role.displayName}">
+                                </option>
+                            </select>
+
+                            <input id="user-role" th:if="${isDetailForm}" type="text" th:value="${accountDTO.userRole.displayName}" class="form-select" readonly>
+
+                            <small class="text-danger" th:if="${#fields.hasErrors('userRole')}" th:errors="*{userRole}"></small>
+                        </div>
+
+                        <div th:unless="${isDetailForm}" class="form-group" >
+                            <button type="submit" class="clanky-tlacitko" th:text="${buttonLabel}"></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section th:fragment="updateAccountForm" class="py-4 px-4">
+            <div class="centered">
+                <h1 th:text="${formName}"></h1>
+            </div>
+
+            <div class="row">
+                <div>
+                    <form th:action="@{${formAction}}" th:object="${updateDTO}" method="post" class="d-flex flex-column gap-2">
+                        <div th:if="${isEmailForm}" class="form-group">
+                            <label for="user-email">E-mail uživatele:</label>
+                            <input id="user-email" th:readonly="${isDetailForm}" name="user-email" type="email" th:field="*{userEmail}" class="form-control"/>
+                            <small class="text-danger" th:errors="*{userEmail}"></small>
+                        </div>
+
+                        <div th:if="${isPasswordForm}" class="form-group">
+                            <label for="user-password">Heslo uživatele</label>
+                            <input id="user-password" th:readonly="${isDetailForm}" name="user-password" type="text" th:field="*{userPassword}" class="form-control"/>
+                            <small class="text-danger" th:errors="*{userPassword}"></small>
+                        </div>
+
+                        <div th:if="${isPasswordForm}" class="form-group">
+                            <label for="confirm-password">Zopakujte heslo pro kontrolu:</label>
+                            <input id="confirm-password" name="password" type="password" th:field="*{confirmPassword}" class="form-control"/>
+                            <small class="text-danger" th:errors="*{confirmPassword}"></small>
+                        </div>
+
+                        <div th:if="${isRoleForm}" class="form-group">
+                            <label for="user-role" class="control-label">Role uživatele:</label>
+                            
+                            <select id="user-role" th:unless="${isDetailForm}" th:field="*{userRole}" class="form-select">
+                                <option value="" selected="selected">Prosím vyberte roli nového uživatele</option>
+
+                                <option th:each="role : ${T(com.danger.insurance.accounts.data.enums.AccountRoles).values()}"
+                                        th:value="${role}"
+                                        th:text="${role.displayName}">
+                                </option>
+                            </select>
+
+                            <small class="text-danger" th:if="${#fields.hasErrors('userRole')}" th:errors="*{userRole}"></small>
+                        </div>
+
+                        <div class="form-group" >
+                            <button type="submit" class="clanky-tlacitko" th:text="${buttonLabel}"></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </section>
 
         <footer th:fragment="footer">

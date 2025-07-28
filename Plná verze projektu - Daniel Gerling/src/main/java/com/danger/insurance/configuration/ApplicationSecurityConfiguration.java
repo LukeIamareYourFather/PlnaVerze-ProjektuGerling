@@ -19,14 +19,14 @@ public class ApplicationSecurityConfiguration {
                 .anyRequest().permitAll()
             )
             .formLogin(form -> form
-                .loginPage("/account/log-in")
-                .loginProcessingUrl("/account/login")
+                .loginPage("/accounts/log-in")
+                .loginProcessingUrl("/accounts/login")
                 .defaultSuccessUrl("/news", true)
                 .usernameParameter("userEmail")
                 .permitAll()
             )
             .logout(logout -> logout
-            	.logoutUrl("/account/logout")
+            	.logoutUrl("/accounts/logout")
 	            .logoutSuccessUrl("/about-us") // or any redirect page
 	            .invalidateHttpSession(true)
 	            .deleteCookies("JSESSIONID")

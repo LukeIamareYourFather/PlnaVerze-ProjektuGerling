@@ -8,7 +8,9 @@ public class IncidentCommentsDTO {
 
 	private long incidentCommentId;
 
+	
 	private String title;
+	
 	private String description;
 
 	private LocalDate commentDate;

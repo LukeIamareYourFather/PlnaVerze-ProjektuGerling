@@ -82,7 +82,13 @@ public class DisplayReportsController {
 	@GetMapping("segments")
 	public String renderSegmentsReportsOverview(Model model) {
 		SegmentReportsDTO segmentsReportDTO = new SegmentReportsDTO();
-		segmentsReportDTO.setAverageContractValuePerPerson(contractsRepository.getTotalContractValue().divide(BigDecimal.valueOf(partiesRepository.getTotalUserCount()), 2, RoundingMode.HALF_UP));
+		
+		try {
+			segmentsReportDTO.setAverageContractValuePerPerson(contractsRepository.getTotalContractValue().divide(BigDecimal.valueOf(partiesRepository.getTotalUserCount()), 2, RoundingMode.HALF_UP));
+		} catch (NullPointerException e) {
+			segmentsReportDTO.setAverageContractValuePerPerson(BigDecimal.valueOf(0));
+		}
+		
 		segmentsReportDTO.setTotalPersonContracts(partyContractsRepository.getTotalContractsOfType(InsurancesSubjects.PERSON.name()));
 		segmentsReportDTO.setTotalPropertyContracts(partyContractsRepository.getTotalContractsOfType(InsurancesSubjects.PROPERTY.name()));
 		segmentsReportDTO.setTotalAssetContracts(partyContractsRepository.getTotalContractsOfType(InsurancesSubjects.ASSETS.name()));

@@ -1,14 +1,15 @@
 package com.danger.insurance.accounts.models.dto.mappers;
 
 import com.danger.insurance.accounts.data.entities.AccountsEntity;
-import com.danger.insurance.accounts.models.dto.AccountCreateDTO;
 import com.danger.insurance.accounts.models.dto.AccountsDTO;
+import com.danger.insurance.accounts.models.dto.get.AccountCreateDTO;
+import com.danger.insurance.accounts.models.dto.get.AccountDetailsDTO;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-07-21T08:28:47+0200",
+    date = "2025-07-28T13:23:39+0200",
     comments = "version: 1.6.3, compiler: javac, environment: Java 23.0.2 (Oracle Corporation)"
 )
 @Component
@@ -57,6 +58,20 @@ public class AccountsMapperImpl implements AccountsMapper {
         accountsDTO.setUserRole( accountCreateDTO.getUserRole() );
 
         return accountsDTO;
+    }
+
+    @Override
+    public AccountDetailsDTO accountsEntityToAccountsDetailsDTO(AccountsEntity source) {
+        if ( source == null ) {
+            return null;
+        }
+
+        AccountDetailsDTO accountDetailsDTO = new AccountDetailsDTO();
+
+        accountDetailsDTO.setUserEmail( source.getUserEmail() );
+        accountDetailsDTO.setUserRole( source.getUserRole() );
+
+        return accountDetailsDTO;
     }
 
     @Override

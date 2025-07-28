@@ -5,8 +5,9 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 import com.danger.insurance.accounts.data.entities.AccountsEntity;
-import com.danger.insurance.accounts.models.dto.AccountCreateDTO;
 import com.danger.insurance.accounts.models.dto.AccountsDTO;
+import com.danger.insurance.accounts.models.dto.get.AccountCreateDTO;
+import com.danger.insurance.accounts.models.dto.get.AccountDetailsDTO;
 import com.danger.insurance.parties.data.entities.PartiesEntity;
 import com.danger.insurance.parties.models.dto.PartiesCreateDTO;
 import com.danger.insurance.parties.models.dto.PartiesDetailsDTO;
@@ -32,6 +33,8 @@ public interface AccountsMapper {
 	
 	@Mapping(target = ".", source = "accountCreateDTO")
 	AccountsDTO mergeToAccountsDTO(@MappingTarget AccountsDTO accountsDTO, AccountCreateDTO accountCreateDTO);
+	
+	AccountDetailsDTO accountsEntityToAccountsDetailsDTO(AccountsEntity source);
 	
 	/**
      * Updates an existing {@link PartiesDetailsDTO} with values from another DTO.

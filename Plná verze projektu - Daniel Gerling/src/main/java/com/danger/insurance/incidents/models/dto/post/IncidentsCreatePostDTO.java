@@ -6,34 +6,35 @@ import com.danger.insurance.incidents.data.enums.IncidentType;
 import com.danger.insurance.insurances.data.enums.InsurancesSubjects;
 import com.danger.insurance.validation.groups.OnCreateIncidentAsEmployee;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public class IncidentsCreatePostDTO {
 	
-	@NotNull(message = "Prosím zadejte den narození", groups = {OnCreateIncidentAsEmployee.class})
+	@NotBlank(message = "Prosím zadejte číslo pojistné události", groups = {OnCreateIncidentAsEmployee.class})
 	private String caseNumber;
 
-	@NotNull(message = "Prosím zadejte den narození")
-	private String Title;
+	@NotBlank(message = "Prosím zadejte předmět pojistné události", groups = {OnCreateIncidentAsEmployee.class})
+	private String title;
 
-	@NotNull(message = "Prosím zadejte den narození")
+	@NotBlank(message = "Prosím zadejte popis pojistné události", groups = {OnCreateIncidentAsEmployee.class})
 	private String description;
 
-	@NotNull(message = "Prosím zadejte den narození")
+	@NotBlank(message = "Prosím zadejte rodné číslo vázané na událost", groups = {OnCreateIncidentAsEmployee.class})
 	private String birthNumber;
 
 
-	@NotNull(message = "Prosím zadejte den narození")
+	@NotNull(message = "Prosím zadejte druh pojistné události", groups = {OnCreateIncidentAsEmployee.class})
 	private IncidentType incidentType;
 
-	@NotNull(message = "Prosím zadejte den narození")
+	@NotNull(message = "Prosím zadejte pojistnou událostí poškozený subjekt", groups = {OnCreateIncidentAsEmployee.class})
 	private InsurancesSubjects incidentSubject;
 	
 
-	@NotNull(message = "Prosím zadejte den narození")
+	@NotNull(message = "Prosím zadejte kdy vznikla pojistná událost", groups = {OnCreateIncidentAsEmployee.class})
 	private LocalDate accidentDate;
 
-	@NotNull(message = "Prosím zadejte den narození")
+	@NotNull(message = "Prosím zadejte kdy byla pojistná událost nahlášena", groups = {OnCreateIncidentAsEmployee.class})
 	private LocalDate reportDate;
 
 	private LocalDate todaysDate;
@@ -56,14 +57,14 @@ public class IncidentsCreatePostDTO {
 	 * @return the title
 	 */
 	public String getTitle() {
-		return Title;
+		return title;
 	}
 
 	/**
 	 * @param title the title to set
 	 */
 	public void setTitle(String title) {
-		Title = title;
+		this.title = title;
 	}
 
 	/**

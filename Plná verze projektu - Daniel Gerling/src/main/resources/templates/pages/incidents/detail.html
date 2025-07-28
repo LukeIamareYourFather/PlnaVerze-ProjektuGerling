@@ -1,20 +1,18 @@
 <!DOCTYPE html>
 
 <html lang="cs-cz">
-    <head th:replace="~{fragments/layout.html :: head}">
-    
-    </head>
+    <head th:replace="~{fragments/layout.html :: head}"></head>
 
-    <header th:replace="~{fragments/layout.html :: header}">
-
-    </header>
+    <header th:replace="~{fragments/layout.html :: header}"></header>
 
     <body id="main-page">
         <article class="pb-5">
             <div class="tile-background">
-                    <button sec:authorize="hasAnyRole('MANAGER', 'ADMINISTRATOR')" onclick="return confirm('Opravdu si přejete pozměnit tuto pojistnou událost?');">
-                        <a th:href="@{${incidentId} + '/edit'}">Upravit incident</a>
-                    </button>
+                <div class="py-2 flash-message message-success" th:text="${success}" th:if="${success}"></div>
+                
+                <button sec:authorize="hasAnyRole('MANAGER', 'ADMINISTRATOR')" onclick="return confirm('Opravdu si přejete pozměnit tuto pojistnou událost?');">
+                    <a th:href="@{${incidentId} + '/edit'}">Upravit incident</a>
+                </button>
 
                 <section th:replace="~{fragments/layout.html :: incidentForm}"></section>
 

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.danger.insurance.insurances.data.entities.InsurancesEntity;
+import com.danger.insurance.insurances.data.enums.InsurancesType;
 import com.danger.insurance.insurances.data.repositories.InsurancesRepository;
 import com.danger.insurance.insurances.models.dto.InsurancesDTO;
 import com.danger.insurance.insurances.models.dto.mappers.InsurancesMapper;
@@ -56,6 +57,19 @@ public class InsurancesServiceImplementation implements InsurancesService{
 	    }
 	   
 	    return insurances;											// Return list of all mapped party DTOs
+	}
+	
+	public List<InsurancesDTO> getAllInsurancesByType(InsurancesType insurancesType) {
+		List<InsurancesDTO> insurances = new ArrayList<>();	
+		List<InsurancesEntity> foundInsurances = insurancesRepository.findByInsurancesType(insurancesType);
+		
+		// Map each entity to a DTO and add it to the result list
+	    for (InsurancesEntity insurancesEntity : foundInsurances) {	
+	    	InsurancesDTO mappedInsurance = insurancesMapper.toDTO(insurancesEntity);						// Convert current entity to a DTO
+	    	insurances.add(mappedInsurance);							//  Add converted DTO to the result list
+	    }
+		
+	    return insurances;
 	}
 	
 	/**

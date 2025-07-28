@@ -11,7 +11,6 @@ public class DeletedInsurancesDTO {
 	private LocalDate requestDate;
 	private LocalDate todaysDate;
 	private String deleteDescription;
-	private Boolean ifToRemoveAllContracts;
 	
 	private long insurancesId;
 	private String name;
@@ -50,12 +49,6 @@ public class DeletedInsurancesDTO {
 	 */
 	public void setIsAutoRenewalRequired(Boolean isAutoRenewalRequired) {
 		this.isAutoRenewalRequired = isAutoRenewalRequired;
-	}
-	/**
-	 * @return the ifToRemoveAllContracts
-	 */
-	public Boolean getIfToRemoveAllContracts() {
-		return ifToRemoveAllContracts;
 	}
 	/**
 	 * @return the todaysDate
@@ -106,18 +99,6 @@ public class DeletedInsurancesDTO {
 	 */
 	public void setDeleteDescription(String deleteDescription) {
 		this.deleteDescription = deleteDescription;
-	}
-	/**
-	 * @return the ifToRemoveAllContracts
-	 */
-	public Boolean isIfToRemoveAllContracts() {
-		return ifToRemoveAllContracts;
-	}
-	/**
-	 * @param ifToRemoveAllContracts the ifToRemoveAllContracts to set
-	 */
-	public void setIfToRemoveAllContracts(Boolean ifToRemoveAllContracts) {
-		this.ifToRemoveAllContracts = ifToRemoveAllContracts;
 	}
 	/**
 	 * @return the insurancesId

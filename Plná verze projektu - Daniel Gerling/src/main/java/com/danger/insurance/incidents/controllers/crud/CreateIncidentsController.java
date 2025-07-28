@@ -18,7 +18,9 @@ import com.danger.insurance.incidents.data.enums.IncidentStatus;
 import com.danger.insurance.incidents.models.dto.IncidentsDTO;
 import com.danger.insurance.incidents.models.dto.mappers.IncidentsMapper;
 import com.danger.insurance.incidents.models.dto.post.IncidentsCreatePostDTO;
+import com.danger.insurance.incidents.models.service.CommonSupportServiceIncidents;
 import com.danger.insurance.incidents.models.service.IncidentsServiceImplementation;
+import com.danger.insurance.infopages.data.enums.FlashMessages;
 import com.danger.insurance.validation.groups.OnCreateIncidentAsEmployee;
 
 @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ADMINISTRATOR')")
@@ -32,32 +34,39 @@ public class CreateIncidentsController {
 	@Autowired
 	private IncidentsMapper incidentsMapper;
 	
+	@Autowired
+	private CommonSupportServiceIncidents supportServiceIncidents;
+	
 	@GetMapping("create")
 	public String renderCreateIncidentForm(Model model) {
-		model.addAttribute("formDTO", new IncidentsCreatePostDTO());
-		model.addAttribute("formAction", "create/process");
+		model.addAttribute("formAction", "create/validate");
 		model.addAttribute("formName", "Vytvoření pojistné události");
 		model.addAttribute("buttonLabel", "Vytvoř");
 		model.addAttribute("isCreateForm", true);
 		model.addAttribute("isSearchForm", false);	
 		
+		if (!model.containsAttribute("formDTO")) {
+			model.addAttribute("formDTO", new IncidentsCreatePostDTO());
+		}
+		
 		return "pages/incidents/create";
 	}
 	
-	@PostMapping("create/process")
-	public String handleCreateIncidentFormPost(@Validated(OnCreateIncidentAsEmployee.class) @ModelAttribute("formDTO") IncidentsCreatePostDTO createDTO, Model model, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+	@PostMapping("create/validate")
+	public String validateCreateIncidentFormPost(@Validated(OnCreateIncidentAsEmployee.class) @ModelAttribute("formDTO") IncidentsCreatePostDTO createDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+		String failRedirect = "incidents/create";
+		String successRedirect = failRedirect + "/process";
 		
-		//
-		if (bindingResult.hasErrors()) {
-			model.addAttribute("formDTO", createDTO);
-			
-			return "pages/incidents/create";
-	    }
-		
+		return supportServiceIncidents.validateAccidentFormPost(createDTO, null, failRedirect, successRedirect, bindingResult, redirectAttributes);
+	}
+	
+	@GetMapping("create/process")
+	public String handleCreateIncidentFormPost(@ModelAttribute("formDTO") IncidentsCreatePostDTO createDTO, Model model, RedirectAttributes redirectAttributes) {
 		IncidentsDTO newIncident = incidentsMapper.mergeCreatePostDTOToIncidentsDTO(new IncidentsDTO(), createDTO);
 		newIncident.setCurrentStatus(IncidentStatus.OPEN);
 		newIncident.setTodaysDate(LocalDate.now());
 		long incidentId = incidentsService.create(newIncident);
+		redirectAttributes.addFlashAttribute("success", FlashMessages.INCIDENT_CREATED.getDisplayName());
 		
 		return "redirect:/incidents/" + incidentId;
 	}

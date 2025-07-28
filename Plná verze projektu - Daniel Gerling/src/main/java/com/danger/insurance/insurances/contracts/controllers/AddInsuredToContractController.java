@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.danger.insurance.infopages.data.enums.ButtonLabels;
+import com.danger.insurance.infopages.data.enums.FlashMessages;
 import com.danger.insurance.infopages.data.enums.FormNames;
 import com.danger.insurance.insurances.contracts.data.entities.ContractsEntity;
 import com.danger.insurance.insurances.contracts.models.dto.ContractsDTO;
@@ -27,6 +28,7 @@ import com.danger.insurance.parties.data.entities.PartiesEntity;
 import com.danger.insurance.parties.data.enums.PartyStatus;
 import com.danger.insurance.parties.models.dto.PartiesDetailsDTO;
 import com.danger.insurance.parties.models.dto.mappers.PartiesMapper;
+import com.danger.insurance.parties.models.service.CommonSupportServiceParties;
 import com.danger.insurance.parties.models.service.PartiesServiceImplementation;
 
 @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ADMINISTRATOR')")
@@ -52,21 +54,31 @@ public class AddInsuredToContractController {
 	@Autowired
 	private PartiesMapper partiesMapper;
 	
+	@Autowired
+	private CommonSupportServiceParties commonSupportParties;
+	
 	@GetMapping("add")
 	public String renderInsuredSearchForm(Model model) {
-		model.addAttribute("formDTO", new PartiesDetailsDTO());
 		model.addAttribute("formAction", "add/validate");
 		model.addAttribute("formName", FormNames.CONTRACTS_ADD_INSURED.getDisplayName() + " - vyhledání pojistníka");
 		model.addAttribute("buttonLabel", ButtonLabels.FIND.getDisplayName());
 		
-		return "pages/parties/insured/find";
+		//
+		if (!model.containsAttribute("formDTO")) {
+			model.addAttribute("formDTO", new PartiesDetailsDTO());
+		}
+		
+		return "pages/parties/find";
 	}
 	
 	@PostMapping("add/validate")
-	public String validateInsuredSearchSubmit(@ModelAttribute("formDTO") PartiesDetailsDTO partyDetails, RedirectAttributes redirectAttributes) {
+	public String validatePartySearchSubmit(@ModelAttribute("formDTO") PartiesDetailsDTO partyDetails, RedirectAttributes redirectAttributes) {
 		
 		//
-		if (!validateSearchSubmit()) {
+		if (!commonSupportParties.validatePartySearchFormPost(partyDetails)) {
+			redirectAttributes.addFlashAttribute("formDTO", partyDetails);
+			redirectAttributes.addFlashAttribute("error", FlashMessages.INSUFFICIENT_INPUT.getDisplayName());
+			
 			return "redirect:/insurances/add";
 		}
 		
@@ -85,10 +97,14 @@ public class AddInsuredToContractController {
 	
 	@GetMapping("add/select/party-{partyId}")
 	public String renderContractSearchForm(@PathVariable("partyId") long partyId, Model model) {
-		model.addAttribute("contractDTO", new ContractsDTO());
 		model.addAttribute("formAction", "party-" + partyId + "/validate");
 		model.addAttribute("buttonLabel", ButtonLabels.FIND.getDisplayName());
 		model.addAttribute("formName", FormNames.CONTRACTS_ADD_INSURED.getDisplayName() + " - vyhledání smlouvy");
+		
+		//
+		if (!model.containsAttribute("contractDTO")) {
+			model.addAttribute("contractDTO", new ContractsDTO());
+		}
 		
 		return "pages/insurances/contracts/find";
 	}
@@ -97,8 +113,11 @@ public class AddInsuredToContractController {
 	public String validateContractSearchForm(@PathVariable("partyId") long partyId, @ModelAttribute("contractDTO") ContractsDTO contractsDTO, RedirectAttributes redirectAttributes) {
 		
 		//
-		if (!validateSearchSubmit()) {
-			return "redirect:/insurances/add/select/party-" + partyId + "/validate";
+		if (!isContractSearchRequestValid(contractsDTO)) {
+			redirectAttributes.addFlashAttribute("contractDTO", contractsDTO);
+			redirectAttributes.addFlashAttribute("error", FlashMessages.INSUFFICIENT_INPUT.getDisplayName());
+			
+			return "redirect:/insurances/add/select/party-" + partyId;
 		}
 		
 		List<ContractsEntity> foundContracts = contractsService.findContractId(contractsDTO);
@@ -126,19 +145,49 @@ public class AddInsuredToContractController {
 	}
 	
 	@PostMapping("add/select/party-{partyId}/contract-{contractId}/confirmed")
-	public String handleConfirmation(@PathVariable("partyId") long partyId, @PathVariable("contractId") long contractId, Model model) {
+	public String handleConfirmation(@PathVariable("partyId") long partyId, @PathVariable("contractId") long contractId, Model model, RedirectAttributes redirectAttributes) {
 		PartyContractsDTO newEntry = new PartyContractsDTO();
 		newEntry.setContractEntity(contractsMapper.toEntity(contractsService.getById(contractId)));
 		newEntry.setPartyEntity(partiesMapper.toEntity(partiesService.getById(partyId)));
 		newEntry.setContractRole(PartyStatus.INSURED);
 		newEntry.setTodaysDate(LocalDate.now());
 		partyContractsService.create(newEntry);
+		redirectAttributes.addFlashAttribute("success", FlashMessages.INSURANCE_CREATED.getDisplayName());
 		
 		return "redirect:/insurances";
 	}
 	
-	private boolean validateSearchSubmit() {
+	private final boolean isContractSearchRequestValid(ContractsDTO contractsDTO) {
+	
+	// Should the birth number be provided
+	if(!contractsDTO.getContractNumber().equals("")) {
+		return true;										// Return evaluation as passed
+	} else {		// Or should the birth number be missing
+		int checksPassed = 0;								// Initialize counter of passed checks
 		
-		return true;
+		// Should the name be provided...
+		if (contractsDTO.getInsuredSubject() != null) {
+			checksPassed++;									// Increase the number of passed checks...
+		}
+		
+		if (contractsDTO.getInsuranceType() != null) {
+			checksPassed++;							
+		}
+		
+		if (contractsDTO.getBeginDate() != null) {
+			checksPassed++;					
+		}
+		
+		if (contractsDTO.getSignatureDate() != null) {
+			checksPassed++;
+		}
+		
+		// Should the desired amount of checks be passed
+		if (checksPassed >= 3) {							
+			return true;									// Return evaluation as passed
+		}
 	}
+	
+	return false;											// Since no requirement was met, return evaluation as failed
+}
 }

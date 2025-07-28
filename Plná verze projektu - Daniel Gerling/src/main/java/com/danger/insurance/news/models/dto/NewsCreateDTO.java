@@ -1,11 +1,19 @@
 package com.danger.insurance.news.models.dto;
 
+import com.danger.insurance.validation.groups.OnCreateNews;
+import com.danger.insurance.validation.groups.OnUpdateNews;
+
+import jakarta.validation.constraints.NotEmpty;
+
 public class NewsCreateDTO {
 
+	@NotEmpty(message = "Prosím zadejte předmět novinového článku", groups = {OnCreateNews.class, OnUpdateNews.class})
 	private String title;
 
+	@NotEmpty(message = "Prosím zadejte popis novinového článku", groups = {OnCreateNews.class, OnUpdateNews.class})
 	private String description;
 	
+	@NotEmpty(message = "Prosím zadejte obsah novinového článku", groups = {OnCreateNews.class, OnUpdateNews.class})
 	private String content;
 
 	/**

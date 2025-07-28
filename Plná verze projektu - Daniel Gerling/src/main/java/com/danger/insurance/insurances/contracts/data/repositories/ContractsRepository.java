@@ -1,36 +1,14 @@
 package com.danger.insurance.insurances.contracts.data.repositories;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
 
 import com.danger.insurance.insurances.contracts.data.entities.ContractsEntity;
-import com.danger.insurance.insurances.data.enums.InsurancesSubjects;
-import com.danger.insurance.insurances.data.enums.InsurancesType;
 
-public interface ContractsRepository extends CrudRepository<ContractsEntity, Long> {
-	
-	@Query("""
-			SELECT c FROM ContractsEntity c
-			WHERE (:contractNumber IS NULL OR c.contractNumber = :contractNumber)
-			AND (:insuredSubject IS NULL OR c.insuredSubject = :insuredSubject)
-		   	AND (:insuranceType IS NULL OR c.insuranceType = :insuranceType)
-			AND (:beginDate IS NULL OR c.beginDate = :beginDate)
-			AND (:signatureDate IS NULL OR c.signatureDate = :signatureDate)
-		  	AND (:pricePerPeriod IS NULL OR c.pricePerPeriod = :pricePerPeriod)
-		""")
-	List<ContractsEntity> searchContracts(
-		@Param("contractNumber") String contractNumber,
-		@Param("insuredSubject") InsurancesSubjects insuredSubject,
-		@Param("insuranceType") InsurancesType insuranceType,
-   		@Param("beginDate") LocalDate beginDate,
-   		@Param("signatureDate") LocalDate signatureDate,
-    	@Param("pricePerPeriod") Long pricePerPeriod
-	);
+public interface ContractsRepository extends JpaRepository<ContractsEntity, Long>, JpaSpecificationExecutor<ContractsEntity> {
 	
 	@Query("SELECT COUNT(c) FROM ContractsEntity c")
 	long getTotalContractsCount();

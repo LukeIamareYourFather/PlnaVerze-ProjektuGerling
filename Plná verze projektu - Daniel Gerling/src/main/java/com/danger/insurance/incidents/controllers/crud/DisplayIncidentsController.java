@@ -7,9 +7,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.danger.insurance.incidents.data.repositories.IncidentCommentsRepository;
 import com.danger.insurance.incidents.models.service.IncidentsServiceImplementation;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ADMINISTRATOR')")
 @Controller
@@ -23,7 +26,10 @@ public class DisplayIncidentsController {
 	private IncidentCommentsRepository incidentCommentsRepository;
 
 	@GetMapping
-	public String renderIndex() {
+	public String renderIndex(HttpServletRequest httpRequest, SessionStatus sessionStatus, Model model) {
+		sessionStatus.setComplete();       
+	    httpRequest.getSession().removeAttribute("incidentCommentDTO");
+		
 		return "pages/incidents/index";
 	}
 	

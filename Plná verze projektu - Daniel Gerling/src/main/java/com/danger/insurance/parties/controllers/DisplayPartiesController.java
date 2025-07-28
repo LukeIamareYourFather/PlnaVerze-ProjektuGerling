@@ -96,6 +96,7 @@ public class DisplayPartiesController {
 	public String renderAllProfilesList(Model model) {
 		List<PartiesDetailsDTO> allParties = partiesService.getAll();
 		model.addAttribute("foundParties", allParties);
+		model.addAttribute("referenceLink", "profile-");
 		
 		return "pages/parties/list";
 	}

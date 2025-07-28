@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html lang="cs-cz">
+    <head th:replace="~{fragments/layout.html :: head}">
+    
+    </head>
+
+    <header th:replace="~{fragments/layout.html :: header}">
+
+    </header>
+
+    <body id="main-page">
+        <article>
+            <ul class="list-group" id="found-insurees">
+                <li th:each="account: ${accountsList}" class="list-group-item">
+                    <h2>
+                        <a th:href="@{${referenceLink} + ${account.accountId}}"
+                        th:text="${account.userEmail}">
+                        </a>
+                    </h2>
+                </li>
+            </ul>
+        </article>
+
+        <footer th:replace="~{fragments/layout.html :: footer}"></footer>
+    </body>
+</html>

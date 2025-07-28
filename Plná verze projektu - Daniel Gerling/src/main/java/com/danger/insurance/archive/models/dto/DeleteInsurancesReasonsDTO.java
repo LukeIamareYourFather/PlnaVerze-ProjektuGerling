@@ -3,13 +3,22 @@ package com.danger.insurance.archive.models.dto;
 import java.time.LocalDate;
 
 import com.danger.insurance.insurances.contracts.data.enums.InsurancesDeleteReason;
+import com.danger.insurance.validation.groups.OnDeleteInsurance;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class DeleteInsurancesReasonsDTO {
 
+	@NotNull(message = "Prosím zadejte důvod odstranění pojištění", groups = {OnDeleteInsurance.class})
 	private InsurancesDeleteReason removalReason;
+	
+	@NotNull(message = "Prosím zadejte datum vzniku požadavku k odstranění", groups = {OnDeleteInsurance.class})
 	private LocalDate requestDate;
+	
+	@NotBlank(message = "Prosím zadejte popis důvodu odstranění pojištění", groups = {OnDeleteInsurance.class})
 	private String deleteDescription;
-	private Boolean ifToRemoveAllContracts;
+	
 	/**
 	 * @return the removalReason
 	 */
@@ -46,19 +55,5 @@ public class DeleteInsurancesReasonsDTO {
 	public void setDeleteDescription(String deleteDescription) {
 		this.deleteDescription = deleteDescription;
 	}
-	/**
-	 * @return the ifToRemoveAllContracts
-	 */
-	public Boolean getIfToRemoveAllContracts() {
-		return ifToRemoveAllContracts;
-	}
-	/**
-	 * @param ifToRemoveAllContracts the ifToRemoveAllContracts to set
-	 */
-	public void setIfToRemoveAllContracts(Boolean ifToRemoveAllContracts) {
-		this.ifToRemoveAllContracts = ifToRemoveAllContracts;
-	}
-	
-	
 	
 }

@@ -28,10 +28,7 @@ public class DeletedPartiesEntity {
 	
 	@Column(nullable = false)
 	private LocalDate todaysDate;
-	
-	@Column(nullable = false)
-	private Boolean ifToDeleteParty;
-	
+		
 	@Column(nullable = true)
 	private String additionalInformation;
 
@@ -119,20 +116,6 @@ public class DeletedPartiesEntity {
 	 */
 	public void setTodaysDate(LocalDate todaysDate) {
 		this.todaysDate = todaysDate;
-	}
-
-	/**
-	 * @return the ifToDeleteParty
-	 */
-	public Boolean getIfToDeleteParty() {
-		return ifToDeleteParty;
-	}
-
-	/**
-	 * @param ifToDeleteParty the ifToDeleteParty to set
-	 */
-	public void setIfToDeleteParty(Boolean ifToDeleteParty) {
-		this.ifToDeleteParty = ifToDeleteParty;
 	}
 
 	/**

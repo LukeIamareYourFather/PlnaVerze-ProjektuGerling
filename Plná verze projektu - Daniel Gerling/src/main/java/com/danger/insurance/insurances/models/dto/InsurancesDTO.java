@@ -1,32 +1,58 @@
 package com.danger.insurance.insurances.models.dto;
 
 import com.danger.insurance.insurances.data.enums.InsurancesType;
+import com.danger.insurance.validation.groups.OnCreateInsurance;
+import com.danger.insurance.validation.groups.OnUpdateInsurance;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class InsurancesDTO {
 
-	private long insurancesId;
+	private Long insurancesId;
+	
+	@NotBlank(message = "Prosím zadejte název pojištění", groups = {OnUpdateInsurance.class, OnCreateInsurance.class})
 	private String name;
+	
+
+	@NotNull(message = "Prosím zadejte typ pojištění", groups = {OnUpdateInsurance.class, OnCreateInsurance.class})
 	private InsurancesType insurancesType;
+
+	@NotBlank(message = "Prosím zadejte popis pojištění", groups = {OnUpdateInsurance.class, OnCreateInsurance.class})
 	private String description;
-	private long minimumInsuranceValue;
-	private long maximumInsuranceValue;
-	private long maximumPayoutValue;
+	
+	@NotNull(message = "Prosím zadejte minimální pojistnou hodnotu", groups = {OnUpdateInsurance.class, OnCreateInsurance.class})
+	private Long minimumInsuranceValue;
+	
+	@NotNull(message = "Prosím zadejte maximální pojistnou hodnotu", groups = {OnUpdateInsurance.class, OnCreateInsurance.class})
+	private Long maximumInsuranceValue;
+	
+	@NotNull(message = "Prosím zadejte maximální vyplacenou částku", groups = {OnUpdateInsurance.class, OnCreateInsurance.class})
+	private Long maximumPayoutValue;
+	
+	@NotNull(message = "Prosím zadejte frekvenci plateb", groups = {OnUpdateInsurance.class, OnCreateInsurance.class})
 	private Boolean isAnnualPaymentRequired;
-	private int renewalPeriod;
-	private long minimumPolicyTerm;
+	
+	@NotNull(message = "Prosím zadejte obnovovací období", groups = {OnUpdateInsurance.class, OnCreateInsurance.class})
+	private Integer renewalPeriod;
+
+	@NotNull(message = "Prosím zadejte minimální dobu trvání", groups = {OnUpdateInsurance.class, OnCreateInsurance.class})
+	private Long minimumPolicyTerm;
+	
+	@NotNull(message = "Prosím zadejte zda vyžadovat automatické prodloužení", groups = {OnUpdateInsurance.class, OnCreateInsurance.class})
 	private Boolean isAutoRenewalRequired;
 	
 
 	/**
 	 * @return the insurancesId
 	 */
-	public long getInsurancesId() {
+	public Long getInsurancesId() {
 		return insurancesId;
 	}
 	/**
 	 * @param insurancesId the insurancesId to set
 	 */
-	public void setInsurancesId(long insurancesId) {
+	public void setInsurancesId(Long insurancesId) {
 		this.insurancesId = insurancesId;
 	}
 	/**
@@ -68,37 +94,37 @@ public class InsurancesDTO {
 	/**
 	 * @return the minimumInsuranceValue
 	 */
-	public long getMinimumInsuranceValue() {
+	public Long getMinimumInsuranceValue() {
 		return minimumInsuranceValue;
 	}
 	/**
 	 * @param minimumInsuranceValue the minimumInsuranceValue to set
 	 */
-	public void setMinimumInsuranceValue(long minimumInsuranceValue) {
+	public void setMinimumInsuranceValue(Long minimumInsuranceValue) {
 		this.minimumInsuranceValue = minimumInsuranceValue;
 	}
 	/**
 	 * @return the maximumInsuranceValue
 	 */
-	public long getMaximumInsuranceValue() {
+	public Long getMaximumInsuranceValue() {
 		return maximumInsuranceValue;
 	}
 	/**
 	 * @param maximumInsuranceValue the maximumInsuranceValue to set
 	 */
-	public void setMaximumInsuranceValue(long maximumInsuranceValue) {
+	public void setMaximumInsuranceValue(Long maximumInsuranceValue) {
 		this.maximumInsuranceValue = maximumInsuranceValue;
 	}
 	/**
 	 * @return the maximumPayoutValue
 	 */
-	public long getMaximumPayoutValue() {
+	public Long getMaximumPayoutValue() {
 		return maximumPayoutValue;
 	}
 	/**
 	 * @param maximumPayoutValue the maximumPayoutValue to set
 	 */
-	public void setMaximumPayoutValue(long maximumPayoutValue) {
+	public void setMaximumPayoutValue(Long maximumPayoutValue) {
 		this.maximumPayoutValue = maximumPayoutValue;
 	}
 	/**
@@ -116,25 +142,25 @@ public class InsurancesDTO {
 	/**
 	 * @return the renewalPeriod
 	 */
-	public int getRenewalPeriod() {
+	public Integer getRenewalPeriod() {
 		return renewalPeriod;
 	}
 	/**
 	 * @param renewalPeriod the renewalPeriod to set
 	 */
-	public void setRenewalPeriod(int renewalPeriod) {
+	public void setRenewalPeriod(Integer renewalPeriod) {
 		this.renewalPeriod = renewalPeriod;
 	}
 	/**
 	 * @return the minimumPolicyTerm
 	 */
-	public long getMinimumPolicyTerm() {
+	public Long getMinimumPolicyTerm() {
 		return minimumPolicyTerm;
 	}
 	/**
 	 * @param minimumPolicyTerm the minimumPolicyTerm to set
 	 */
-	public void setMinimumPolicyTerm(long minimumPolicyTerm) {
+	public void setMinimumPolicyTerm(Long minimumPolicyTerm) {
 		this.minimumPolicyTerm = minimumPolicyTerm;
 	}
 	/**

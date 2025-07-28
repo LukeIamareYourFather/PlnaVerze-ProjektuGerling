@@ -2,9 +2,16 @@ package com.danger.insurance.incidents.models.dto.post;
 
 import java.time.LocalDate;
 
+import com.danger.insurance.validation.groups.OnProcessIncident;
+
+import jakarta.validation.constraints.NotBlank;
+
 public class IncidentCommentsCreatePostDTO {
 
+	@NotBlank(message = "Prosím zadejte předmět kroku zpracování události", groups = {OnProcessIncident.class})
 	private String title;
+	
+	@NotBlank(message = "Prosím zadejte popis kroku zpracování pojistné události", groups = {OnProcessIncident.class})
 	private String description;
 
 	private LocalDate commentDate;
