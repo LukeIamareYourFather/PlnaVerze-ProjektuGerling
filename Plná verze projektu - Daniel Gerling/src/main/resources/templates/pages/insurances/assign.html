@@ -14,7 +14,7 @@
             <div class="tile-background">
                 <div class="py-2 flash-message message-error" th:text="${error}" th:if="${error}"></div>
                 
-                <section th:replace="~{fragments/layout.html :: createContractForm}"></section>
+                <section th:replace="~{fragments/contractFragments.html :: createContractForm}"></section>
             </div>
         </article>
 

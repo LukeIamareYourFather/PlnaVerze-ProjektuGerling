@@ -12,13 +12,13 @@
     <body id="main-page">
         <article class="pb-5">
             <div class="tile-background">
-                <h2 th:text="${pageTitle}"></h2>
+                <h2 class="px-4 pt-2" th:text="${pageTitle}"></h2>
 
-                <button th:unless="${ifShowDeleteForm}" sec:authorize="hasAnyRole('MANAGER', 'ADMINISTRATOR')" onclick="return confirm('Opravdu si přejete pozměnit toto pojištění?');">
+                <button class="mx-4 mt-4 edit-button" th:unless="${ifShowDeleteForm}" sec:authorize="hasAnyRole('ADMINISTRATOR')" onclick="return confirm('Opravdu si přejete pozměnit toto pojištění?');">
                     <a th:href="@{'insurance-' + ${insurancesId} + '/edit'}">Upravit pojištění</a>
                 </button>
 
-                <section th:replace="~{fragments/layout.html :: insuranceDetailsForm}"></section>
+                <section th:replace="~{fragments/insuranceFragments.html :: insuranceDetailsForm}"></section>
             </div>
 
             <div class="tile-background" th:if="${ifShowDeleteForm}">
@@ -41,9 +41,10 @@
 
                 <form id="hiddenForm" method="post" th:action="@{${confirmationLink}}" style="display: none;"></form>
 
-                <button type="submit" form="hiddenForm" class="btn btn-primary">Odebrat</button>
+                <button type="submit" form="hiddenForm" class="btn btn-primary px-4">Odebrat</button>
             </div>
         </article>
+
         <footer th:replace="~{fragments/layout.html :: footer}"></footer>
     </body>
 </html>

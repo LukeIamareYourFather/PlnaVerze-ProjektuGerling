@@ -1,0 +1,151 @@
+<section th:fragment="personForm()" class="py-4 px-4">
+    <div class="centered">
+        <h1 th:text="${formName}"></h1>
+    </div>
+
+    <form class="d-flex flex-column gap-2" method="post" th:action="${formAction}" th:object="${formDTO}">
+        <div class="form-group">
+            <label for="name" class="control-label">Jméno:</label>
+            <input id="name" th:field="*{name}" class="form-control"/>
+            <small class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+        </div>
+        
+        <div class="form-group">
+            <label for="surname" class="control-label">Příjmení:</label>
+            <input id="surname" class="form-control" th:field="*{surname}"/>
+            <small class="text-danger" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></small>
+        </div>
+        
+        <div class="form-group">
+            <label for="birth-day" class="control-label">Datum narození:</label>
+            <input id="birth-day" type="date" class="form-control" th:field="*{birthDay}"/>
+            <small class="text-danger" th:if="${#fields.hasErrors('birthDay')}" th:errors="*{birthDay}"></small>
+        </div>
+
+        <div class="form-group">
+            <label for="birth-number" class="control-label">Rodné číslo:</label>
+            <input id="birth-number" class="form-control" th:field="*{birthNumber}"/>
+            <small class="text-danger" th:if="${#fields.hasErrors('birthNumber')}" th:errors="*{birthNumber}"></small>
+        </div>
+        
+        <div class="form-group">
+            <label for="email" class="control-label">E-mail:</label>
+            <input id="email" type="email" th:field="*{email}" class="form-control"/>
+            <small class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+        </div>
+        
+        <div class="form-group">
+            <label for="phone-number" class="control-label">Telefonní číslo:</label>
+            <input id="phone-number" class="form-control" th:field="*{phoneNumber}"/>
+            <small class="text-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></small>
+        </div>
+        
+        <div class="form-group">
+            <label for="street" class="control-label">Adresa:</label>
+            <input id="street" class="form-control" th:field="*{street}"/>
+            <small class="text-danger" th:if="${#fields.hasErrors('street')}" th:errors="*{street}"></small>
+        </div>
+
+        <div class="form-group">
+            <label for="city" class="control-label">Město:</label>
+            <input id="city" class="form-control" th:field="*{city}"/>
+            <small class="text-danger" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></small>
+        </div>
+
+        <div class="form-group">
+            <label for="zip-code" class="control-label">PSČ:</label>
+            <input id="zip-code" class="form-control" th:field="*{zipCode}"/>
+            <small class="text-danger" th:if="${#fields.hasErrors('zipCode')}" th:errors="*{zipCode}"></small>
+        </div>
+        
+        <div class="form-group">
+            <button type="submit" class="clanky-tlacitko" th:text="${buttonLabel}"></button>
+        </div>
+    </form>
+</section>
+
+<section th:fragment="deleteForm(formName, buttonLabel)" class="py-4 px-4">
+    <div class="centered">
+        <h1 th:text="${formName}"></h1>
+    </div>
+
+    <form class="d-flex flex-column gap-2" method="post" th:action="${formAction}" th:object="${reasonsDTO}">
+        <div class="form-group">
+            <label for="removal-reason" class="control-label">Důvod odebrání:</label>
+
+            <select id="removal-reason" th:field="*{removalReason}" class="form-select">
+                <option value="" selected="selected">Prosím vyberte důvod odebrání</option>
+
+                <option th:each="reason : ${T(com.danger.insurance.parties.data.enums.PartiesRemovalReason).values()}"
+                        th:value="${reason}"
+                        th:text="${reason.displayName}">
+                </option>
+            </select>
+
+            <small class="text-danger" th:if="${#fields.hasErrors('removalReason')}" th:errors="*{removalReason}"></small>
+        </div>
+
+        <div class="form-group">
+            <label for="date-of-request" class="control-label">Datum podaní požadavku:</label>
+            <input id="date-of-request" type="date" class="form-control" th:field="*{dateOfRequest}"/>
+            <small class="text-danger" th:if="${#fields.hasErrors('dateOfRequest')}" th:errors="*{dateOfRequest}"></small>
+        </div>
+        
+        <div class="form-group">
+            <label for="additional-information" class="control-label">Dodatečné informace:</label>
+            <textarea id="additional-information" class="form-control" th:field="*{additionalInformation}"></textarea>
+            <small class="text-danger" th:if="${#fields.hasErrors('additionalInformation')}" th:errors="*{additionalInformation}"></small>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="clanky-tlacitko" th:text="${buttonLabel}"></button>
+        </div>
+    </form>
+</section>
+
+<section th:fragment="partyDetailsForm" class="px-4 py-4">
+    <div class="form-group">
+        <label for="name" class="control-label">Jméno:</label>
+        <input id="name" type="text" th:value="${party.name}" class="form-control" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="surname" class="control-label">Příjmení:</label>
+        <input id="surname" type="text" th:value="${party.surname}" class="form-control" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="birth-day" class="control-label">Datum narození:</label>
+        <input id="birth-day" type="date" th:value="${party.birthDay}" class="form-control" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="birth-number" class="control-label">Rodné číslo:</label>
+        <input id="birth-number" type="text" th:value="${party.birthNumber}" class="form-control" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="email" class="control-label">E-mail:</label>
+        <input id="email" type="email" th:value="${party.email}" class="form-control" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="phone-number" class="control-label">Telefonní číslo:</label>
+        <input id="phone-number" type="text" th:value="${party.phoneNumber}" class="form-control" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="street" class="control-label">Adresa:</label>
+        <input id="street" type="text" th:value="${party.street}" class="form-control" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="city" class="control-label">Město:</label>
+        <input id="city" type="text" th:value="${party.city}" class="form-control" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="zip-code" class="control-label">PSČ:</label>
+        <input id="zip-code" type="number" th:value="${party.zipCode}" class="form-control" readonly>
+    </div>
+</section>

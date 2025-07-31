@@ -16,52 +16,38 @@
                     <div class="py-2 flash-message message-success" th:text="${success}" th:if="${success}"></div>
                 
                     <div class="row justify-content-center">
-                        <div class="col-auto mx-4 my-4">
-                            <button class="btn insuree-tile lime-tile">
-                                <a href="parties/find/policy-owner">Vyhledat pojistníka</a>
-                            </button>
+                        <div class="col-auto mx-4 my-4 index-hover">
+                            <a href="parties/find/policy-owner" class="btn insuree-tile lime-tile d-flex align-items-center justify-content-center">Vyhledat pojistníka</a>
                         </div>
 
-                        <div class="col-auto mx-4 my-4">
-                            <button class="btn insuree-tile green-tile">
-                                <a href="parties/find/insured">Vyhledat pojištěnce</a>
-                            </button>
+                        <div class="col-auto mx-4 my-4 index-hover">
+                            <a href="parties/find/insured" class="btn insuree-tile green-tile d-flex align-items-center justify-content-center">Vyhledat pojištěnce</a>
                         </div>
                     </div>
 
                     <div class="row justify-content-center mt-4">
-                        <div class="col-auto mx-4 my-4">
-                            <button class="btn insuree-tile blue-tile">
-                                <a href="parties/find/uninsured">Vyhledat osobu</a>
-                            </button>
+                        <div class="col-auto mx-4 my-4 index-hover">
+                            <a href="parties/find/uninsured" class="btn insuree-tile blue-tile d-flex align-items-center justify-content-center">Vyhledat osobu</a>
                         </div>
 
-                        <div class="col-auto mx-4 my-4">
-                            <button class="btn insuree-tile purple-tile">
-                                <a href="parties/create">Vytvořit osobu</a>
-                            </button>
+                        <div class="col-auto mx-4 my-4 index-hover">
+                            <a href="parties/create" class="btn insuree-tile purple-tile d-flex align-items-center justify-content-center">Vytvořit osobu</a>
                         </div>
                     </div>
 
                     <div class="row justify-content-center mt-4">
-                        <div class="col-auto mx-4 my-4">
-                            <button class="btn insuree-tile orange-tile">
-                                <a href="parties/parties-list">Seznam osob</a>
-                            </button>
+                        <div class="col-auto mx-4 my-4 index-hover">
+                            <a href="parties/parties-list" class="btn insuree-tile orange-tile d-flex align-items-center justify-content-center">Seznam osob</a>
                         </div>
 
-                        <div class="col-auto mx-4 my-4">
-                            <button class="btn insuree-tile red-tile">
-                                <a href="parties/deleted-parties-list">Seznam smazaných</a>
-                            </button>
+                        <div class="col-auto mx-4 my-4 index-hover">
+                            <a href="parties/deleted-parties-list" class="btn insuree-tile red-tile d-flex align-items-center justify-content-center">Seznam smazaných</a>
                         </div>
                     </div>
 
-                    <div sec:authorize="hasAnyRole('MANAGER', 'ADMINISTRATOR')" class="row justify-content-center mt-4">
-                        <div class="col-auto mx-4 my-4">
-                            <button class="btn insuree-tile black-tile">
-                                <a href="parties/delete">Odebrat osobu</a>
-                            </button>
+                    <div sec:authorize="hasAnyRole('ADMINISTRATOR')" class="row justify-content-center mt-4">
+                        <div class="col-auto mx-4 my-4 black-index-hover">
+                            <a href="parties/delete" class="btn insuree-tile black-tile d-flex align-items-center justify-content-center">Odebrat osobu</a>
                         </div>
                     </div>
                 </div>

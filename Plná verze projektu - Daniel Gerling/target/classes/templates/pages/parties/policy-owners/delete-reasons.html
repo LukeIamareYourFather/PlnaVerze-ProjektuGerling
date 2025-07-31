@@ -11,7 +11,7 @@
 
     <body id="main-page">
         <article>
-            <section th:replace="~{fragments/layout.html :: deleteForm('Odebrání pojistnínka', @{/parties/delete/policy-owners/find}, 'Potvrdit')}"></footer>
+            <section th:replace="~{fragments/partiesFragments.html :: deleteForm('Odebrání pojistnínka', @{/parties/delete/policy-owners/find}, 'Potvrdit')}"></footer>
         </article>
         <footer th:replace="~{fragments/layout.html :: footer}"></footer>
     </body>

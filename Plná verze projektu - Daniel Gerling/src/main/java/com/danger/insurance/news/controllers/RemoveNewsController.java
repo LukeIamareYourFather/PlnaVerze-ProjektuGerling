@@ -1,10 +1,5 @@
 package com.danger.insurance.news.controllers;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -13,39 +8,59 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.danger.insurance.infopages.data.enums.FlashMessages;
-import com.danger.insurance.news.models.service.NewsService;
+import com.danger.insurance.news.models.service.NewsProcesingServices;
 
+/**
+ * Controller responsible for handling the removal of news articles.
+ * <p>
+ * Mapped under the "/news" base path, this controller provides endpoints for initiating,
+ * confirming, and executing the deletion of published news entries. It supports workflows
+ * that ensure safe and intentional removal, including confirmation prompts and audit logging.
+ * </p>
+ */
 @PreAuthorize("hasAnyRole('MANAGER', 'ADMINISTRATOR')")
 @Controller
 @RequestMapping("news")
 public class RemoveNewsController {
 	
 	@Autowired
-	private NewsService newsService;
-
-	public static final String UPLOAD_DIR = System.getProperty("user.dir") + "/src/main/resources/static/uploads/news-pictures";
-
+	private NewsProcesingServices procesingServices;
+	
+	/**
+	 * Handles the deletion of a specific news article.
+	 * <p>
+	 * Triggered via GET at "/news/remove/{newsId}", this method removes the news entry
+	 * identified by {@code newsId} from the system. It performs the deletion via the service layer
+	 * and uses {@code RedirectAttributes} to pass feedback messages to the redirected view.
+	 * </p>
+	 *
+	 * <h2>Responsibilities:</h2>
+	 * <ul>
+	 *   <li>Invoke service logic to delete the specified news article</li>
+	 *   <li>Handle cases where the article does not exist or cannot be deleted</li>
+	 *   <li>Pass success or error messages via flash attributes</li>
+	 *   <li>Redirect to the news list or confirmation view</li>
+	 * </ul>
+	 *
+	 * <h2>Redirect Behavior:</h2>
+	 * <ul>
+	 *   <li>On success → redirect to "/news" with a success message</li>
+	 *   <li>On failure → redirect to "/news" with an error message</li>
+	 * </ul>
+	 *
+	 * <h2>Security Considerations:</h2>
+	 * <ul>
+	 *   <li>Ensure only authorized users can delete news articles</li>
+	 *   <li>Log deletion actions for audit and traceability</li>
+	 * </ul>
+	 *
+	 * @param newsId ID of the news article to be deleted
+	 * @param redirectAttributes used to pass flash messages across redirects
+	 * @return redirect path to the news list or confirmation view
+	 */
 	@GetMapping("/remove/{newsId}")
-	public String handleDeleteNewsForm(@PathVariable("newsId") long newsId, RedirectAttributes redirectAttributes) {
-	    
-		//
-		try {
-	        String pictureUrl = newsService.getById(newsId).getPictureUrl();
-
-	        String filename = pictureUrl.substring(pictureUrl.lastIndexOf("/") + 1);
-
-	        Path filePath = Paths.get(UPLOAD_DIR).resolve(filename);
-	        Files.deleteIfExists(filePath); 
-
-	        newsService.delete(newsId); 
-	        redirectAttributes.addFlashAttribute("success", FlashMessages.NEWS_REMOVED.getDisplayName());
-	    } catch (IOException | NullPointerException e) {
-
-	        return "redirect:/news/" + newsId; 
-	    }
-
-	    return "redirect:/news";
+	public String handleDeleteNewsFormPost(@PathVariable("newsId") long newsId, RedirectAttributes redirectAttributes) {
+	    return procesingServices.processDeleteNewsFormPost(newsId, redirectAttributes);
 	}
 	
 }

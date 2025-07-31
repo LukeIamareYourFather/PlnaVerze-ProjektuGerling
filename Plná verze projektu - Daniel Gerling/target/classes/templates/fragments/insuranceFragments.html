@@ -1,0 +1,140 @@
+<section th:fragment="createInsurancesForm" class="py-4 px-4">
+    <div class="centered">
+        <h1 th:text="${formName}"></h1>
+    </div>
+
+    <form class="d-flex flex-column gap-2" method="post" th:action="${formAction}" th:object="${insurancesDTO}">
+        <div class="form-group">
+            <label for="name" class="control-label">Název pojištění:</label>
+            <input id="name" th:field="*{name}" class="form-control"/>
+            <small class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+        </div>
+        
+        <div class="form-group">
+            <label for="insurances-type" class="control-label">Typ pojištění:</label>
+
+            <select id="insurances-type" th:field="*{insurancesType}" class="form-select">
+                <option value="" selected="selected">Prosím vyberte typ pojištění</option>
+                
+                <option th:each="insuranceType : ${T(com.danger.insurance.insurances.data.enums.InsurancesType).values()}"
+                        th:value="${insuranceType}"
+                        th:text="${insuranceType.displayName}">
+                </option>
+            </select>
+
+            <small class="text-danger" th:if="${#fields.hasErrors('insurancesType')}" th:errors="*{insurancesType}"></small>
+        </div>
+        
+        <div class="form-group">
+            <label for="description" class="control-label">Popis pojištění:</label>
+            <textarea id="description" class="form-control" th:field="*{description}"></textarea>
+            <small class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
+        </div>
+
+        <div class="form-group">
+            <label for="minimum-insurance-value" class="control-label">Minimální pojistná hodnota:</label>
+            <input id="minimum-insurance-value" class="form-control" th:field="*{minimumInsuranceValue}"/>
+            <small class="text-danger" th:if="${#fields.hasErrors('minimumInsuranceValue')}" th:errors="*{minimumInsuranceValue}"></small>
+        </div>
+        
+        <div class="form-group">
+            <label for="maximum-insurance-value" class="control-label">Maximální pojistná hodnota:</label>
+            <input id="maximum-insurance-value" th:field="*{maximumInsuranceValue}" class="form-control"/>
+            <small class="text-danger" th:if="${#fields.hasErrors('maximumInsuranceValue')}" th:errors="*{maximumInsuranceValue}"></small>
+        </div>
+        
+        <div class="form-group">
+            <label for="maximum-payout-value" class="control-label">Maximální vyplacená částka:</label>
+            <input id="maximum-payout-value" class="form-control" th:field="*{maximumPayoutValue}"/>
+            <small class="text-danger" th:if="${#fields.hasErrors('maximumPayoutValue')}" th:errors="*{maximumPayoutValue}"></small>
+        </div>
+        
+        <div class="form-group">
+            <label for="is-annual-payment-required" class="control-label">Frekvence plateb:</label>
+            <select id="is-annual-payment-required" class="form-select" th:field="*{isAnnualPaymentRequired}">
+                <option value="" selected="selected">Prosím vyberte frekvenci plateb</option>
+                <option value="true">Požadovat roční platbu</option>
+                <option value="false">Umožnit měsíční platby</option>
+            </select>
+            <small class="text-danger" th:if="${#fields.hasErrors('isAnnualPaymentRequired')}" th:errors="*{isAnnualPaymentRequired}"></small>
+        </div>
+
+        <div class="form-group">
+            <label for="renewal-period" class="control-label">Obnovovací doba:</label>
+            <input id="renewal-period" class="form-control" th:field="*{renewalPeriod}"/>
+            <small class="text-danger" th:if="${#fields.hasErrors('renewalPeriod')}" th:errors="*{renewalPeriod}"></small>
+        </div>
+
+        <div class="form-group">
+            <label for="minimum-policy-term" class="control-label">Minimální doba trvání:</label>
+            <input id="minimum-policy-term" class="form-control" th:field="*{minimumPolicyTerm}"/>
+            <small class="text-danger" th:if="${#fields.hasErrors('minimumPolicyTerm')}" th:errors="*{minimumPolicyTerm}"></small>
+        </div>
+        
+        <div class="form-group">
+            <label for="is-auto-renewal-required" class="control-label">Povinnost automatického prodloužení:</label>
+            <select id="is-auto-renewal-required" class="form-select" th:field="*{isAutoRenewalRequired}">
+                <option value="" selected="selected">Prosím vyberte podmínku prodloužení smlouvy</option>
+                <option value="true">Požadovat automatické prodloužení</option>
+                <option value="false">Umožnit výběr prodlužování</option>
+            </select>
+            <small class="text-danger" th:if="${#fields.hasErrors('isAutoRenewalRequired')}" th:errors="*{isAutoRenewalRequired}"></small>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="clanky-tlacitko" th:text="${buttonLabel}"></button>
+        </div>
+    </form>
+</section>
+
+<section th:fragment="insuranceDetailsForm" class="px-4 py-4">
+    <div class="form-group">
+        <label for="name" class="control-label">Název pojištění:</label>
+        <input id="name" type="text" th:value="${insurance.name}" class="form-control" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="insurances-type" class="control-label">Typ pojištění:</label>
+        <input id="insurances-type" type="text" th:value="${insurance.insurancesType.displayName}" class="form-control" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="description" class="control-label">Popis pojištění:</label>
+        <textarea id="description" th:field="${insurance.description}" class="form-control" readonly></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="minimum-insurance-value" class="control-label">Minimální pojistná hodnota:</label>
+        <input id="minimum-insurance-value" type="number" th:value="${insurance.minimumInsuranceValue}" class="form-control" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="maximum-insurance-value" class="control-label">Maximální pojistná hodnota:</label>
+        <input id="maximum-insurance-value" type="number" th:value="${insurance.maximumInsuranceValue}" class="form-control" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="maximum-payout-value" class="control-label">Maximální vyplacená částka:</label>
+        <input id="maximum-payout-value" type="number" th:value="${insurance.maximumPayoutValue}" class="form-control" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="is-annual-payment-required" class="control-label">Je roční platba požadována:</label>
+        <input id="is-annual-payment-required" type="text" th:value="${insurance.isAnnualPaymentRequired}" class="form-control" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="renewal-period" class="control-label">Obnovovací doba:</label>
+        <input id="renewal-period" type="number" th:value="${insurance.renewalPeriod}" class="form-control" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="minimum-policy-term" class="control-label">Minimální doba trvání:</label>
+        <input id="minimum-policy-term" type="number" th:value="${insurance.minimumPolicyTerm}" class="form-control" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="is-auto-renewal-required" class="control-label">Je automatická obnova požadována:</label>
+        <input id="is-auto-renewal-required" type="text" th:value="${insurance.isAutoRenewalRequired}" class="form-control" readonly>
+    </div>
+</section>

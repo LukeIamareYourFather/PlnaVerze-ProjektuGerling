@@ -16,7 +16,7 @@
 
                 <div class="container">
                     <div class="px-4 py-4">
-                        <button sec:authorize="hasAnyRole('JOURNALIST', 'MANAGER', 'ADMINISTRATOR')" onclick="return confirm('Opravdu si přejete pozměnit tento článek?');">
+                        <button class="edit-button" type="button" sec:authorize="hasAnyRole('JOURNALIST', 'MANAGER', 'ADMINISTRATOR')" onclick="return confirm('Opravdu si přejete pozměnit tento článek?');">
                             <a th:href="@{${article.newsId} + '/edit'}">Upravit článek</a>
                         </button>
 
@@ -35,7 +35,7 @@
                             <p th:text="${article.content}"></p>
                         </div>
 
-                        <button sec:authorize="hasAnyRole('MANAGER', 'ADMINISTRATOR')" onclick="return confirm('Opravdu si přejete trvale odstranit tento článek?');">
+                        <button class="delete-button" type="button" sec:authorize="hasAnyRole('MANAGER', 'ADMINISTRATOR')" onclick="return confirm('Opravdu si přejete trvale odstranit tento článek?');">
                             <a th:href="@{'remove/' + ${article.newsId}}">Odstranit článek</a>
                         </button>
                     </div>

@@ -10,16 +10,22 @@
     </header>
 
     <body id="main-page">
-        <article>
-            <ul class="list-group" id="found-incidents">
-                <li th:each="incident: ${incidentsList}" class="list-group-item">
-                    <h2>
-                        <a th:href="@{${referenceLink} + ${incident.incidentId}}"
-                        th:text="${incident.caseNumber}">
-                        </a>
-                    </h2>
-                </li>
-            </ul>
+        <article class="pb-5">
+            <div class="tile-background">
+                <ul class="list-group py-4 px-4" id="found-incidents">
+                    <li th:each="incident: ${incidentsList}" class="list-group-item white-tile" style="width: 100%;">
+                        <h2>
+                            <a th:href="@{${referenceLink} + ${incident.incidentId}}"
+                            th:text="${incident.caseNumber + '&nbsp;&mdash;&nbsp;' + incident.title}">
+                            </a>
+                        </h2>
+
+                        <p th:text="${'Druh události:&nbsp;' + incident.incidentType.getDisplayName + 
+                        '&nbsp;&nbsp;&nbsp;&nbsp;Status:&nbsp;' + incident.currentStatus.getDisplayName}">
+                        </p>
+                    </li>
+                </ul>
+            </div>
         </article>
 
         <footer th:replace="~{fragments/layout.html :: footer}"></footer>

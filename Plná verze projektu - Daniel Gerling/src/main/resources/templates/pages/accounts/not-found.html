@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html lang="cs-cz">
+    <head th:replace="~{fragments/layout.html :: head}">
+    
+    </head>
+
+    <header th:replace="~{fragments/layout.html :: header}">
+
+    </header>
+
+    <body id="main-page">
+        <article class="pb-5">
+            <div class="tile-background red-border">
+                <h2 class="px-4 py-4 orange-tile centered">Žádný uživtelský účet neodpovídá zadaným parametrům</h2>
+
+                <section class="py-4 px-4 orange-tile centered">
+                    <p>Prosím pokuste se opětovat zadání a ujistit se o správnosti zadání,</p>
+                    <p>v případě, že jste ujištěni o bezchybnosti zadání a existujícím účtu,</p>
+                    <p>prosím kontaktujte svého nadřízeného, který Vám údaje ověří a</p>
+                    <p>případně napraví chybu, jež zabraňuje ve vyhledání účtu.
+                </section>
+            </div>
+        </article>
+
+        <footer th:replace="~{fragments/layout.html :: footer}"></footer>
+    </body>
+</html>

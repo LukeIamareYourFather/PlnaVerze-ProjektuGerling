@@ -10,16 +10,22 @@
     </header>
 
     <body id="main-page">
-        <article>
-            <ul class="list-group" id="found-insurees">
-                <li th:each="insurance: ${insurancesList}" class="list-group-item">
-                    <h2>
-                        <a th:href="@{${referenceLink} + ${insurance.insurancesId}}"
-                        th:text="${insurance.name}">
-                        </a>
-                    </h2>
-                </li>
-            </ul>
+        <article class="pb-5">
+            <div class="tile-background">
+                <ul class="list-group px-4 py-4" id="found-insurees">
+                    <li th:each="insurance: ${insurancesList}" class="list-group-item white-tile" style="width: 100%;">
+                        <h2>
+                            <a th:href="@{${referenceLink} + ${insurance.insurancesId}}"
+                            th:text="${insurance.insurancesType.getDisplayName + '&nbsp;&mdash;&nbsp;' + insurance.name}">
+                            </a>
+                        </h2>
+
+                        <p th:text="${'Maximální pojistná hodnota:&nbsp;' + insurance.maximumInsuranceValue +
+                        '&nbsp;&nbsp;&nbsp;&nbsp;' + 'Obnovovací období:&nbsp;' + insurance.renewalPeriod}">
+                        </p>
+                    </li>
+                </ul>
+            </div>
         </article>
 
         <footer th:replace="~{fragments/layout.html :: footer}"></footer>

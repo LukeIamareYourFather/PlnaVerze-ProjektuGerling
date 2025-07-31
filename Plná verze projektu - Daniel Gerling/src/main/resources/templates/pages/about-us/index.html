@@ -1,18 +1,42 @@
 <!DOCTYPE html>
 
 <html lang="cs-cz">
-    <head th:replace="~{fragments/layout.html :: head}">
-    
-    </head>
+    <head th:replace="~{fragments/layout.html :: head}"></head>
 
-    <header th:replace="~{fragments/layout.html :: header}">
-
-    </header>
+    <header th:replace="~{fragments/layout.html :: header}"></header>
 
     <body id="main-page">
-        <article>
-            Text text taxt tats
+        <article class="pb-5">
+            <div class="tile-background">
+                <h1 class="centered pt-2 header-text-color">Vítejte u Meyers Insured & Co.</h1>
+
+                <br />
+
+                <section class="px-4 py-4">
+                    <div class="white-tile grey-border">
+                        <div th:with="segmentTitle='První světová pojišťovna bez kompromisů', 
+                                      segmentContent='Konec netransparentního vyhodnocování pojistných událostí a zbytečného dožadování kolikrát nemožných dokumentů.
+                                      Jednoduše nás informujte, co se stalo, a my vám poskytneme potřebnou podporu.'">
+                            <section th:replace="~{fragments/layout.html :: aboutUsSegment(${segmentTitle}, ${segmentContent})}"></section>
+                        </div>
+
+                        <div th:with="segmentTitle='Naší hlavní prioritou je vaše jistota.', 
+                                      segmentContent='Ať už se bojíte o svého drahocenného mazlíčka nebo o svoji oblíbenou hračku, na kterou máte citové pouto,
+                                      bez ohledu na subjekt vám rádi poskytneme potřebnou ochranu pro váš klid a pocit bezpečí.'">
+                            <section th:replace="~{fragments/layout.html :: aboutUsSegment(${segmentTitle}, ${segmentContent})}"></section>
+                        </div>
+
+                        <div th:with="segmentTitle='První pobočka v České Republice', 
+                                      segmentContent='Díky nově vybudovanému klientskému centru v České republice máme nyní možnost nabídnout standardní i
+                                      nadstandardní pomoc — okamžitě a bez zdržování. Naše zákaznická linka je k dispozici 24/7, abychom mohli být nablízku
+                                      právě ve chvílích, kdy záleží na každé minutě.'">
+                            <section th:replace="~{fragments/layout.html :: aboutUsSegment(${segmentTitle}, ${segmentContent})}"></section>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </article>
+
         <footer th:replace="~{fragments/layout.html :: footer}"></footer>
     </body>
 </html>

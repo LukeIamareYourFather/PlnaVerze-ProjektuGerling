@@ -10,16 +10,18 @@
     </header>
 
     <body id="main-page">
-        <article>
-            <ul class="list-group" id="found-insurees">
-                <li th:each="account: ${accountsList}" class="list-group-item">
-                    <h2>
-                        <a th:href="@{${referenceLink} + ${account.accountId}}"
-                        th:text="${account.userEmail}">
-                        </a>
-                    </h2>
-                </li>
-            </ul>
+        <article class="pb-5">
+            <div class="tile-background">
+                <ul class="list-group py-4 px-4" id="found-insurees">
+                    <li th:each="account: ${accountsList}" class="list-group-item white-tile">
+                        <h2>
+                            <a th:href="@{${referenceLink} + ${account.accountId}}"
+                            th:text="${account.userEmail}">
+                            </a>
+                        </h2>
+                    </li>
+                </ul>
+            </div>
         </article>
 
         <footer th:replace="~{fragments/layout.html :: footer}"></footer>

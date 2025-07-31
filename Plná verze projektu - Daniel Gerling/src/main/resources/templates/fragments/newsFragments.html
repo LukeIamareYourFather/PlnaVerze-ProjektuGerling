@@ -1,0 +1,35 @@
+<section th:fragment="newsCreateForm" class="py-4 px-4">
+    <div class="centered">
+        <h1 th:text="${formName}"></h1>
+    </div>
+
+    <form class="d-flex flex-column gap-2" method="post" th:action="${formAction}" th:object="${newsCreateDTO}" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="title" class="control-label">Titulek novinky:</label>
+            <input id="title" class="form-control" th:field="*{title}" />
+            <small class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></small>
+        </div>
+        
+        <div class="form-group">
+            <label for="description" class="control-label">Popisek novinky:</label>
+            <input id="description" class="form-control" th:field="*{description}" />
+            <small class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
+        </div>
+
+        <div class="form-group">
+            <label for="content" class="control-label">Obsah novinky:</label>
+            <textarea id="content" class="form-control" th:field="*{content}"></textarea>
+            <small class="text-danger" th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></small>
+        </div>
+
+        <div th:unless="${isEditForm}" class="form-group">
+            <label for="file" class="control-label">Obrázek novinky:</label>
+            <input id="file" type="file" name="file" accept="image/*" />
+            <small class="text-danger" th:text="${fileError}" th:if="${fileError}"></small>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="clanky-tlacitko" th:text="${buttonLabel}"></button>
+        </div>
+    </form>
+</section>

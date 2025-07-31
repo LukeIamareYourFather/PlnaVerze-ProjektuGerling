@@ -17,38 +17,28 @@
                     <div class="py-2 flash-message message-error" th:text="${error}" th:if="${error}"></div>
                     
                     <div class="row justify-content-center">
-                        <div class="col-auto mx-4 my-4">
-                            <button class="btn insuree-tile orange-tile">
-                                <a href="incidents/create">Vytvořit událost</a>
-                            </button>
+                        <div class="col-auto mx-4 my-4 index-hover">
+                            <a href="incidents/create" class="btn insuree-tile orange-tile -tile d-flex align-items-center justify-content-center">Vytvořit událost</a>
                         </div>
 
-                        <div class="col-auto mx-4 my-4">
-                            <button class="btn insuree-tile green-tile">
-                                <a href="incidents/find">Vyhledat událost</a>
-                            </button>
+                        <div class="col-auto mx-4 my-4 index-hover">
+                            <a href="incidents/find" class="btn insuree-tile green-tile -tile d-flex align-items-center justify-content-center">Vyhledat událost</a>
                         </div>
                     </div>
 
                     <div class="row justify-content-center mt-4">
-                        <div class="col-auto mx-4 my-4">
-                            <button class="btn insuree-tile blue-tile">
-                                <a href="incidents/process">Zpracovat událost</a>
-                            </button>
+                        <div class="col-auto mx-4 my-4 index-hover">
+                            <a href="incidents/process" class="btn insuree-tile blue-tile -tile d-flex align-items-center justify-content-center">Zpracovat událost</a>
                         </div>
 
-                        <div class="col-auto mx-4 my-4">
-                            <button class="btn insuree-tile purple-tile">
-                                <a href="incidents/close">Uzavřít událost</a>
-                            </button>
+                        <div class="col-auto mx-4 my-4 index-hover">
+                            <a href="incidents/close" class="btn insuree-tile purple-tile -tile d-flex align-items-center justify-content-center">Uzavřít událost</a>
                         </div>
                     </div>
 
-                    <div sec:authorize="hasAnyRole('MANAGER', 'ADMINISTRATOR')" class="row justify-content-center mt-4">
-                        <div class="col-auto mx-4 my-4">
-                            <button class="btn insuree-tile red-tile">
-                                <a href="incidents/delete">Smazat událost</a>
-                            </button>
+                    <div sec:authorize="hasAnyRole('ADMINISTRATOR')" class="row justify-content-center mt-4">
+                        <div class="col-auto mx-4 my-4 index-hover">
+                            <a href="incidents/delete" class="btn insuree-tile red-tile -tile d-flex align-items-center justify-content-center">Smazat událost</a>
                         </div>
                     </div>
                 </div>

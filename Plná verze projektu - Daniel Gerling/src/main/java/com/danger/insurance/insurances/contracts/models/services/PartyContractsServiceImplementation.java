@@ -34,8 +34,7 @@ public class PartyContractsServiceImplementation implements PartyContractsServic
 	@Override
 	public long create(PartyContractsDTO dto) {
 		PartyContractsEntity newInsurance = partyContractsMapper.toEntity(dto);										// Convert received DTO to party entity
-		partyContractsRepository.save(newInsurance);						// Save the received party to the database
-		
+		partyContractsRepository.save(newInsurance);
 		return newInsurance.getId();
 	}
 

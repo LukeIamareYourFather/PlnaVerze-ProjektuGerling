@@ -10,9 +10,12 @@
     </header>
 
     <body id="main-page">
-        <article>
-            USER NOT FOUND!
+        <article class="pb-5">
+            <div class="tile-background">
+                <img th:src="@{/images/UserNotFound_RemoveForProduction.PNG}" alt="RemoveForProduction" class="px-4 py-4" style="width: 100%;">
+            </div>
         </article>
+
         <footer th:replace="~{fragments/layout.html :: footer}"></footer>
     </body>
 </html>

@@ -16,16 +16,12 @@
                     <div class="py-2 flash-message message-success" th:text="${success}" th:if="${success}"></div>
                                 
                     <div class="row justify-content-center">
-                        <div class="col-auto mx-4 my-4">
-                            <button class="btn insuree-tile green-tile">
-                                <a href="accounts/register">Vytvořit uživatele</a>
-                            </button>
+                        <div class="col-auto mx-4 my-4 index-hover">
+                            <a href="accounts/register" class="btn insuree-tile green-tile d-flex align-items-center justify-content-center">Vytvořit uživatele</a>
                         </div>
 
-                        <div class="col-auto mx-4 my-4">
-                            <button class="btn insuree-tile blue-tile">
-                                <a href="accounts/find">Vyhledat uživatele</a>
-                            </button>
+                        <div class="col-auto mx-4 my-4 index-hover">
+                            <a href="accounts/find" class="btn insuree-tile blue-tile d-flex align-items-center justify-content-center">Vyhledat uživatele</a>
                         </div>
                     </div>
                 </div>

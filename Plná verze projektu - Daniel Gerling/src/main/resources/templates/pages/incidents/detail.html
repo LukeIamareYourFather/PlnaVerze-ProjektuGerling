@@ -10,19 +10,19 @@
             <div class="tile-background">
                 <div class="py-2 flash-message message-success" th:text="${success}" th:if="${success}"></div>
                 
-                <button sec:authorize="hasAnyRole('MANAGER', 'ADMINISTRATOR')" onclick="return confirm('Opravdu si přejete pozměnit tuto pojistnou událost?');">
+                <button class="mx-4 mt-4 edit-button" sec:authorize="hasAnyRole('MANAGER', 'ADMINISTRATOR')" onclick="return confirm('Opravdu si přejete pozměnit tuto pojistnou událost?');">
                     <a th:href="@{${incidentId} + '/edit'}">Upravit incident</a>
                 </button>
 
-                <section th:replace="~{fragments/layout.html :: incidentForm}"></section>
+                <section th:replace="~{fragments/incidentFragments.html :: incidentForm}"></section>
 
-                <ul class="list-group px-4 py-4" id="found-incidents">
+                <ul th:unless="${isListEmpty}" class="list-group px-4 py-4" id="found-incidents">
                     <li th:each="incidentComment: ${incidentCommentsList}" class="list-group-item">
-                        <h2>
+                        <h3>
                             <p th:text="${incidentComment.title + '  —  ' + incidentComment.commentDate}"></p>
+                        </h3>
 
-                            <p th:text="${incidentComment.description}"></p>
-                        </h2>
+                        <p th:text="${incidentComment.description}"></p>
                     </li>
                 </ul>
             </div>

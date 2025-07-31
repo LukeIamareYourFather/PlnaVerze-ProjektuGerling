@@ -16,11 +16,11 @@
                 
                 <h2 th:text="${pageTitle}"></h2>
 
-                <button sec:authorize="hasAnyRole('MANAGER', 'ADMINISTRATOR')">
+                <button class="mx-4 mt-4 edit-button" sec:authorize="hasAnyRole('MANAGER', 'ADMINISTRATOR')">
                     <a th:href="@{${editLink}}">Upravit osobu</a>
                 </button>
 
-                <section th:replace="~{fragments/layout.html :: partyDetailsForm}"></section>
+                <section th:replace="~{fragments/partiesFragments.html :: partyDetailsForm}"></section>
 
 
                 <div th:if="${ifShowDeleteForm}">
@@ -43,10 +43,10 @@
 
                     <form id="hiddenForm" method="post" th:action="@{${confirmationLink}}" style="display: none;"></form>
 
-                    <button type="submit" form="hiddenForm" class="btn btn-primary">Odebrat</button>
+                    <button type="submit" form="hiddenForm" class="btn btn-primary px-4">Odebrat</button>
                 </div>
 
-                <div>
+                <div th:unless="${isPartiesListEmpty}">
                     <section class="px-4 py-4">
                         <ul class="list-group" id="found-insurees">
                             <li th:each="contract: ${activeContractsWithRoles}" class="list-group-item">
@@ -54,15 +54,16 @@
                                     <a th:href="@{${referenceLink} + ${contract.contractId}}"
                                     th:text="${contract.contractNumber + ' — ' + contract.contractRole.displayName}">
                                     </a>
-                                    <p th:text="${contract.insuranceType.displayName + ' — ' + contract.insuranceName}"></p>
                                 </h2>
+                                
+                                <p th:text="${contract.insuranceType.displayName + ' — ' + contract.insuranceName}"></p>
                             </li>
                         </ul>
                     </section>
                 </div>
 
                 <button th:unless="@{ifShowDeleteForm}">
-                    <a a href="#" onclick="history.back(); return false;"></a>
+                    <a class="px-4" href="#" onclick="history.back(); return false;"></a>
                 </button>
             </div>
 

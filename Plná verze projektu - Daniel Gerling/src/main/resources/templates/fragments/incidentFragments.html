@@ -1,0 +1,182 @@
+<section th:fragment="incidentForm" class="py-4 px-4">
+    <div class="centered">
+        <h1 th:text="${formName}"></h1>
+    </div>
+
+    <form class="d-flex flex-column gap-2" method="post" th:action="${isCreateForm} ? ${formAction} : ''" th:object="${formDTO}">
+        <div class="form-group">
+            <label for="case-number" class="control-label">Číslo případu:</label>
+            <input id="case-number" type="text" th:readonly="${!isCreateForm}" th:field="*{caseNumber}" class="form-control"/>
+            <small class="text-danger" th:if="${#fields.hasErrors('caseNumber')}" th:errors="*{caseNumber}"></small>
+        </div>
+        
+        <div class="form-group">
+            <label for="title" class="control-label">Předmět události:</label>
+            <input id="title" type="text" th:readonly="${!isCreateForm}" th:field="*{title}" class="form-control"/>
+            <small class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></small>
+        </div>
+        
+        <th:block th:unless="${isSearchForm}">
+            <div class="form-group">
+                <label for="description" class="control-label">Popis události:</label>
+                <textarea id="description" th:readonly="${!isCreateForm}" th:field="*{description}" class="form-control"></textarea>
+                <small class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
+            </div>      
+        </th:block>
+
+        <div class="form-group">
+            <label for="birth-number" class="control-label">Rodné číslo:</label>
+            <input id="birth-number" type="text" th:readonly="${!isCreateForm}" class="form-control" th:field="*{birthNumber}" />
+            <small class="text-danger" th:if="${#fields.hasErrors('birthNumber')}" th:errors="*{birthNumber}"></small>
+        </div>
+
+        <div class="form-group">
+            <label for="incident-type" class="control-label">Druh události:</label>
+
+            <select th:if="${isCreateForm}" id="incident-type" th:field="*{incidentType}" class="form-select">
+                <option value="" selected="selected">Prosím vyberte druh události</option>
+
+                <option th:each="incident : ${T(com.danger.insurance.incidents.data.enums.IncidentType).values()}"
+                        th:value="${incident}"
+                        th:text="${incident.displayName}">
+                </option>
+            </select>
+
+            <small class="text-danger" th:if="${#fields.hasErrors('incidentType')}" th:errors="*{incidentType}"></small>
+
+            <input id="incident-type" th:unless="${isCreateForm}" th:value="${formDTO.incidentType.displayName}" class="form-select" readonly>
+        </div>
+        
+        <div class="form-group">
+            <label for="incident-subject" class="control-label">Událostí poškozený:</label>
+
+            <select th:if="${isCreateForm}" id="incident-subject" th:field="*{incidentSubject}" class="form-select">
+                <option value="" selected="selected">Prosím vyberte událostí poškozený subjekt</option>
+
+                <option th:each="subject: ${T(com.danger.insurance.insurances.data.enums.InsurancesSubjects).values()}"
+                        th:value="${subject}"
+                        th:text="${subject.displayName}">
+                </option>
+            </select>
+
+            <small class="text-danger" th:if="${#fields.hasErrors('incidentSubject')}" th:errors="*{incidentSubject}"></small>
+
+            <input id="incident-subject" th:unless="${isCreateForm}" th:value="${formDTO.incidentSubject.displayName}" class="form-select" readonly>
+        </div>
+        
+        <div class="form-group" th:unless="${isCreateForm}">
+            <label for="current-status" class="control-label">Status zpracování:</label>
+            <input id="current-status" th:value="${formDTO.currentStatus.displayName}" class="form-select" readonly>
+            <small class="text-danger" th:if="${#fields.hasErrors('currentStatus')}" th:errors="*{currentStatus}"></small>
+        </div>
+        
+        <div class="form-group">
+            <label for="accident-date" class="control-label">Datum události:</label>
+            <input id="accident-date" th:unless="${isCreateForm}" type="date" class="form-control" th:value="*{accidentDate}" readonly/>
+            <input id="accident-date" th:if="${isCreateForm}" type="date" class="form-control" th:field="*{accidentDate}"/>
+            <small class="text-danger" th:if="${#fields.hasErrors('accidentDate')}" th:errors="*{accidentDate}"></small>
+        </div>
+
+        <div class="form-group" th:unless="${isSearchForm}">
+            <label for="report-date" class="control-label">Datum ohlášení:</label>
+            <input id="report-date" th:unless="${isCreateForm}" type="date" class="form-control" th:value="*{reportDate}" readonly/>
+            <input id="report-date" th:if="${isCreateForm}" type="date" class="form-control" th:field="*{reportDate}"/>
+            <small class="text-danger" th:if="${#fields.hasErrors('reportDate')}" th:errors="*{reportDate}"></small>
+        </div>
+
+        <div class="form-group" th:unless="${isCreateForm or isSearchForm}">
+            <label for="todays-date" class="control-label">Datum evidence:</label>
+            <input id="todays-date" th:unless="${isCreateForm}" type="date" class="form-control" th:value="*{todaysDate}" readonly/>
+            <input id="todays-date" th:if="${isCreateForm}" type="date" class="form-control" th:field="*{todaysDate}"/>
+            <small class="text-danger" th:if="${#fields.hasErrors('todaysDate')}" th:errors="*{todaysDate}"></small>
+        </div>
+        
+        <div class="form-group" th:unless="${isCreateForm or isSearchForm}">
+            <label for="closure-date" class="control-label">Datum uzavření:</label>
+            <input id="closure-date" type="date" th:if="${!isCreateForm and formDTO.closureDate != null}" class="form-control" th:value="*{closureDate}" readonly/>
+            <input id="closure-date" type="text" th:if="${!isCreateForm and formDTO.closureDate == null}" class="form-control" value="Případ se stále zpracovává" readonly/>
+            <input id="closure-date" th:if="${isCreateForm}" type="date" class="form-control" th:field="*{closureDate}"/>
+            <small class="text-danger" th:if="${#fields.hasErrors('closureDate')}" th:errors="*{closureDate}"></small>
+        </div>
+
+        <div class="form-group" th:if="${isCreateForm}">
+            <button type="submit" class="clanky-tlacitko" th:text="${buttonLabel}"></button>
+        </div>
+    </form>
+</section>
+
+<section th:fragment="incidentCommentForm" class="py-4 px-4">
+    <div class="centered">
+        <h1 th:text="${formName}"></h1>
+    </div>
+
+    <form class="d-flex flex-column gap-2" method="post" th:action="${formAction}" th:object="${incidentCommentDTO}">
+        <div class="form-group">
+            <label for="comment-title" class="control-label">Předmět kroku zpracování:</label>
+            <input id="comment-title" type="text" th:readonly="${!isCommentCreateForm}" th:field="${incidentCommentDTO.title}" class="form-control" />
+            <small class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></small>
+        </div>
+        
+        <div class="form-group">
+            <label for="comment-description" class="control-label">Popis kroku zpracování:</label>
+            <textarea id="comment-description" th:readonly="${!isCommentCreateForm}" class="form-control" th:field="*{description}"></textarea>
+            <small class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
+        </div>
+
+        <div class="form-group" th:if="${isClosureForm or isClosureDetail}">
+            <label for="incident-resolution" class="control-label">Výsledek události:</label>
+
+            <select id="incident-resolution" th:unless="${isClosureDetail}" th:field="*{incidentResolution}" class="form-select">
+                <option value="" selected="selected">Prosím vyberte výsledek zpracování pojistné události</option>
+                
+                <option th:each="incidentResolutionType: ${T(com.danger.insurance.incidents.data.enums.IncidentResolutionsType).values()}"
+                        th:value="${incidentResolutionType}"
+                        th:text="${incidentResolutionType.displayName}">
+                </option>
+            </select>
+
+            <small class="text-danger" th:if="${#fields.hasErrors('incidentResolution')}" th:errors="*{incidentResolution}"></small>
+
+            <input id="incident-resolution" th:if="${isClosureDetail}" type="text" th:value="${incidentCommentDTO.incidentResolution.displayName}" class="form-select" readonly>
+        </div>
+
+        <div class="form-group" th:if="${isCommentCreateForm or isConfirmationForm}">
+            <button type="submit" class="clanky-tlacitko" th:text="${buttonLabel}"></button>
+        </div>
+    </form>
+</section>
+
+<section th:fragment="incidentRemovalForm" class="py-4 px-4">
+    <div class="centered">
+        <h1 th:text="${formName}"></h1>
+    </div>
+
+    <form class="d-flex flex-column gap-2" method="post" th:action="${formAction}" th:object="${incidentRemovalReasonsDTO}">
+        <div class="form-group">
+            <label for="removal-reason" class="control-label">Důvod odstranění pojištění:</label>
+
+            <select id="removal-reason" th:if="${isDeleteIncidentCreateForm}" th:field="*{incidentRemovalReason}" class="form-select">
+                <option value="" selected="selected">Prosím vyberte důvod odstranění pojistné události</option>
+
+                <option th:each="removalReason : ${T(com.danger.insurance.incidents.data.enums.IncidentRemovalReasons).values()}"
+                        th:value="${removalReason}"
+                        th:text="${removalReason.displayName}">
+                </option>
+            </select>
+
+            <small class="text-danger" th:if="${#fields.hasErrors('incidentRemovalReason')}" th:errors="*{incidentRemovalReason}"></small>
+
+            <input id="incident-resolution" th:unless="${isDeleteIncidentCreateForm}" type="text" th:value="${incidentRemovalReasonsDTO.incidentRemovalReason.displayName}" class="form-select" readonly>
+        </div>
+        
+        <div class="form-group">
+            <label for="removal-description" class="control-label">Popis důvodu odstranění:</label>
+            <textarea id="removal-description" th:readonly="${!isDeleteIncidentCreateForm}" class="form-control" th:field="*{removalDescription}"></textarea>
+            <small class="text-danger" th:if="${#fields.hasErrors('removalDescription')}" th:errors="*{removalDescription}"></small>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="clanky-tlacitko" th:text="${buttonLabel}"></button>
+        </div>
+    </form>
+</section>

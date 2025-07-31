@@ -12,78 +12,78 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.danger.insurance.accounts.models.dto.AccountsDTO;
 import com.danger.insurance.accounts.models.dto.get.AccountCreateDTO;
-import com.danger.insurance.accounts.models.dto.mappers.AccountsMapper;
-import com.danger.insurance.accounts.models.exceptions.DuplicateEmailException;
-import com.danger.insurance.accounts.models.exceptions.PasswordsDoNotEqualException;
-import com.danger.insurance.accounts.models.services.AccountsServiceImplementation;
-import com.danger.insurance.infopages.data.enums.ButtonLabels;
-import com.danger.insurance.infopages.data.enums.FlashMessages;
-import com.danger.insurance.infopages.data.enums.FormNames;
+import com.danger.insurance.accounts.models.services.AccountsAssigningServices;
+import com.danger.insurance.accounts.models.services.AccountsProcessingServices;
 import com.danger.insurance.validation.groups.OnCreateAccount;
 
+/**
+ * Controller class responsible for creating new accounts.
+ * Mapped to handle HTTP requests under the /accounts path, this class
+ * typically contains methods for displaying account creation forms,
+ * validating user input, and persisting new account data.
+ */
 @PreAuthorize("hasAnyRole('ADMINISTRATOR')")
 @Controller
 @RequestMapping("accounts")
 public class CreateAccountsController {
-
-	@Autowired
-    private AccountsServiceImplementation accountsService;
 	
 	@Autowired
-	private AccountsMapper accountsMapper;
+	private AccountsAssigningServices assigningServices;
 	
+	@Autowired
+	private AccountsProcessingServices processingServices;
+	
+	/**
+     * Handles HTTP GET requests to the /accounts/register endpoint.
+     * This method renders the account registration form view,
+     * allowing users to input necessary details to create a new account.
+     *
+     * It typically prepares and adds attributes to the model, such as
+     * an empty account DTO or form defaults, which the view binds to.
+     *
+     * URL Mapping:
+     * GET /accounts/register
+     *
+     * @param model the Spring Model used to pass form-related data to the view layer.
+     * @return the name of the view template that displays the registration form.
+     */
     @GetMapping("register")
-    public String renderRegister(Model model) {
-    	addRegisterFormAttributes(model);
+    public String renderRegisterForm(Model model) {
+    	String formAction = "register";
+    	boolean isSearchFrom = false;
+    	boolean isDetailForm = false;
     	
-    	//
-    	if (!model.containsAttribute("accountDTO")) {
-    		model.addAttribute("accountDTO", new AccountCreateDTO());
-    	}
-    	
-        return "/pages/accounts/register";
+    	return assigningServices.addRegisterIndexAttributes(formAction, isSearchFrom, isDetailForm, model);
     }
     
+    /**
+     * Handles HTTP POST requests to the /accounts/register endpoint.
+     * Processes the submitted registration form containing user account data.
+     * Performs validation based on the OnCreateAccount validation group,
+     * checks for binding errors, and either displays validation messages
+     * or proceeds with account creation logic.
+     *
+     * Responsibilities:
+     * - Validate form input using annotations and specified validation group
+     * - Handle any binding errors and return to the registration view if errors exist
+     * - Save new account data via service layer if validation passes
+     * - Use RedirectAttributes to pass success/failure messages post-redirect
+     *
+     * URL Mapping:
+     * POST /accounts/register
+     *
+     * @param userDTO the data transfer object carrying user-submitted registration info
+     * @param bindingResult object that holds the results of the validation and binding
+     * @param model the Spring Model to pass data to the view in case of validation failure
+     * @param redirectAttributes used to pass flash messages after redirect
+     * @return the logical view name, typically the form (on failure) or a confirmation page (on success)
+     */
     @PostMapping("register")
-    public String register(@Validated(OnCreateAccount.class) @ModelAttribute("accountDTO") AccountCreateDTO userDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
-        
-    	//
-    	if (bindingResult.hasErrors()) {
-    		redirectAttributes.addFlashAttribute("accountDTO", userDTO);
-    		redirectAttributes.addFlashAttribute("error", FlashMessages.INVALID_INPUT.getDisplayName());
-    		redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.accountDTO", bindingResult);
-    		
-            return "redirect:/accounts/register";
-    	}
+    public String handleRegisterFormPost(@Validated(OnCreateAccount.class) @ModelAttribute("accountDTO") AccountCreateDTO userDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+        String formAction = "register";
     	
-    	//
-        try {
-        	accountsService.create(accountsMapper.mergeToAccountsDTO(new AccountsDTO(), userDTO), userDTO.getConfirmPassword());
-        } catch (DuplicateEmailException e) {
-        	bindingResult.rejectValue("userEmail", "error", FlashMessages.EMAIL_DUPLICATE.getDisplayName());
-        	model.addAttribute("error", FlashMessages.EMAIL_DUPLICATE.getDisplayName());
-        	addRegisterFormAttributes(model);
-            return "pages/accounts/register";
-        } catch (PasswordsDoNotEqualException e) {
-        	bindingResult.rejectValue("userPassword", "error", "Prosím zadejte jinou E-mailovou adresu");
-        	bindingResult.rejectValue("confirmPassword", "error", "Prosím zadejte schodná hesla kvůli kontrole");
-        	model.addAttribute("error", FlashMessages.PASSWORDS_MISMATCH.getDisplayName());
-        	addRegisterFormAttributes(model);
-            return "pages/accounts/register";
-        }
-
-        redirectAttributes.addFlashAttribute("success", FlashMessages.ACCOUNT_CREATED.getDisplayName());
-        return "redirect:/accounts";
+    	return processingServices.processRegisterFormPost(userDTO, formAction, bindingResult, redirectAttributes, model);
     }
-    
-    private void addRegisterFormAttributes(Model model) {
-    	model.addAttribute("formName", FormNames.ACCOUNT_CREATE.getDisplayName());
-    	model.addAttribute("buttonLabel", ButtonLabels.CREATE.getDisplayName());
-		model.addAttribute("formAction", "register");
-		model.addAttribute("isSearchForm", false);
-		model.addAttribute("isDetailForm", false);
-	}
     
 }

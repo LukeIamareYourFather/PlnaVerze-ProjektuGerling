@@ -1,8 +1,5 @@
 package com.danger.insurance.insurances.contracts.controllers;
 
-import java.time.LocalDate;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -14,180 +11,199 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.danger.insurance.infopages.data.enums.ButtonLabels;
-import com.danger.insurance.infopages.data.enums.FlashMessages;
-import com.danger.insurance.infopages.data.enums.FormNames;
-import com.danger.insurance.insurances.contracts.data.entities.ContractsEntity;
 import com.danger.insurance.insurances.contracts.models.dto.ContractsDTO;
-import com.danger.insurance.insurances.contracts.models.dto.PartyContractsDTO;
-import com.danger.insurance.insurances.contracts.models.dto.mappers.ContractsMapper;
-import com.danger.insurance.insurances.contracts.models.services.ContractsServiceImplementation;
-import com.danger.insurance.insurances.contracts.models.services.PartyContractsServiceImplementation;
-import com.danger.insurance.insurances.models.services.InsurancesServiceImplementation;
-import com.danger.insurance.parties.data.entities.PartiesEntity;
-import com.danger.insurance.parties.data.enums.PartyStatus;
+import com.danger.insurance.insurances.contracts.models.services.support.ContractsAssigningServices;
+import com.danger.insurance.insurances.contracts.models.services.support.ContractsProcesingServices;
+import com.danger.insurance.insurances.contracts.models.services.support.ContractsVeryfyingServices;
 import com.danger.insurance.parties.models.dto.PartiesDetailsDTO;
-import com.danger.insurance.parties.models.dto.mappers.PartiesMapper;
-import com.danger.insurance.parties.models.service.CommonSupportServiceParties;
-import com.danger.insurance.parties.models.service.PartiesServiceImplementation;
 
+/**
+ * Controller responsible for managing the workflow of adding insured individuals to insurance contracts.
+ * Mapped under "/insurances", this class orchestrates form handling, validation, contract lookup,
+ * and insured data submission into contract records.
+ */
 @PreAuthorize("hasAnyRole('EMPLOYEE', 'MANAGER', 'ADMINISTRATOR')")
 @Controller
 @RequestMapping("insurances")
 public class AddInsuredToContractController {
 
 	@Autowired
-	private PartiesServiceImplementation partiesService;
-	
-	@Autowired 
-	private ContractsServiceImplementation contractsService;
+	private ContractsAssigningServices assigningServices;
 	
 	@Autowired
-	private InsurancesServiceImplementation insurancesService;
+	private ContractsProcesingServices procesingServices;
 	
 	@Autowired
-	private PartyContractsServiceImplementation partyContractsService;
+	private ContractsVeryfyingServices veryfyingServices;
 	
-	@Autowired 
-	private ContractsMapper contractsMapper;
-	
-	@Autowired
-	private PartiesMapper partiesMapper;
-	
-	@Autowired
-	private CommonSupportServiceParties commonSupportParties;
-	
+	/**
+	 * Renders the form for searching and selecting an insured individual to be added to a contract.
+	 * Accessed via GET request to "/insurances/add", this method initializes the model with
+	 * a blank search form DTO and optionally preloads dropdowns or hints to guide user input.
+	 *
+	 * Ideal Use Cases:
+	 * - Search by name, ID, birthdate, or eligibility criteria
+	 * - Dynamic filtering based on contract type or regional rules
+	 * - Provide user feedback for duplicate entries or matching insured records
+	 *
+	 * @param model the Spring MVC model used to populate the view with form data
+	 * @return the name of the form view template for adding an insured person
+	 */
 	@GetMapping("add")
 	public String renderInsuredSearchForm(Model model) {
-		model.addAttribute("formAction", "add/validate");
-		model.addAttribute("formName", FormNames.CONTRACTS_ADD_INSURED.getDisplayName() + " - vyhledání pojistníka");
-		model.addAttribute("buttonLabel", ButtonLabels.FIND.getDisplayName());
-		
-		//
-		if (!model.containsAttribute("formDTO")) {
-			model.addAttribute("formDTO", new PartiesDetailsDTO());
-		}
-		
-		return "pages/parties/find";
+		return assigningServices.addInsuredSearchFromAttributes(model);
 	}
 	
+	/**
+	 * Validates the party search form submission and prepares redirect flow.
+	 * This POST handler under "/insurances/add/validate" processes user input
+	 * contained in PartiesDetailsDTO to confirm search intent or select party details
+	 * for contract association. Based on input, it may guide the user to a selection
+	 * interface or display feedback for missing or incorrect data.
+	 *
+	 * Common Use Cases:
+	 * - Confirm that search criteria are provided (e.g. name, birthdate)
+	 * - Redirect to party selection or contract match preview
+	 * - Flash error feedback and preserve input on failure
+	 *
+	 * @param partyDetails DTO containing user-provided party search details
+	 * @param redirectAttributes used to pass data/messages between redirects
+	 * @return redirect URL based on validation and match outcome
+	 */
 	@PostMapping("add/validate")
-	public String validatePartySearchSubmit(@ModelAttribute("formDTO") PartiesDetailsDTO partyDetails, RedirectAttributes redirectAttributes) {
-		
-		//
-		if (!commonSupportParties.validatePartySearchFormPost(partyDetails)) {
-			redirectAttributes.addFlashAttribute("formDTO", partyDetails);
-			redirectAttributes.addFlashAttribute("error", FlashMessages.INSUFFICIENT_INPUT.getDisplayName());
-			
-			return "redirect:/insurances/add";
-		}
-		
-		List<PartiesEntity> foundInsured = partiesService.findUserId(partyDetails, PartyStatus.REGISTERED);
-		redirectAttributes.addFlashAttribute("foundParties", foundInsured);
-		
-		return "redirect:/insurances/add/select";
+	public String validatePartySearchPost(@ModelAttribute("formDTO") PartiesDetailsDTO partyDetails, RedirectAttributes redirectAttributes) {
+		return veryfyingServices.verifyPartySearchPost(partyDetails, redirectAttributes);
 	}
 	
+	/**
+	 * Renders the list of insured individuals available for selection and contract association.
+	 * Triggered via GET request to "/insurances/add/select", this method prepares the UI with
+	 * pre-filtered candidates gathered from earlier search criteria. It helps users choose
+	 * the correct party to add into an insurance contract.
+	 *
+	 * Common Features:
+	 * - Display match results from search validation step
+	 * - Enable clickable rows or radio buttons for selection
+	 * - Include tooltips, duplicate detection, or flags for contract eligibility
+	 *
+	 * @param model Spring MVC model to supply view attributes
+	 * @return view name for the insured selection interface
+	 */
 	@GetMapping("add/select")
 	public String renderSelectInsuredList(Model model) {
-		model.addAttribute("referenceLink", "select/party-");
+		String referenceLink = "select/party-";
+		String returnedPage = "pages/parties/found-parties";
 		
-		return "pages/parties/list";
+		return assigningServices.addSelectListAttributes(referenceLink, returnedPage, model);
 	}
 	
+	/**
+	 * Renders the contract selection form for the specified insured party.
+	 * Triggered via GET request to "/insurances/add/select/party-{partyId}", this method
+	 * facilitates the next step in adding an insured individual by presenting a list of 
+	 * available insurance contracts they may be linked to.
+	 *
+	 * Usage Scenarios:
+	 * - Filter contracts based on the party's region, plan eligibility, or association history
+	 * - Display warnings for contracts that are full, expired, or restricted
+	 * - Highlight recommended contracts based on age, relationship, or prior claims
+	 *
+	 * @param partyId the ID of the insured party selected for addition
+	 * @param model Spring model for passing data to the view
+	 * @return the name of the view displaying contract selection UI
+	 */
 	@GetMapping("add/select/party-{partyId}")
 	public String renderContractSearchForm(@PathVariable("partyId") long partyId, Model model) {
-		model.addAttribute("formAction", "party-" + partyId + "/validate");
-		model.addAttribute("buttonLabel", ButtonLabels.FIND.getDisplayName());
-		model.addAttribute("formName", FormNames.CONTRACTS_ADD_INSURED.getDisplayName() + " - vyhledání smlouvy");
-		
-		//
-		if (!model.containsAttribute("contractDTO")) {
-			model.addAttribute("contractDTO", new ContractsDTO());
-		}
-		
-		return "pages/insurances/contracts/find";
+		return assigningServices.addContractSearchFormAttributes(partyId, model);
 	}
 	
+	/**
+	 * Validates the contract selection for the insured party and prepares for confirmation.
+	 * Invoked via POST request to "/insurances/add/select/party-{partyId}/validate", this method
+	 * ensures a valid contract has been selected for the given party. If validation passes, 
+	 * the workflow proceeds to confirmation; otherwise, the user is redirected back with feedback.
+	 *
+	 * Features worth adding:
+	 * - Ensure selected contract ID is present and belongs to eligible list
+	 * - Display alerts for expired, full, or ineligible contracts
+	 * - Preserve context on failure and reset session flow on success
+	 *
+	 * @param partyId the ID of the insured party
+	 * @param contractsDTO DTO containing selected contract information
+	 * @param redirectAttributes used to carry data and status across redirects
+	 * @return redirect URL based on validation outcome
+	 */
 	@PostMapping("add/select/party-{partyId}/validate")
-	public String validateContractSearchForm(@PathVariable("partyId") long partyId, @ModelAttribute("contractDTO") ContractsDTO contractsDTO, RedirectAttributes redirectAttributes) {
-		
-		//
-		if (!isContractSearchRequestValid(contractsDTO)) {
-			redirectAttributes.addFlashAttribute("contractDTO", contractsDTO);
-			redirectAttributes.addFlashAttribute("error", FlashMessages.INSUFFICIENT_INPUT.getDisplayName());
-			
-			return "redirect:/insurances/add/select/party-" + partyId;
-		}
-		
-		List<ContractsEntity> foundContracts = contractsService.findContractId(contractsDTO);
-		redirectAttributes.addFlashAttribute("foundContractsList", foundContracts);
-		
-		return "redirect:/insurances/add/select/party-" + partyId + "/pick";
+	public String validateContractSearchFormPost(@PathVariable("partyId") long partyId, @ModelAttribute("contractDTO") ContractsDTO contractsDTO, RedirectAttributes redirectAttributes) {
+		return veryfyingServices.verifyContractSearchFormPost(partyId, contractsDTO, redirectAttributes);
 	}
 	
+	/**
+	 * Displays a list of selectable contracts for the specified insured party.
+	 * Accessed via GET at "/insurances/add/select/party-{partyId}/pick", this method retrieves
+	 * all eligible or active contracts available to that party, filtered by business rules or plan eligibility.
+	 * It enables users to review options before making a final selection for contract binding.
+	 *
+	 * Possible UI Enhancements:
+	 * - Show contract details like coverage tier, expiration date, and associated beneficiaries
+	 * - Add tooltips or icons for contract status (e.g. active, pending, restricted)
+	 * - Include sorting by price, coverage scope, or recommendation score
+	 *
+	 * @param partyId ID of the insured party initiating contract selection
+	 * @param model MVC model to pass contract list and metadata to view
+	 * @return view name presenting the contract selection interface
+	 */
 	@GetMapping("add/select/party-{partyId}/pick")
 	public String renderSelectContractList(@PathVariable("partyId") long partyId, Model model) {
-		model.addAttribute("referenceLink", "contract-");
+		String referenceLink = "contract-";
+		String returnedPage = "pages/insurances/contracts/list";
 		
-		return "pages/insurances/contracts/list";
+		return assigningServices.addSelectListAttributes(referenceLink, returnedPage, model);
 	}
 	
+	/**
+	 * Renders the confirmation overview before binding the insured party to the selected contract.
+	 * This GET endpoint at "/insurances/add/select/party-{partyId}/contract-{contractId}" prepares 
+	 * a final review screen that summarizes both the insured party and the chosen contract details.
+	 * It gives users a chance to verify all inputs before committing to the enrollment.
+	 *
+	 * Typical Review Content:
+	 * - Insured party personal and eligibility details
+	 * - Contract metadata (coverage scope, expiration, tier)
+	 * - Flags or warnings (e.g. duplicate entry, conflicting policies)
+	 * - Optional confirmation controls (agree/disagree buttons, disclaimers)
+	 *
+	 * @param partyId ID of the selected insured individual
+	 * @param contractId ID of the contract intended for assignment
+	 * @param model MVC model used to pass attributes to the view
+	 * @return name of the confirmation overview template
+	 */
 	@GetMapping("add/select/party-{partyId}/contract-{contractId}")
 	public String renderConfirmOverview(@PathVariable("partyId") long partyId, @PathVariable("contractId") long contractId, Model model) {
-		model.addAttribute("party", partiesService.getById(partyId));
-		model.addAttribute("insurance", insurancesService.getById(contractsService.getById(contractId).getInsurancesEntity().getInsurancesId()));
-		model.addAttribute("contract", contractsService.getById(contractId));
-		model.addAttribute("buttonLabel", "Potvrdit");
-		model.addAttribute("referenceLink", "contract-" + contractId + "/confirmed");
-		
-		return "pages/insurances/assign-confirm";
+		return assigningServices.addConfirmOverviewAttributes(partyId, contractId, model);
 	}
 	
+	/**
+	 * Finalizes the enrollment of the insured party into the selected contract.
+	 * Triggered via POST to "/insurances/add/select/party-{partyId}/contract-{contractId}/confirmed",
+	 * this method performs the actual binding operation between the insured and the insurance contract.
+	 * It includes validation, persistence, and redirect messaging to confirm success.
+	 *
+	 * Key Workflow Steps:
+	 * - Validate party and contract relationship eligibility
+	 * - Persist the association via service layer
+	 * - Provide UI feedback (success or failure)
+	 * - Optionally log the event for audit trail purposes
+	 *
+	 * @param partyId ID of the insured individual
+	 * @param contractId ID of the contract they are being enrolled into
+	 * @param model used to inject any final attributes or fallback messaging
+	 * @param redirectAttributes used to flash success feedback across redirect
+	 * @return redirect path to final success page or contract overview
+	 */
 	@PostMapping("add/select/party-{partyId}/contract-{contractId}/confirmed")
-	public String handleConfirmation(@PathVariable("partyId") long partyId, @PathVariable("contractId") long contractId, Model model, RedirectAttributes redirectAttributes) {
-		PartyContractsDTO newEntry = new PartyContractsDTO();
-		newEntry.setContractEntity(contractsMapper.toEntity(contractsService.getById(contractId)));
-		newEntry.setPartyEntity(partiesMapper.toEntity(partiesService.getById(partyId)));
-		newEntry.setContractRole(PartyStatus.INSURED);
-		newEntry.setTodaysDate(LocalDate.now());
-		partyContractsService.create(newEntry);
-		redirectAttributes.addFlashAttribute("success", FlashMessages.INSURANCE_CREATED.getDisplayName());
-		
-		return "redirect:/insurances";
+	public String handleAddInsuredToContractConfirmation(@PathVariable("partyId") long partyId, @PathVariable("contractId") long contractId, Model model, RedirectAttributes redirectAttributes) {
+		return procesingServices.processAddInsuredToContractConfirmation(partyId, contractId, redirectAttributes);
 	}
 	
-	private final boolean isContractSearchRequestValid(ContractsDTO contractsDTO) {
-	
-	// Should the birth number be provided
-	if(!contractsDTO.getContractNumber().equals("")) {
-		return true;										// Return evaluation as passed
-	} else {		// Or should the birth number be missing
-		int checksPassed = 0;								// Initialize counter of passed checks
-		
-		// Should the name be provided...
-		if (contractsDTO.getInsuredSubject() != null) {
-			checksPassed++;									// Increase the number of passed checks...
-		}
-		
-		if (contractsDTO.getInsuranceType() != null) {
-			checksPassed++;							
-		}
-		
-		if (contractsDTO.getBeginDate() != null) {
-			checksPassed++;					
-		}
-		
-		if (contractsDTO.getSignatureDate() != null) {
-			checksPassed++;
-		}
-		
-		// Should the desired amount of checks be passed
-		if (checksPassed >= 3) {							
-			return true;									// Return evaluation as passed
-		}
-	}
-	
-	return false;											// Since no requirement was met, return evaluation as failed
-}
 }

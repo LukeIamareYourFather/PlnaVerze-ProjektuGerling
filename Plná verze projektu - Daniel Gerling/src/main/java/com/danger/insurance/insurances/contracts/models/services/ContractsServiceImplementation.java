@@ -14,6 +14,8 @@ import com.danger.insurance.insurances.contracts.models.exceptions.ContractNotFo
 import com.danger.insurance.parties.models.exceptions.PartyNotFoundException;
 import com.danger.insurance.specifications.ContractsSpecifications;
 
+import jakarta.persistence.NonUniqueResultException;
+
 @Service
 public class ContractsServiceImplementation implements ContractsService{
 
@@ -35,7 +37,12 @@ public class ContractsServiceImplementation implements ContractsService{
 	@Override
 	public long create(ContractsDTO dto) {
 		ContractsEntity newInsurance = contractsMapper.toEntity(dto);										// Convert received DTO to party entity
-		contractsRepository.save(newInsurance);						// Save the received party to the database
+		
+		try {
+			contractsRepository.save(newInsurance);
+		} catch (NonUniqueResultException e) {
+			return 0;
+		}
 		
 		return newInsurance.getContractId();
 	}

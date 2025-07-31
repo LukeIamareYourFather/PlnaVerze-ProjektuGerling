@@ -2,7 +2,9 @@ com\danger\insurance\incidents\models\dto\IncidentCommentsDTO.class
 com\danger\insurance\validation\groups\OnUpdateParty.class
 com\danger\insurance\archive\models\dto\RemoveContractReasonsDTO.class
 com\danger\insurance\incidents\models\dto\mappers\IncidentsMapperImpl.class
+com\danger\insurance\parties\models\service\PartiesProcesingServices.class
 com\danger\insurance\insurances\models\dto\mappers\InsurancesMapper.class
+com\danger\insurance\news\models\service\NewsVerifyingServices.class
 com\danger\insurance\accounts\controllers\AccessAccountsController.class
 com\danger\insurance\accounts\models\dto\get\AccountDetailsDTO.class
 com\danger\insurance\accounts\models\dto\mappers\AccountsMapperImpl.class
@@ -21,6 +23,7 @@ com\danger\insurance\insurances\contracts\models\dto\PartyContractsDTO.class
 com\danger\insurance\incidents\models\service\IncidentsService.class
 com\danger\insurance\insurances\models\exceptions\InsuranceNotFoundException.class
 com\danger\insurance\insurances\models\dto\InsurancesDTO.class
+com\danger\insurance\insurances\contracts\models\services\support\ContractsAssigningServices.class
 com\danger\insurance\archive\models\services\DeletedPartiesServiceImplementation.class
 com\danger\insurance\archive\models\services\RemovedContractsServiceImplementation.class
 com\danger\insurance\infopages\data\enums\FormNames.class
@@ -28,7 +31,6 @@ com\danger\insurance\parties\models\dto\PartiesReasonsFormDTO.class
 com\danger\insurance\infopages\data\enums\FlashMessages.class
 com\danger\insurance\incidents\data\enums\IncidentResolutionsType.class
 com\danger\insurance\archive\data\entities\RemovedContractsEntity.class
-com\danger\insurance\parties\models\service\CommonSupportServiceParties.class
 com\danger\insurance\archive\data\entities\RemovedIncidentsEntity.class
 com\danger\insurance\accounts\models\dto\post\AccountLoginDTO.class
 com\danger\insurance\incidents\models\exceptions\IncidentNotFoundException.class
@@ -36,10 +38,10 @@ com\danger\insurance\insurances\contracts\data\enums\ContractsRemovalReason.clas
 com\danger\insurance\configuration\ApplicationSecurityConfiguration.class
 com\danger\insurance\archive\models\exceptions\RemovedIncidentCommentNotFoundException.class
 com\danger\insurance\news\models\dto\mappers\NewsMapper.class
+com\danger\insurance\accounts\models\services\AccountsSupportServices.class
 com\danger\insurance\news\models\dto\mappers\NewsMapperImpl.class
 com\danger\insurance\validation\groups\OnCreateIncidentAsEmployee.class
 com\danger\insurance\archive\models\exceptions\RemovedIncidentNotFoundException.class
-com\danger\insurance\insurances\contracts\models\services\CommonSupportContractsService.class
 com\danger\insurance\validation\groups\OnDeleteParty.class
 com\danger\insurance\archive\data\repositories\RemovedIncidentCommentsRepository.class
 com\danger\insurance\validation\groups\OnUpdateInsurance.class
@@ -48,6 +50,7 @@ com\danger\insurance\insurances\controllers\DeleteInsurancesController.class
 com\danger\insurance\accounts\data\repositories\AccountsRepository.class
 com\danger\insurance\news\models\dto\NewsDTO.class
 com\danger\insurance\parties\models\service\PartiesService.class
+com\danger\insurance\insurances\models\services\InsurancesAssigningServices.class
 com\danger\insurance\incidents\models\dto\get\IncidentDetailsGetDTO.class
 com\danger\insurance\archive\models\services\incidents\RemovedIncidentsService.class
 com\danger\insurance\validation\groups\OnCreateInsurance.class
@@ -56,15 +59,18 @@ com\danger\insurance\insurances\contracts\controllers\RemoveContractInsuredContr
 com\danger\insurance\infopages\controllers\HelpPageController.class
 com\danger\insurance\validation\groups\OnCreateInsured.class
 com\danger\insurance\archive\models\dto\RemovedIncidentCommentsDTO.class
+com\danger\insurance\insurances\models\services\InsurancesVerifyingServices.class
 com\danger\insurance\validation\groups\OnUpdateContract.class
 com\danger\insurance\accounts\data\entities\AccountsEntity.class
 com\danger\insurance\archive\models\services\DeletedInsurancesServiceImplementation.class
+com\danger\insurance\incidents\models\service\support\IncidentsAssigningServices.class
 com\danger\insurance\archive\models\services\incidents\RemovedIncidentsServiceImplementation.class
 com\danger\insurance\accounts\models\dto\AccountsDTO.class
 com\danger\insurance\insurances\contracts\models\services\ContractsServiceImplementation.class
 com\danger\insurance\insurances\contracts\controllers\AddInsuredToContractController.class
 com\danger\insurance\parties\models\dto\mappers\PartiesMapperImpl.class
 com\danger\insurance\news\controllers\DisplayNewsController.class
+com\danger\insurance\insurances\contracts\models\services\support\ContractsVeryfyingServices.class
 com\danger\insurance\news\controllers\RemoveNewsController.class
 com\danger\insurance\parties\data\entities\PartiesEntity.class
 com\danger\insurance\validation\groups\OnUpdateIncident.class
@@ -75,14 +81,16 @@ com\danger\insurance\specifications\ContractsSpecifications.class
 com\danger\insurance\archive\models\dto\mappers\RemovedIncidentsMapper.class
 com\danger\insurance\specifications\IncidentsSpecifications.class
 com\danger\insurance\insurances\data\repositories\InsurancesRepository.class
+com\danger\insurance\shared\services\RequiredDataInjecterService.class
 com\danger\insurance\archive\data\repositories\RemovedIncidentsRepository.class
+com\danger\insurance\validation\groups\OnUpdateNews.class
 com\danger\insurance\accounts\models\dto\mappers\AccountsMapper.class
-com\danger\insurance\incidents\models\service\CommonSupportServiceIncidents.class
 com\danger\insurance\archive\models\services\incidents\RemovedIncidentCommentsService.class
 com\danger\insurance\reports\models\dto\SegmentReportsDTO.class
 com\danger\insurance\archive\models\dto\RemoveIncidentReasonsDTO.class
 com\danger\insurance\archive\models\dto\mappers\RemovedIncidentCommentsMapperImpl.class
 com\danger\insurance\incidents\controllers\ProcessIncidentsController.class
+com\danger\insurance\incidents\models\service\support\IncidentsSupportServices.class
 com\danger\insurance\insurances\contracts\data\entities\ContractsEntity.class
 com\danger\insurance\parties\controllers\FindPartiesController.class
 com\danger\insurance\accounts\models\dto\post\AccountPasswordUpdateDTO.class
@@ -92,6 +100,8 @@ com\danger\insurance\archive\models\dto\mappers\DeletedInsurancesMapper.class
 com\danger\insurance\archive\models\dto\DeleteInsurancesReasonsDTO.class
 com\danger\insurance\insurances\contracts\controllers\InsurancesAssigningController.class
 com\danger\insurance\insurances\data\enums\InsurancesType.class
+com\danger\insurance\shared\enums\ActivePageTokens.class
+com\danger\insurance\accounts\models\services\AccountsProcessingServices.class
 com\danger\insurance\incidents\models\dto\mappers\IncidentCommentsMapperImpl.class
 com\danger\insurance\incidents\controllers\crud\UpdateIncidentsController.class
 com\danger\insurance\archive\data\repositories\RemovedContractsRepository.class
@@ -99,6 +109,7 @@ com\danger\insurance\parties\data\enums\PartyStatus.class
 com\danger\insurance\InsuranceRecorderApplication.class
 com\danger\insurance\archive\models\dto\mappers\RemovedIncidentCommentsMapper.class
 com\danger\insurance\validation\groups\OnUpdateAccount.class
+com\danger\insurance\insurances\contracts\models\services\support\ContractsProcesingServices.class
 com\danger\insurance\insurances\contracts\models\dto\ContractsDTO.class
 com\danger\insurance\incidents\models\dto\post\IncidentCommentsCreatePostDTO.class
 com\danger\insurance\archive\data\repositories\DeletedInsurancesRepository.class
@@ -106,6 +117,7 @@ com\danger\insurance\parties\controllers\DisplayPartiesController.class
 com\danger\insurance\insurances\contracts\data\enums\InsurancesDeleteReason.class
 com\danger\insurance\specifications\PartiesSpecifications.class
 com\danger\insurance\accounts\controllers\FindAccountsController.class
+com\danger\insurance\news\models\service\NewsAssigningServices.class
 com\danger\insurance\parties\models\exceptions\PartyNotFoundException.class
 com\danger\insurance\news\data\entities\NewsEntity.class
 com\danger\insurance\incidents\models\dto\IncidentsDTO.class
@@ -114,6 +126,7 @@ com\danger\insurance\parties\models\service\PartiesServiceImplementation.class
 com\danger\insurance\infopages\controllers\HomeController.class
 com\danger\insurance\accounts\controllers\crud\UpdateAccountsController.class
 com\danger\insurance\news\models\service\NewsServiceImplementation.class
+com\danger\insurance\reports\models\services\ReportsService.class
 com\danger\insurance\infopages\controllers\ProfileOverviewController.class
 com\danger\insurance\insurances\controllers\DisplayInsurancesController.class
 com\danger\insurance\incidents\data\entities\IncidentCommentsEntity.class
@@ -128,9 +141,12 @@ com\danger\insurance\reports\models\dto\CompanyReportsDTO.class
 com\danger\insurance\parties\controllers\RemovePartiesController.class
 com\danger\insurance\incidents\controllers\FindIncidentsController.class
 com\danger\insurance\insurances\controllers\UpdateInsurancesController.class
+com\danger\insurance\shared\services\RequiredDataInjectorSupportService.class
 com\danger\insurance\insurances\contracts\models\dto\mappers\PartyContractsMapper.class
 com\danger\insurance\parties\models\dto\PartiesCreateDTO.class
 com\danger\insurance\incidents\controllers\crud\RemoveIncidentsController.class
+com\danger\insurance\validation\groups\OnCreateNews.class
+com\danger\insurance\insurances\models\services\InsurancesProcesingServices.class
 com\danger\insurance\archive\models\dto\mappers\DeletedPartiesMapperImpl.class
 com\danger\insurance\incidents\controllers\CloseIncidentController.class
 com\danger\insurance\incidents\controllers\crud\CreateIncidentsController.class
@@ -138,6 +154,7 @@ com\danger\insurance\accounts\models\services\AccountsServiceImplementation.clas
 com\danger\insurance\archive\models\dto\RemovedIncidentsDTO.class
 com\danger\insurance\insurances\contracts\data\repositories\ContractsRepository.class
 com\danger\insurance\insurances\models\services\InsurancesService.class
+com\danger\insurance\incidents\models\service\support\IncidentsVerifyingServices.class
 com\danger\insurance\validation\groups\OnCreateContract.class
 com\danger\insurance\news\data\repositories\NewsRepository.class
 com\danger\insurance\insurances\contracts\models\dto\mappers\ContractsMapperImpl.class
@@ -145,6 +162,7 @@ com\danger\insurance\insurances\contracts\controllers\RemoveContractsContoller.c
 com\danger\insurance\accounts\models\dto\get\AccountCreateDTO.class
 com\danger\insurance\archive\data\repositories\DeletedPartiesRepository.class
 com\danger\insurance\incidents\models\service\IncidentCommentsServiceImplementation.class
+com\danger\insurance\insurances\models\services\InsurancesSupportServices.class
 com\danger\insurance\incidents\data\enums\IncidentRemovalReasons.class
 com\danger\insurance\incidents\models\dto\mappers\IncidentsMapper.class
 com\danger\insurance\infopages\controllers\AboutUsController.class
@@ -153,6 +171,8 @@ com\danger\insurance\validation\groups\OnCreateAccount.class
 com\danger\insurance\archive\data\entities\RemovedIncidentCommentsEntity.class
 com\danger\insurance\insurances\data\enums\InsurancesSubjects.class
 com\danger\insurance\incidents\data\enums\IncidentType.class
+com\danger\insurance\news\models\service\NewsSupportServices.class
+com\danger\insurance\accounts\models\services\AccountsVerifyingServices.class
 com\danger\insurance\archive\models\dto\DeletedInsurancesDTO.class
 com\danger\insurance\insurances\models\services\InsurancesServiceImplementation.class
 com\danger\insurance\news\models\dto\NewsCreateDTO.class
@@ -161,10 +181,14 @@ com\danger\insurance\accounts\data\enums\AccountRoles.class
 com\danger\insurance\archive\models\dto\DeletedPartiesDTO.class
 com\danger\insurance\archive\models\dto\mappers\DeletedInsurancesMapperImpl.class
 com\danger\insurance\news\controllers\UpdateNewsController.class
+com\danger\insurance\accounts\models\services\AccountsAssigningServices.class
+com\danger\insurance\parties\models\service\PartiesSupportServices.class
 com\danger\insurance\incidents\models\service\IncidentsServiceImplementation.class
 com\danger\insurance\validation\groups\OnDeleteInsurance.class
 com\danger\insurance\accounts\controllers\crud\RemoveAccountsController.class
+com\danger\insurance\news\models\service\NewsProcesingServices.class
 com\danger\insurance\accounts\controllers\crud\DisplayAccountsController.class
+com\danger\insurance\parties\models\service\PartiesVerifyingServices.class
 com\danger\insurance\validation\groups\OnRemoveIncident.class
 com\danger\insurance\accounts\models\services\AccountsService.class
 com\danger\insurance\archive\models\dto\mappers\RemovedContractsMapperImpl.class
@@ -172,6 +196,7 @@ com\danger\insurance\incidents\models\service\IncidentCommentsService.class
 com\danger\insurance\insurances\controllers\CreateInsurancesController.class
 com\danger\insurance\parties\data\enums\PartiesRemovalReason.class
 com\danger\insurance\incidents\models\exceptions\IncidentCommentNotFoundException.class
+com\danger\insurance\parties\models\service\PartiesAssigningServices.class
 com\danger\insurance\insurances\contracts\models\dto\ContractPartyRoleDTO.class
 com\danger\insurance\incidents\data\enums\IncidentStatus.class
 com\danger\insurance\infopages\controllers\InsureMePageController.class
@@ -179,6 +204,8 @@ com\danger\insurance\parties\controllers\CreatePartiesController.class
 com\danger\insurance\insurances\contracts\models\dto\mappers\PartyContractsMapperImpl.class
 com\danger\insurance\archive\data\entities\DeletedPartiesEntity.class
 com\danger\insurance\parties\data\repositories\PartiesRepository.class
+com\danger\insurance\shared\services\CommonSupportServiceShared.class
+com\danger\insurance\incidents\models\service\support\IncidentsProcesingServices.class
 com\danger\insurance\accounts\models\exceptions\PasswordsDoNotEqualException.class
 com\danger\insurance\incidents\data\repositories\IncidentsRepository.class
 com\danger\insurance\archive\models\dto\mappers\RemovedIncidentsMapperImpl.class
@@ -189,6 +216,7 @@ com\danger\insurance\archive\models\services\DeletedPartiesService.class
 com\danger\insurance\specifications\AccountsSpecifications.class
 com\danger\insurance\parties\models\dto\PartiesFoundSendDTO.class
 com\danger\insurance\archive\models\services\incidents\RemovedIncidentCommentsServiceImplementation.class
+com\danger\insurance\insurances\contracts\models\services\support\ContractsSupportServices.class
 com\danger\insurance\validation\groups\OnRemoveContract.class
 com\danger\insurance\insurances\contracts\models\dto\PartyContractsProfileDTO.class
 com\danger\insurance\insurances\contracts\models\dto\mappers\ContractsMapper.class

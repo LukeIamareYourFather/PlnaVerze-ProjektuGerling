@@ -12,7 +12,8 @@ public enum ButtonLabels {
 	CREATE("Vytvořit"),				// Person who owns and holds an active insurance policy
 	CHANGE("Pozměňit"),
 	FIND("Vyhledej"),
-	BACK("Zpět");					// Person covered by someone else's insurance policy
+	BACK("Zpět"),					// Person covered by someone else's insurance policy
+	END("Ukončit");
 	
 	// Define Strings
 	private final String displayName;		// Stores display name in local language

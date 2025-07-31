@@ -15,9 +15,9 @@
                 <h2 th:text="${pageTitle}"></h2>
 
                 <form th:action="@{${referenceLink}}" method="post">
-                    <section th:replace="~{fragments/layout.html :: incidentForm}"></section>
+                    <section th:replace="~{fragments/incidentFragments.html :: incidentForm}"></section>
 
-                    <section th:replace="~{fragments/layout.html :: incidentRemovalForm}"></section>
+                    <section th:replace="~{fragments/incidentFragments.html :: incidentRemovalForm}"></section>
                 </form>
             </div>
         </article>

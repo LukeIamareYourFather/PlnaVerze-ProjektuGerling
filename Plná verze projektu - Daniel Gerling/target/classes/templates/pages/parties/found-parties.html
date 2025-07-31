@@ -10,16 +10,20 @@
     </header>
 
     <body id="main-page">
-        <article>
-            <ul class="list-group" id="found-insurees">
-                <li th:each="party: ${foundParties}" class="list-group-item">
-                    <h2>
-                        <a th:href="@{${referenceLink} + ${party.partyId}}"
-                        th:text="${party.name}">
-                        </a>
-                    </h2>
-                </li>
-            </ul>
+        <article class="pb-5">
+            <div class="tile-background">
+                <ul class="list-group px-4 py-4" id="found-insurees">
+                    <li th:each="party: ${foundParties}" class="list-group-item white-tile" style="width: 100%;">
+                        <h2>
+                            <a th:href="@{${referenceLink} + ${party.partyId}}"
+                            th:text="${party.name + '&nbsp;&nbsp;&nbsp;' + party.surname}">
+                            </a>
+                        </h2>
+
+                        <p th:text="${'Rodné číslo: ' + party.birthNumber + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Datum narození: ' + party.birthDay}"></p>
+                    </li>
+                </ul>
+            </div>
         </article>
 
         <footer th:replace="~{fragments/layout.html :: footer}"></footer>

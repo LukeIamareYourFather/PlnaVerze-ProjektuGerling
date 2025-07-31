@@ -1,0 +1,117 @@
+<section th:fragment="accountsForm" class="py-4 px-4">
+    <div class="centered">
+        <h1 th:text="${formName}"></h1>
+    </div>
+
+    <div th:if="${isDetailForm}" class="d-flex gap-2">
+        <button class="edit-button" type="button">
+            <a th:href="@{${editEmailLink}}" onclick="return confirm('Opravdu si přejete pozměnit E-mail uživatele?');">Aktualizovat E-mail</a>
+        </button>
+
+        <button class="edit-button" type="button">
+            <a th:href="@{${editPasswordLink}}" onclick="return confirm('Opravdu si přejete pozměnit heslo uživatele?');">Aktualizovat heslo</a>
+        </button>
+
+        <button class="edit-button" type="button">
+            <a th:href="@{${editRoleLink}}" onclick="return confirm('Opravdu si přejete pozměnit uživatelskou roli?');">Aktualizovat roli</a>
+        </button>
+
+        <button class="delete-button" type="button">
+            <a th:href="@{${removeLink}}" onclick="return confirm('Opravdu si přejete zrušit účet tohoto uživatele?');">Zrušit uživatele</a>
+        </button>
+    </div>
+
+    <div class="row pt-2">
+        <div>
+            <form th:action="@{${formAction}}" th:object="${accountDTO}" method="post" class="d-flex flex-column gap-2">
+                <div class="form-group">
+                    <label for="user-email">E-mail uživatele:</label>
+                    <input id="user-email" th:readonly="${isDetailForm}" name="user-email" type="email" th:field="*{userEmail}" class="form-control"/>
+                    <small class="text-danger" th:errors="*{userEmail}"></small>
+                </div>
+
+                <div th:unless="${isSearchForm or isDetailForm}" class="form-group">
+                    <label for="user-password">Heslo uživatele</label>
+                    <input id="user-password" th:readonly="${isDetailForm}" name="user-password" type="text" th:field="*{userPassword}" class="form-control"/>
+                    <small class="text-danger" th:errors="*{userPassword}"></small>
+                </div>
+
+                <div th:unless="${isSearchForm or isDetailForm}" class="form-group">
+                    <label for="confirm-password">Zopakujte heslo pro kontrolu:</label>
+                    <input id="confirm-password" name="password" type="password" th:field="*{confirmPassword}" class="form-control"/>
+                    <small class="text-danger" th:errors="*{confirmPassword}"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="user-role" class="control-label">Role uživatele:</label>
+                    
+                    <select id="user-role" th:unless="${isDetailForm}" th:field="*{userRole}" class="form-select">
+                        <option value="" selected="selected">Prosím vyberte roli nového uživatele</option>
+
+                        <option th:each="role : ${T(com.danger.insurance.accounts.data.enums.AccountRoles).values()}"
+                                th:value="${role}"
+                                th:text="${role.displayName}">
+                        </option>
+                    </select>
+
+                    <input id="user-role" th:if="${isDetailForm}" type="text" th:value="${accountDTO.userRole.displayName}" class="form-select" readonly>
+
+                    <small class="text-danger" th:if="${#fields.hasErrors('userRole')}" th:errors="*{userRole}"></small>
+                </div>
+
+                <div th:unless="${isDetailForm}" class="form-group" >
+                    <button type="submit" class="clanky-tlacitko" th:text="${buttonLabel}"></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<section th:fragment="updateAccountForm" class="py-4 px-4">
+    <div class="centered">
+        <h1 th:text="${formName}"></h1>
+    </div>
+
+    <div class="row">
+        <div>
+            <form th:action="@{${formAction}}" th:object="${updateDTO}" method="post" class="d-flex flex-column gap-2">
+                <div th:if="${isEmailForm}" class="form-group">
+                    <label for="user-email">E-mail uživatele:</label>
+                    <input id="user-email" th:readonly="${isDetailForm}" name="user-email" type="email" th:field="*{userEmail}" class="form-control"/>
+                    <small class="text-danger" th:errors="*{userEmail}"></small>
+                </div>
+
+                <div th:if="${isPasswordForm}" class="form-group">
+                    <label for="user-password">Heslo uživatele</label>
+                    <input id="user-password" th:readonly="${isDetailForm}" name="user-password" type="text" th:field="*{userPassword}" class="form-control"/>
+                    <small class="text-danger" th:errors="*{userPassword}"></small>
+                </div>
+
+                <div th:if="${isPasswordForm}" class="form-group">
+                    <label for="confirm-password">Zopakujte heslo pro kontrolu:</label>
+                    <input id="confirm-password" name="password" type="password" th:field="*{confirmPassword}" class="form-control"/>
+                    <small class="text-danger" th:errors="*{confirmPassword}"></small>
+                </div>
+
+                <div th:if="${isRoleForm}" class="form-group">
+                    <label for="user-role" class="control-label">Role uživatele:</label>
+                    
+                    <select id="user-role" th:unless="${isDetailForm}" th:field="*{userRole}" class="form-select">
+                        <option value="" selected="selected">Prosím vyberte roli nového uživatele</option>
+
+                        <option th:each="role : ${T(com.danger.insurance.accounts.data.enums.AccountRoles).values()}"
+                                th:value="${role}"
+                                th:text="${role.displayName}">
+                        </option>
+                    </select>
+
+                    <small class="text-danger" th:if="${#fields.hasErrors('userRole')}" th:errors="*{userRole}"></small>
+                </div>
+
+                <div class="form-group" >
+                    <button type="submit" class="clanky-tlacitko" th:text="${buttonLabel}"></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

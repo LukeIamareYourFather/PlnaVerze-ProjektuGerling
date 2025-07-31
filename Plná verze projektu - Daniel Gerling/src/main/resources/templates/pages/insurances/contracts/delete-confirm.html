@@ -15,7 +15,11 @@
                 <h2 th:text="${pageTitle}"></h2>
 
                 <form th:action="@{${referenceLink}}" method="post">
-                    <section th:replace="~{fragments/layout.html :: contractDetailsForm}"></section>
+                    <h1 class="px-4 pt-4">Ukončení smlouvy - potvrzení zadání</h1>
+
+                    <section th:replace="~{fragments/contractFragments.html :: contractDetailsForm}"></section>
+
+                    <h2 class="px-4">Kontrola osob kterých se ukončení týká:</h2>
 
                     <ul class="list-group px-4 py-4" id="found-insurees">
                         <li th:each="party: ${foundParties}" class="list-group-item">
@@ -27,7 +31,9 @@
                         </li>
                     </ul>
 
-                    <section th:replace="~{fragments/layout.html :: contractRemovalReasons}"></section>
+                    <h2 class="px-4">Kontrola důvodů ukončení:</h2>
+
+                    <section th:replace="~{fragments/contractFragments.html :: contractRemovalReasons}"></section>
                 </form>
             </div>
         </article>

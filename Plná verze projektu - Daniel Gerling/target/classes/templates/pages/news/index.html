@@ -14,12 +14,12 @@
             <div class="tile-background">
                 <div class="py-2 flash-message message-success" th:text="${success}" th:if="${success}"></div>
 
-                <button sec:authorize="hasAnyRole('JOURNALIST', 'MANAGER', 'ADMINISTRATOR')">
-                    <a  href="news/create">Vytvořit nový článek</a>
+                <button class="mx-4 mt-4 create-button" type="button" sec:authorize="hasAnyRole('JOURNALIST', 'ADMINISTRATOR')">
+                    <a href="news/create">Vytvořit nový článek</a>
                 </button>
 
                 <ul class="list-group py-4 px-4" id="found-insurees">
-                    <li th:each="news : ${newsList}" class="list-group-item" style="width: 100%;">
+                    <li th:each="news : ${newsList}" class="list-group-item white-tile" style="width: 100%;">
                         <div style="display: flex; align-items: center; gap: 20px;">
                             <img th:src="@{${news.pictureUrl}}" alt="News Image" style="width: 150px; height: auto; object-fit: cover;">
 

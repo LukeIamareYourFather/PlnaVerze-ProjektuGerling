@@ -14,18 +14,18 @@
             <div class="tile-background">
                 <div class="py-2 flash-message message-success" th:text="${success}" th:if="${success}"></div>
                 
-                <h2 th:text="${pageTitle}"></h2>
+                <h2 class="px-4 pt-2" th:text="${pageTitle}"></h2>
 
-                <section class="px-4 py-4 list-group" style="z-index: 1;">
-                    <h2 class="list-group-item">
+                <section class="px-4 py-2 list-group" style="z-index: 1;">
+                    <h2 class="list-group-item colored-hover">
                         <a th:href="@{${insuranceReferenceLink} + ${insurance.insurancesId}}"
-                        th:text="${insurance.name}">
+                        th:text="${insurance.insurancesType.getDisplayName + '&nbsp;&mdash;&nbsp;' + insurance.name}">
                         </a>
                     </h2>
                 </section>
 
                 <section class="px-4 py-4">
-                    <button sec:authorize="hasAnyRole('MANAGER', 'ADMINISTRATOR')" onclick="return confirm('Opravdu si přejete pozměnit tuto smlouvu?');">
+                    <button class="mb-4 edit-button" sec:authorize="hasAnyRole('MANAGER', 'ADMINISTRATOR')" onclick="return confirm('Opravdu si přejete pozměnit tuto smlouvu?');">
                         <a th:href="@{'contract-' + ${contractId} + '/edit'}">Upravit smlouvu</a>
                     </button>
 
@@ -70,7 +70,7 @@
                         <li th:each="party: ${insuredPartiesWithRoles}" class="list-group-item">
                             <h2>
                                 <a th:href="@{${referenceLink} + ${party.partyEntity.partyId}}"
-                                th:text="${party.partyEntity.name + ' — ' + party.contractRole.displayName}">
+                                th:text="${party.partyEntity.name + '&nbsp;&nbsp;' + party.partyEntity.surname + '&nbsp;&mdash;&nbsp;' + party.contractRole.displayName}">
                                 </a>
                             </h2>
                         </li>

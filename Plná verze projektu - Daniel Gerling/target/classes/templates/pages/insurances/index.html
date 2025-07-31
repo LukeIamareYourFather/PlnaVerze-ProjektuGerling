@@ -14,60 +14,46 @@
             <div class="container-fluid">
                 <div class="tile-background">
                     <div class="py-2 flash-message message-success" th:text="${success}" th:if="${success}"></div>
+
+                    <div class="py-2 flash-message message-error" th:text="${error}" th:if="${error}"></div>
                     
                     <div class="row justify-content-center">
-                        <div class="col-auto mx-4 my-4">
-                            <button class="btn insuree-tile blue-tile">
-                                <a href="insurances/find">Vyhledat smlouvu</a>
-                            </button>
+                        <div class="col-auto mx-4 my-4 index-hover">
+                            <a href="insurances/find" class="btn insuree-tile blue-tile d-flex align-items-center justify-content-center">Vyhledat smlouvu</a>
                         </div>
 
-                        <div class="col-auto mx-4 my-4">
-                            <button class="btn insuree-tile purple-tile">
-                                <a href="insurances/list">Seznam pojištění</a>
-                            </button>
+                        <div class="col-auto mx-4 my-4 index-hover">
+                            <a href="insurances/list" class="btn insuree-tile purple-tile d-flex align-items-center justify-content-center">Seznam pojištění</a>
                         </div>
                     </div>
 
                     <div class="row justify-content-center mt-4">
-                        <div class="col-auto mx-4 my-4">
-                            <button class="btn insuree-tile lime-tile">
-                                <a href="insurances/create">Vytvořit smlouvu</a>
-                            </button>
+                        <div class="col-auto mx-4 my-4 index-hover">
+                            <a href="insurances/create" class="btn insuree-tile lime-tile d-flex align-items-center justify-content-center">Vytvořit smlouvu</a>
                         </div>
 
-                        <div class="col-auto mx-4 my-4">
-                            <button class="btn insuree-tile red-tile">
-                                <a href="insurances/terminate">Ukončit smlouvu</a>
-                            </button>
+                        <div class="col-auto mx-4 my-4 index-hover">
+                            <a href="insurances/terminate" class="btn insuree-tile red-tile d-flex align-items-center justify-content-center">Ukončit smlouvu</a>
                         </div>
                     </div>
 
                     <div class="row justify-content-center mt-4">
-                        <div class="col-auto mx-4 my-4">
-                            <button class="btn insuree-tile green-tile">
-                                <a href="insurances/add">Přidat pojištěnce</a>
-                            </button>
+                        <div class="col-auto mx-4 my-4 index-hover">
+                            <a href="insurances/add" class="btn insuree-tile green-tile d-flex align-items-center justify-content-center">Přidat pojištěnce</a>
                         </div>
 
-                        <div class="col-auto mx-4 my-4">
-                            <button class="btn insuree-tile orange-tile">
-                                <a href="insurances/remove">Odebrat pojištěnce</a>
-                            </button>
+                        <div class="col-auto mx-4 my-4 index-hover">
+                            <a href="insurances/remove" class="btn insuree-tile orange-tile d-flex align-items-center justify-content-center">Odebrat pojištěnce</a>
                         </div>
                     </div>
 
-                    <div sec:authorize="hasAnyRole('MANAGER', 'ADMINISTRATOR')" class="row justify-content-center mt-4">
-                        <div class="col-auto mx-4 my-4">
-                            <button class="btn insuree-tile white-tile">
-                                <a href="insurances/make">Vytvořit pojištění</a>
-                            </button>
+                    <div sec:authorize="hasAnyRole('ADMINISTRATOR')" class="row justify-content-center mt-4">
+                        <div class="col-auto mx-4 my-4 white-index-hover">
+                            <a href="insurances/make" class="btn insuree-tile white-tile d-flex align-items-center justify-content-center">Vytvořit pojištění</a>
                         </div>
 
-                        <div sec:authorize="hasAnyRole('MANAGER', 'ADMINISTRATOR')" class="col-auto mx-4 my-4">
-                            <button class="btn insuree-tile black-tile">
-                                <a href="insurances/delete">Odstranit pojištění</a>
-                            </button>
+                        <div sec:authorize="hasAnyRole('ADMINISTRATOR')" class="col-auto mx-4 my-4 black-index-hover">
+                            <a href="insurances/delete" class="btn insuree-tile black-tile d-flex align-items-center justify-content-center">Odstranit pojištění</a>
                         </div>
                     </div>
                 </div>

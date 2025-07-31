@@ -1,5 +1,6 @@
 package com.danger.insurance.accounts.models.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,19 @@ public class AccountsServiceImplementation implements AccountsService {
         }
     	
     }
+    
+    public List<AccountsDTO> getAll() {
+		List<AccountsDTO> foundAccounts = new ArrayList<>();	// Initialize list to hold mapped party DTOs
+	    Iterable<AccountsEntity> fetchedAccounts = accountsRepository.findAll();						// Fetch all party entities from the database
+	    
+	    // Map each entity to a DTO and add it to the result list
+	    for (AccountsEntity accountEntity : fetchedAccounts) {	
+	        AccountsDTO mappedAccount = accountsMapper.accountsEntityToAccountsDTO(accountEntity);						// Convert current entity to a DTO
+	        foundAccounts.add(mappedAccount);							//  Add converted DTO to the result list
+	    }
+	   
+	    return foundAccounts;											// Return list of all mapped party DTOs
+	}
     
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

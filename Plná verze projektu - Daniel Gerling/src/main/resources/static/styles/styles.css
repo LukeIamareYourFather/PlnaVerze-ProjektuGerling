@@ -1,5 +1,6 @@
 body {
     max-width: 100vw;
+    font-family: 'vollkornFont';
 }
 
 footer {
@@ -9,7 +10,27 @@ footer {
     height: 28px;
 	padding-left: 5vw;
     background-color: #2e3c47;
-    color: #9ca89f;
+    color: #C5B0CD;
+}
+
+label, h1, h2, div h1{
+    color: #F3E2D4;
+}
+
+a {
+    color: #415E72;
+}
+
+li h2 :hover {
+    color: #C5B0CD !important;
+}
+
+.colored-hover :hover {
+    color: #C5B0CD !important;
+}
+
+h1 {
+    text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3) !important;
 }
 
 nav ul {
@@ -19,6 +40,13 @@ nav ul {
     list-style: none;
     background-color: #2e3c47;
     flex-wrap: nowrap;
+}
+
+@font-face {
+    font-family: 'vollkornFont';
+    src: url('/fonts/vollkorn.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
 
 @media (max-width: 900px) { /* md and below */
@@ -38,7 +66,11 @@ ul li {
 
 nav a {
     text-decoration: none;
-    color: #9ca89f;
+    color: #F3E2D4;
+}
+
+nav :hover {
+    color: #415E72 !important;
 }
 
 article {
@@ -62,9 +94,13 @@ article {
     background-color: rgb(22, 22, 22);
     display: flex;
     background-size: cover;
-    color: rgb(234, 234, 234);
     text-align: center;
     justify-content: center;
+    padding: 14px 0px 4px 0px;
+}
+
+#logo h1 {
+    color: #C5B0CD !important;
 }
 
 .centered {
@@ -94,47 +130,56 @@ article {
 .insuree-tile {
     width: 250px;
     height: 150px;
-}
-
-.insuree-tile a {
     text-decoration: none;
     color: black;
 }
 
+.index-hover :hover {
+    color: white !important;
+    border: 2px solid black;
+}
+
+.black-index-hover :hover {
+    color: red !important;
+    border: 2px solid white;
+}
+
+.white-index-hover :hover {
+    color: greenyellow !important;
+    border: 2px solid black;
+}
+
 .red-tile {
-    background-color: red;
+    background-color: rgb(129, 6, 6);
 }
 
 .orange-tile {
-    background-color: orange;
+    background-color: rgb(219, 115, 54);
 }
 
 .blue-tile {
-    background-color: blue;
+    background-color: rgb(46, 46, 163);
 }
 
 .purple-tile {
-    background-color: blueviolet;
+    background-color: rgb(106, 37, 128);
 }
 
 .lime-tile {
-    background-color: lime;
+    background-color: rgb(74, 179, 74);
 }
 
 .green-tile {
-    background-color: darkgreen;
+    background-color: rgb(18, 94, 18);
 }
 
 .black-tile {
     background-color: black;
-}
-
-.black-tile a {
     color: white;
 }
 
 .white-tile {
-    background-color: white;
+    background-color: #F3E2D4;
 }
 
 .tile-background {
@@ -145,4 +190,51 @@ article {
 
 .red-border {
     border: solid 2px red;
+}
+
+.grey-border {
+    border: solid 2px grey;
+}
+
+.header-text-color {
+    color: #F3E2D4;
+}
+
+li.active a {
+  font-weight: bold;
+  border-bottom: 3px solid #415E72;
+  color: white;
+}
+
+.btn-primary {
+    background-color: #415E72 !important;
+    border: 0px;
+}
+
+.btn-primary a {
+    color: #C5B0CD !important;
+}
+
+.edit-button {
+    background-color: rgb(95, 95, 245) !important;
+    border-color: blue;
+}
+
+.delete-button {
+    background-color: #ff5d4b !important;
+    border-color: red;
+}
+
+.create-button {
+    background-color: rgb(107, 255, 107) !important;
+    border-color: green;
+}
+
+.delete-button :hover, .edit-button :hover, .create-button :hover {
+    color: white !important;
+}
+
+.delete-button a, .edit-button a, .create-button a {
+    color: black !important;
+    text-decoration: none !important;
 }

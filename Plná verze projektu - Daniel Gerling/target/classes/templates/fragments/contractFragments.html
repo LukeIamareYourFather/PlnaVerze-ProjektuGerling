@@ -1,0 +1,163 @@
+<section th:fragment="createContractForm"  class="py-4 px-4">
+    <div class="centered">
+        <h1 th:text="${formName}"></h1>
+    </div>
+
+    <form class="d-flex flex-column gap-2" method="post" th:action="@{${formAction}}" th:object="${contractDTO}">
+        <div class="form-group">
+            <label for="contract-number" class="control-label">Číslo smlouvy:</label>
+            <input id="contract-number" type="text" class="form-control" th:field="*{contractNumber}"/>
+            <small class="text-danger" th:if="${#fields.hasErrors('contractNumber')}" th:errors="*{contractNumber}"></small>
+        </div>
+
+        <div class="form-group">
+            <label for="removal-reason" class="control-label">Subjekt k Pojištění:</label>
+
+            <select id="removal-reason" th:field="*{insuredSubject}" class="form-select">
+                <option value="" th:text="'Prosím vyberte pojištěný subjekt'" selected="selected"></option>
+
+                <option th:each="subject : ${T(com.danger.insurance.insurances.data.enums.InsurancesSubjects).values()}"
+                        th:value="${subject}"
+                        th:text="${subject.displayName}">
+                </option>
+            </select>
+
+            <small class="text-danger" th:if="${#fields.hasErrors('insuredSubject')}" th:errors="*{insuredSubject}"></small>
+        </div>
+
+        <div class="form-group">
+            <label for="insurance-type" class="control-label">Typ pojištění:</label>
+
+            <select id="removal-reason" th:field="*{insuranceType}" class="form-select">
+                <option value="" th:text="'Prosím vyberte typ pojištění'" selected="selected"></option>
+
+                <option th:each="insuranceType : ${T(com.danger.insurance.insurances.data.enums.InsurancesType).values()}"
+                        th:value="${insuranceType}"
+                        th:text="${insuranceType.displayName}">
+                </option>
+            </select>
+
+            <small class="text-danger" th:if="${#fields.hasErrors('insuranceType')}" th:errors="*{insuranceType}"></small>
+        </div>
+        
+        <div class="form-group">
+            <label for="begin-date" class="control-label">Datum zahájení:</label>
+            <input id="begin-date" type="date" class="form-control" th:field="*{beginDate}"/>
+            <small class="text-danger" th:if="${#fields.hasErrors('beginDate')}" th:errors="*{beginDate}"></small>
+        </div>                
+
+        <div class="form-group">
+            <label for="signature-date" class="control-label">Datum podpisu smlouvy:</label>
+            <input id="signature-date" type="date" class="form-control" th:field="*{signatureDate}"/>
+            <small class="text-danger" th:if="${#fields.hasErrors('signatureDate')}" th:errors="*{signatureDate}"></small>
+        </div>
+
+        <div class="form-group" th:if="${ifShowCreateForm}">
+            <label for="price-per-period" class="control-label">Cena za období:</label>
+            <input id="price-per-period" type="number" class="form-control" th:field="*{pricePerPeriod}"/>
+            <small class="text-danger" th:if="${#fields.hasErrors('pricePerPeriod')}" th:errors="*{pricePerPeriod}"></small>
+        </div>
+
+        <div class="form-group" th:if="${ifShowCreateForm}">
+            <label for="liability-percentage" class="control-label">Procentuální spoluúčast:</label>
+            <input id="liability-percentage" type="number" step="0.01" class="form-control" th:field="*{liabilityPercentage}"/>
+            <small class="text-danger" th:if="${#fields.hasErrors('liabilityPercentage')}" th:errors="*{liabilityPercentage}"></small>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="clanky-tlacitko" th:text="${buttonLabel}"></button>
+        </div>
+    </form>
+</section>
+
+<section th:fragment="contractRemovalReasons" class="px-4 py-4">        
+    <div class="centered">
+        <h1 th:text="${formName}"></h1>
+    </div>
+
+    <form class="d-flex flex-column gap-2 py-4 px-4" method="post" th:action="${formAction}" th:object="${removalReasonsDTO}">
+        <div class="form-group">
+            <label for="delete-reason" class="control-label">Důvod odebrání smlouvy:</label>
+
+            <select id="delete-reason" th:unless="${isConfirmForm}" th:field="*{deleteReason}" class="form-select">
+                <option value="" selected="selected">Prosím vyberte důvod ukončení</option>
+
+                <option th:each="deleteReason : ${T(com.danger.insurance.insurances.contracts.data.enums.ContractsRemovalReason).values()}"
+                        th:value="${deleteReason}"
+                        th:text="${deleteReason.displayName}">
+                </option>
+            </select>
+
+            <input id="incident-resolution" th:if="${isConfirmForm}" type="text" th:value="${removalReasonsDTO.deleteReason.displayName}" class="form-select" readonly>
+
+            <small class="text-danger" th:if="${#fields.hasErrors('deleteReason')}" th:errors="*{deleteReason}"></small>
+        </div>
+
+        <div class="form-group">
+            <label for="date-of-request" class="control-label">Datum požadavku:</label>
+
+            <input id="date-of-request" th:unless="${isConfirmForm}" type="date" class="form-control" th:field="*{dateOfRequest}"></input>
+            
+            <input id="date-of-request" th:if="${isConfirmForm}" type="date" class="form-control" th:value="*{dateOfRequest}" readonly></input>
+            
+            <small class="text-danger" th:if="${#fields.hasErrors('dateOfRequest')}" th:errors="*{dateOfRequest}"></small>
+        </div>
+
+        <div class="form-group">
+            <label for="date-of-cancellation" class="control-label">Datum ukončení:</label>
+
+            <input id="date-of-cancellation" th:unless="${isConfirmForm}" type="date" class="form-control" th:field="*{dateOfCancellation}"></input>
+
+            <input id="date-of-cancellation" th:if="${isConfirmForm}" type="date" class="form-control" th:value="*{dateOfCancellation}" readonly></input>
+
+            <small class="text-danger" th:if="${#fields.hasErrors('dateOfCancellation')}" th:errors="*{dateOfCancellation}"></small>
+        </div>
+        
+        <div class="form-group">
+            <label for="description" class="control-label">Popis důvodu odstranění:</label>
+            <textarea id="description" th:readonly="${isConfirmForm}" class="form-control" th:field="*{description}"></textarea>
+            <small class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></small>
+        </div>
+
+        <div class="form-group pt-2">
+            <button type="submit" class="clanky-tlacitko" th:text="${buttonLabel}"></button>
+        </div>
+    </form>
+</section>
+
+<section th:fragment="contractDetailsForm" class="px-4 py-4">
+    <div class="form-group">
+            <label for="contract-number" class="control-label">Číslo smlouvy:</label>
+        <input id="contract-number" type="text" th:value="${contract.contractNumber}" class="form-control" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="insured-subject" class="control-label">Subjekt k Pojištění:</label>
+        <input id="insured-subject" type="text" th:value="${contract.insuredSubject.displayName}" class="form-control" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="insurance-type" class="control-label">Typ pojištění:</label>
+        <input id="insurance-type" type="text" th:value="${contract.insuranceType.displayName}" class="form-control" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="begin-date" class="control-label">Datum zahájení:</label>
+        <input id="begin-date" type="date" th:value="${contract.beginDate}" class="form-control" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="signature-date" class="control-label">Datum podpisu smlouvy:</label>
+        <input id="signature-date" type="date" th:value="${contract.signatureDate}" class="form-control" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="price-per-period" class="control-label">Cena za období:</label>
+        <input id="price-per-period" type="number" th:value="${contract.pricePerPeriod}" class="form-control" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="liability-percentage" class="control-label">Procentuální spoluúčast:</label>
+        <input id="liability-percentage" type="number" step="0.01" th:value="${contract.liabilityPercentage}" class="form-control" readonly>
+    </div>
+</section>
