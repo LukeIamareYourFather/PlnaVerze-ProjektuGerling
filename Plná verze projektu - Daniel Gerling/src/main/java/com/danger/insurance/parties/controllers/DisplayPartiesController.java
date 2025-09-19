@@ -85,7 +85,7 @@ public class DisplayPartiesController {
 		
 		return "pages/parties/index";															// Redirect to the main page
 	}
-	
+
 	/**
 	 * Renders the view displaying party profiles that match search or filter criteria.
 	 * <p>

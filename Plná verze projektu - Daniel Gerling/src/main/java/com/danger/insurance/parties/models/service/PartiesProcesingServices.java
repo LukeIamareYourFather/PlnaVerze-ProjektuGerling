@@ -115,13 +115,7 @@ public class PartiesProcesingServices {
 				RemoveContractReasonsDTO removalReasonsDTO = new RemoveContractReasonsDTO(); 
 				InsurancesDTO insuranceDTO = insurancesService.getById(partyOwnedContract.getInsurancesEntity().getInsurancesId());
 				removalReasonsDTO = removedContractsMapper.mergeToRemoveContractReasonsDTO(contractsMapper.toDTO(partyOwnedContract), insuranceDTO, removalReasonsDTO);
-				removalReasonsDTO.setDateOfCancellation(todaysDate);
-				removalReasonsDTO.setDateOfRequest(todaysDate);
-				removalReasonsDTO.setDeleteReason(ContractsRemovalReason.AUTOMATED);
-				removalReasonsDTO.setDescription("Smlouva uzavřena, jelikož byla osoba odstraněna ze systému");
-				removalReasonsDTO.setTodaysDate(todaysDate);
-				removalReasonsDTO.setBirthNumber(partiesService.getById(partyId).getBirthNumber());
-				removalReasonsDTO.setInsuranceName(insuranceDTO.getName());
+				assignAutomationAttributes(removalReasonsDTO, todaysDate, partyId, insuranceDTO);
 				removedContractsService.create(removalReasonsDTO);
 				contractsService.delete(partyOwnedContract.getContractId());
 			}
@@ -143,6 +137,16 @@ public class PartiesProcesingServices {
 		redirectAttributes.addFlashAttribute("reasonsDTO", partiesReasonsFormDTO);
 		redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.reasonsDTO", bindingResult);
 		redirectAttributes.addFlashAttribute("error", errorMessage.getDisplayName());
+	}
+	
+	private void assignAutomationAttributes(RemoveContractReasonsDTO removalReasonsDTO, LocalDate todaysDate, Long partyId, InsurancesDTO insuranceDTO) {
+		removalReasonsDTO.setDateOfCancellation(todaysDate);
+		removalReasonsDTO.setDateOfRequest(todaysDate);
+		removalReasonsDTO.setDeleteReason(ContractsRemovalReason.AUTOMATED);
+		removalReasonsDTO.setDescription("Smlouva uzavřena, jelikož byla osoba odstraněna ze systému");
+		removalReasonsDTO.setTodaysDate(todaysDate);
+		removalReasonsDTO.setBirthNumber(partiesService.getById(partyId).getBirthNumber());
+		removalReasonsDTO.setInsuranceName(insuranceDTO.getName());
 	}
 	
 }

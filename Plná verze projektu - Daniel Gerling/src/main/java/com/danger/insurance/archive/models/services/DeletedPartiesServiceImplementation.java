@@ -18,7 +18,7 @@ import com.danger.insurance.parties.models.exceptions.PartyNotFoundException;
 public class DeletedPartiesServiceImplementation implements DeletedPartiesService{
 
 	// Object initialization
-	
+
 	@Autowired
 	private DeletedPartiesRepository deletedRepository;				// Handles querying operations for the Parties entity
 	

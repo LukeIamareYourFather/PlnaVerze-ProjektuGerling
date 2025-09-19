@@ -57,4 +57,5 @@ public interface DeletedPartiesMapper {
      * @param target the entity to be updated.
      */
 	void updatePartiesEntity(DeletedPartiesDTO source, @MappingTarget DeletedPartiesEntity target);
+	
 }
